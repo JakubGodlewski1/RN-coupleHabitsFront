@@ -9,7 +9,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    'AbhayaLibre-Regular': require('./../assets/fonts/AbhayaLibre-Regular.ttf'),
+    'AbhayaLibre-Medium': require('./../assets/fonts/AbhayaLibre-Medium.ttf'),
+    'AbhayaLibre-SemiBold': require('./../assets/fonts/AbhayaLibre-SemiBold.ttf'),
+    'AbhayaLibre-Bold': require('./../assets/fonts/AbhayaLibre-Bold.ttf'),
+    'AbhayaLibre-ExtraBold': require('./../assets/fonts/AbhayaLibre-ExtraBold.ttf')
   });
 
   useEffect(() => {
