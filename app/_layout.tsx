@@ -1,8 +1,10 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import {Slot, Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import {SafeAreaWrapperWithGradient} from "@/components/SafeAreaWrapperWithGradient";
+import {Text} from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,12 +29,11 @@ export default function RootLayout() {
   }
 
   return (
-      <Stack screenOptions={{
-        headerShown:false
-      }}>
-        <Stack.Screen name="(no-tabs)/hero"/>
-        <Stack.Screen name="(tabs)/dashboard"/>
-        <Stack.Screen name="+not-found"/>
-      </Stack>
+         <Stack
+          screenOptions={{
+            contentStyle:{backgroundColor:"transparent"},
+            headerShown:false
+          }}
+         />
   );
 }

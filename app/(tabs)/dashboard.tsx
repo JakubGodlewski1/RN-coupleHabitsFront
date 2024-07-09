@@ -1,8 +1,9 @@
 import {View, Text} from "react-native";
+import {SafeAreaWrapperWithGradient} from "@/components/SafeAreaWrapperWithGradient";
 
 export default function Dashboard(){
 
-    return <View>
+    return <SafeAreaWrapperWithGradient>
         <Text>Dashboard</Text>
-    </View>
+    </SafeAreaWrapperWithGradient>
 }
