@@ -4,11 +4,12 @@ import {Platform} from "react-native";
 import {Shadows} from "@/styles/Shadows";
 
 export default function TabsLayout(){
+        // const isOlderThanIphoneX = useIsOldIOS()
 
     return <Tabs
         screenOptions={{
             tabBarStyle: Platform.OS==="android" ? {height:76, paddingTop:6}:{height:100, paddingTop: 12},
-            tabBarItemStyle:{ ...Shadows.md, elevation:4, marginHorizontal: 10, paddingBottom:5, borderRadius: 8, marginBottom: Platform.OS === "android" ? 8 : 0},
+            tabBarItemStyle:{ ...Shadows, elevation:4, marginHorizontal: 10, paddingBottom:5, borderRadius: 8, marginBottom: Platform.OS === "android" ? 8  : 0},
             tabBarInactiveBackgroundColor: Platform.OS === "android" ? "white":"transparent",
             tabBarActiveBackgroundColor:"#EBF4CA",
             headerShown: false,

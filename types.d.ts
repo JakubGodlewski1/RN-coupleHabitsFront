@@ -36,22 +36,3 @@ type User = {
 
 //Dashboard page
 type DashboardTab = "todo" | "completed" | "all"
-
-/*backend habit - for later*/
-type H = {
-    id: string
-    frequency: Frequency
-    details: [
-        {
-            userId: number,
-            label: string,
-            completed: boolean
-        },
-        {
-            userId: number,
-            label: string,
-            completed: boolean
-        }
-    ],
-    strike: number
-}

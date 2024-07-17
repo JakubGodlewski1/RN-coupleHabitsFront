@@ -1,9 +1,9 @@
 import {View, Text} from "react-native";
-import {SafeAreaWrapperWithGradient} from "@/components/SafeAreaWrapperWithGradient";
+import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 
 export default function Dashboard(){
 
-    return <SafeAreaWrapperWithGradient>
+    return <SafeAreaWrapper options={{disableBottomSafeArea:true}}>
         <Text>Dashboard</Text>
-    </SafeAreaWrapperWithGradient>
+    </SafeAreaWrapper>
 }

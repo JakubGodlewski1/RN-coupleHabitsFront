@@ -4,17 +4,21 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        alRegular: "AbhayaLibre-Regular",
-        alMedium:"AbhayaLibre-Medium",
-        alSemiBold:"AbhayaLibre-SemiBold",
-        alBold:"AbhayaLibre-Bold",
-        alExtraBold:"AbhayaLibre-ExtraBold",
+        mainRegular: "AbhayaLibre-Regular",
+        mainMedium:"AbhayaLibre-Medium",
+        mainSemiBold:"AbhayaLibre-SemiBold",
+        mainBold:"AbhayaLibre-Bold",
+        mainExtraBold:"AbhayaLibre-ExtraBold",
       },
       colors:{
-        success: "#25e56b",
-        error: "#e52525",
-        primary: "#14C2EF",
-        secondary: "#EBF4CA"
+        primary: "#FF5545",
+        secondary: "#6EC166",
+        tertiary:"#69BCFC",
+        tertiaryLight:"#C8EDFE",
+        background:"#E5F6FE",
+        skip:"#D2D7E5",
+        accent:"#413085"
+
       }
     },
   },

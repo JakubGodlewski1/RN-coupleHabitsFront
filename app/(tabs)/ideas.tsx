@@ -1,9 +1,9 @@
 import {View, Text} from "react-native";
-import {SafeAreaWrapperWithGradient} from "@/components/SafeAreaWrapperWithGradient";
+import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 
 export default function Ideas(){
 
-    return <SafeAreaWrapperWithGradient>
+    return <SafeAreaWrapper options={{disableBottomSafeArea:true}}>
         <Text>Ideas</Text>
-    </SafeAreaWrapperWithGradient>
+    </SafeAreaWrapper>
 }

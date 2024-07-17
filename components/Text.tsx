@@ -1,25 +1,26 @@
 import {Text} from "react-native";
 import {ReactNode} from "react";
 
-type TextType = "h1" | "h3" | "span"
+type TextType = "h1" | "h2" | "h3" | "span"
 
 type Props = {
     children: string | string[] | ReactNode,
     classNames?:{
-        wrapper:string
+        text:string
     }
     type?: TextType
 }
 
 const TextTypeMap:Record<TextType, string> = {
-    h1: "text-4xl font-alExtraBold",
-    h3: "text-2xl font-alSemiBold",
-    span: "text-lg font-alRegular"
+    h1: "text-4xl font-mainExtraBold",
+    h2: "text-3xl font-mainExtraBold",
+    h3: "text-2xl font-mainSemiBold",
+    span: "text-lg font-mainRegular"
 }
 
 export default function ({children, classNames, type="span"}:Props){
 
-    return <Text className={`${TextTypeMap[type]} ${classNames?.wrapper}`}>
+    return <Text className={`${TextTypeMap[type]} ${classNames?.text}`}>
         {children}
     </Text>
 }

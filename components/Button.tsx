@@ -1,31 +1,25 @@
 import {TouchableOpacity} from "react-native";
-import Text from "@/components/Text";
 import {ReactNode} from "react"
-
-type Size = "sm" | "md" | "lg"
+import {Shadows} from "@/styles/Shadows";
+import Text from "@/components/Text";
 
 type Props = {
     onPress: ()=>void,
-    size?: Size
-    classnames?:{
-        wrapper?: string,
-        text?:string
+    children?: ReactNode,
+    iconPosition?: "left" | "right",
+    title: String,
+    classNames?: {
+        wrapper?: String
     }
-    title: string | string[],
-    children?: ReactNode
 }
 
-const SizeMap: Record<Size, string> = {
-    sm:"p-1",
-    md: "text-xl font-alSemiBold p-1",
-    lg: "text-2xl font-alBold p-2"
-}
+export default function Button({ children, iconPosition="left", title,  onPress, classNames}:Props) {
 
-export default function Button({ title, children, classnames, size="sm", onPress}:Props) {
-
-    return <TouchableOpacity onPress={onPress} className={`bg-primary rounded-lg flex-row items-center justify-center space-x-2 ${classnames?.wrapper}`}>
-            <Text classNames={{wrapper:`text-center text-white ${SizeMap[size]} ${classnames?.text}`}}>{title}</Text>
+    return <TouchableOpacity  onPress={onPress} style={{...Shadows}} className={`flex-row  items-center justify-center space-x-5 bg-primary rounded-[20px] p-4 ${classNames?.wrapper}`}>
+        {iconPosition === "right" && <Text classNames={{text:"text-white font-mainBold"}}>{title}</Text>}
              {children && children}
+        {iconPosition === "left" && <Text classNames={{text:"text-white font-mainBold"}}>{title}</Text>}
+
     </TouchableOpacity>
 
 }
