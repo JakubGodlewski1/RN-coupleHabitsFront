@@ -1,44 +1,66 @@
-import {Tabs} from "expo-router";
-import {Ionicons} from "@expo/vector-icons";
-import {Platform} from "react-native";
-import {Shadows} from "@/styles/Shadows";
+import {Link, Navigator, router} from "expo-router";
+import {Image, Platform, TouchableOpacity, View} from "react-native";
+import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
+// @ts-ignore
+import bulb from "./../../assets/icons/bulb.png"
+// @ts-ignore
+import bulb_active from "./../../assets/icons/bulb_active.png"
+import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import Slot = Navigator.Slot;
+import {ReactNode, useState} from "react";
 
-export default function TabsLayout(){
-        // const isOlderThanIphoneX = useIsOldIOS()
+type CurrentPage = "ideas" | "dashboard" | "settings"
 
-    return <Tabs
-        screenOptions={{
-            tabBarStyle: Platform.OS==="android" ? {height:76, paddingTop:6}:{height:100, paddingTop: 12},
-            tabBarItemStyle:{ ...Shadows, elevation:4, marginHorizontal: 10, paddingBottom:5, borderRadius: 8, marginBottom: Platform.OS === "android" ? 8  : 0},
-            tabBarInactiveBackgroundColor: Platform.OS === "android" ? "white":"transparent",
-            tabBarActiveBackgroundColor:"#EBF4CA",
-            headerShown: false,
-            tabBarLabelStyle:{fontFamily:"AbhayaLibre-SemiBold", color:"#000", fontSize: 13}
-        }}
-        sceneContainerStyle={{backgroundColor:"transparent"}}
-        initialRouteName="dashboard"
-    >
-        <Tabs.Screen
-            name="ideas"
-            options={{
-                title:"Ideas",
-                tabBarIcon: ()=><Ionicons name="bulb-outline" size={24}/>
-            }}
-        />
-          <Tabs.Screen
-            name="dashboard"
-            options={{
-                title:"Dashboard",
-                tabBarIcon:()=><Ionicons name="people-outline" size={24}/>
-            }}
-        />
-          <Tabs.Screen
-            name="settings"
-            options={{
-                title:"Settings",
-                tabBarIcon:()=><Ionicons name="settings-outline" size={22}/>
-            }}
-        />
+const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode }[] = [{
+    name: "ideas",
+    body: (currentPage: CurrentPage) => <Image className="w-10 h-10"
+                                               source={currentPage === "ideas" ? bulb_active : bulb}/>
+},
+    {
+        name: "dashboard",
+        body: (currentPage) => <MaterialCommunityIcons color={currentPage === "dashboard" ? "#413085" : "#5CBFEC"}
+                                                       size={40} name="view-dashboard"/>
+    },
+    {
+        name: "settings",
+        body: (currentPage) => <Ionicons size={40} color={currentPage === "settings" ? "#413085" : "#5CBFEC"}
+                                         name="settings-sharp"/>
+    }
 
-    </Tabs>
+
+]
+
+export default function TabsLayout() {
+    const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
+
+    return <View className="grow justify-center">
+        <SafeAreaWrapper options={{disableBottomSafeArea: true}}>
+            {<Slot/>}
+        </SafeAreaWrapper>
+        <View className="h-32 items-center justify-evenly flex-row">
+            {icons.map(icon => (
+                <TouchableOpacity
+                    key={icon.name}
+                    activeOpacity={100}
+                    className={
+                        `px-2.5 py-4 rounded-full
+                     ${currentPage === icon.name ? "bg-white" : ""}
+                     ${Platform.OS === "android" ? "-mb-4" : "-mb-2"}
+                     `}
+                    onPress={() => {
+                        setCurrentPage(icon.name)
+                        router.replace(`/(tabs)/${icon.name}`)
+                    }}>
+                    {icon.body(currentPage)}
+                </TouchableOpacity>
+            ))}
+
+            {Platform.OS === "ios" ?
+                <View
+                    className="-z-10 bg-tertiaryLight h-[60vw] mt-auto rounded-t-full absolute w-[120vw] -left-[10%] top-0"/> :
+                <View
+                    className="-z-10 bg-tertiaryLight h-[100vw] mt-auto rounded-t-full absolute w-[200vw] -left-[50%] top-0"/>
+            }
+        </View>
+    </View>
 }
