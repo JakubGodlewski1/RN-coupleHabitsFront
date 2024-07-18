@@ -5,13 +5,14 @@ import {Entypo} from "@expo/vector-icons";
 import {useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import PageTitle from "@/components/PageTitle";
+import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 
 export default function Settings() {
     const [showHabitCard, setShowHabitCard] = useState(false);
 
-    return <View className="grow">
+    return <SafeAreaWrapper>
         <PageTitle>Settings</PageTitle>
-        <View style={{gap: 16}} className="grow">
+        <View style={{gap: 16}}>
             <Button classNames={{wrapper: "justify-between"}} iconPosition="right" onPress={() => {
             }} title="Sign in/Sign up">
                 <Entypo color="white" size={24} name="chevron-small-right"/>
@@ -42,5 +43,5 @@ export default function Settings() {
         </View>
 
 
-    </View>
+    </SafeAreaWrapper>
 }
