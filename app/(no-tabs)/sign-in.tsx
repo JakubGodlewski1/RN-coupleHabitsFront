@@ -12,10 +12,10 @@ export default function SignIn() {
 
     return <SafeAreaWrapper>
         <PageTitle>Sign in</PageTitle>
-        <Input classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
-        }} placeholder="Email"/>
-        <Input classNames={{wrapper: "mb-2"}} type="password" value={""} onChangeText={() => {
-        }} placeholder="Password"/>
+        <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
+        }} placeholder="emazing@email.com"/>
+        <Input label="Password" classNames={{wrapper: "mb-2"}} type="password" value={""} onChangeText={() => {
+        }} placeholder="*******"/>
         <Text classNames={{text: "text-sm ml-auto mb-4"}}>Forgot password?</Text>
         <Button onPress={() => {
         }} title="Sign in"/>

@@ -11,7 +11,7 @@ type Props<T extends string> = {
 export default function Tabs<T extends string>({options, onPress, initialValue = options[0]}: Props<T>) {
     const [selected, setSelected] = useState<T>(initialValue)
 
-    return <View className="flex-row space-x-2 justify-evenly bg-white p-2 h-14 rounded-xl">
+    return <View className="flex-row space-x-2 justify-evenly bg-white p-2 h-14 rounded-xl border-[1px] border-skip">
         {options.map((option) => (
             <TouchableOpacity activeOpacity={90} onPress={() => {
                 onPress(option)
@@ -20,7 +20,7 @@ export default function Tabs<T extends string>({options, onPress, initialValue =
                               className={`grow justify-center rounded-lg ${selected === option ? "bg-primary" : ""}`}
                               key={option}>
                 <Text
-                    classNames={{text: `text-center ${selected === option ? "text-white font-mainBold" : "text-gray"}`}}>{option}</Text>
+                    classNames={{text: `text-center ${selected === option ? "text-white font-mainBold" : "text-[#828282]"}`}}>{option}</Text>
             </TouchableOpacity>
         ))}
     </View>

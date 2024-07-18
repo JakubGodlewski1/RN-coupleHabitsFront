@@ -12,12 +12,13 @@ export default function SignUp() {
 
     return <SafeAreaWrapper>
         <PageTitle>Sign up</PageTitle>
-        <Input classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
-        }} placeholder="Email"/>
-        <Input classNames={{wrapper: "mb-4"}} type="password" value={""} onChangeText={() => {
-        }} placeholder="Password"/>
-        <Input classNames={{wrapper: "mb-2"}} type="password" value={""} onChangeText={() => {
-        }} placeholder="Password confirmation"/>
+        <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
+        }} placeholder="super@email.com"/>
+        <Input label="Password" classNames={{wrapper: "mb-4"}} type="password" value={""} onChangeText={() => {
+        }} placeholder="********"/>
+        <Input label="Password confirmation" classNames={{wrapper: "mb-2"}} type="password" value={""}
+               onChangeText={() => {
+               }} placeholder="********"/>
         <Button onPress={() => {
         }} title="Sign up"/>
         <DividerOr classNames={{wrapper: "my-4"}}/>

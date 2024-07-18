@@ -1,4 +1,5 @@
 import {Stack} from "expo-router";
+import {Platform} from "react-native";
 
 export default function () {
 
@@ -14,6 +15,7 @@ export default function () {
         />
         <Stack.Screen
             options={{
+                title: "Create a habit",
                 presentation: "modal"
             }}
             name="add-habit"

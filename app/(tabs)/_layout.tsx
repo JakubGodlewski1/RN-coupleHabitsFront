@@ -6,6 +6,7 @@ import bulb from "./../../assets/icons/bulb.png"
 import bulb_active from "./../../assets/icons/bulb_active.png"
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {ReactNode, useState} from "react";
+import {Shadows} from "@/styles/Shadows";
 
 type CurrentPage = "ideas" | "dashboard" | "settings"
 
@@ -59,6 +60,7 @@ export default function TabsLayout() {
                 </View>
                 {Platform.OS === "ios" ?
                     <View
+                        style={{...Shadows}}
                         className="z-10 bg-tertiaryLight h-[60vw] mt-auto rounded-t-full absolute w-[120vw] -left-[10%] -top-12"/> :
                     <View
                         className="z-10 bg-tertiaryLight h-[100vw] mt-auto rounded-t-full absolute w-[200vw] -left-[50%] -top-12"/>
