@@ -1,8 +1,12 @@
-import { Redirect } from "expo-router";
-
+import {Redirect, router} from "expo-router";
 
 //redirect user to the intended init page which is hero section
 const Index = () => {
-    return <Redirect href="/(no-tabs)/hero"/>;
+    //correct root
+    //<Redirect href="/(no-tabs)/hero"/>;
+
+
+    //temporary root
+    return <Redirect href="/(tabs)"/>;
 };
 export default Index;

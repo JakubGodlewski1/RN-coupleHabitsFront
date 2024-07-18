@@ -50,7 +50,7 @@ export default function TabsLayout() {
                      `}
                             onPress={() => {
                                 setCurrentPage(icon.name)
-                                router.replace(`/(tabs)/${icon.name}`)
+                                router.replace(`/(tabs)/${icon.name === "dashboard" ? "(dashboard)" : icon.name}`)
                             }}>
                             {icon.body(currentPage)}
                         </TouchableOpacity>
@@ -64,7 +64,8 @@ export default function TabsLayout() {
                         className="z-10 bg-tertiaryLight h-[100vw] mt-auto rounded-t-full absolute w-[200vw] -left-[50%] -top-12"/>
                 }
             </View>
-        )}/>
+        )}>
+    </Tabs>
 
 
 }

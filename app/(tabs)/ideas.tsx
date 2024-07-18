@@ -61,7 +61,7 @@ export default function Ideas() {
         <ScrollView showsVerticalScrollIndicator={false}>
             {examplHabits.map((_, i) => {
                 if (i * 2 + 1 >= examplHabits.length) return
-                return <View style={{gap: 8}} className="flex-row mb-2">
+                return <View key={i} style={{gap: 8}} className="flex-row mb-2">
                     <IdeaCard habitTitle={examplHabits[i * 2]}/>
                     <IdeaCard habitTitle={examplHabits[i * 2 + 1]}/>
                 </View>
