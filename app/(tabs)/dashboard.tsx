@@ -1,9 +1,10 @@
-import {View, Text} from "react-native";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
+import TopBar from "@/components/TopBar";
 
-export default function Dashboard(){
+export default function Dashboard() {
 
-    return <SafeAreaWrapper options={{disableBottomSafeArea:true}}>
-        <Text>Dashboard</Text>
+    return <SafeAreaWrapper options={{disableBottomSafeArea: true}}>
+        <TopBar/>
+        
     </SafeAreaWrapper>
 }
