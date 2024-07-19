@@ -9,7 +9,7 @@ import Dropdown from "@/components/Dropdown";
 import Button from "@/components/Button";
 import {router} from "expo-router";
 
-export default function Modal() {
+export default function AddHabit() {
     const [theSameLabel, setTheSameLabel] = React.useState(false);
 
     return <View className="p-4 bg-white grow">

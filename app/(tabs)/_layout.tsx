@@ -1,9 +1,5 @@
 import {router, Tabs} from "expo-router";
 import {Image, Platform, TouchableOpacity, View} from "react-native";
-// @ts-ignore
-import bulb from "./../../assets/icons/bulb.png"
-// @ts-ignore
-import bulb_active from "./../../assets/icons/bulb_active.png"
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {ReactNode, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
@@ -14,7 +10,9 @@ const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode 
     {
         name: "ideas",
         body: (currentPage: CurrentPage) => <Image className="w-10 h-10"
-                                                   source={currentPage === "ideas" ? bulb_active : bulb}/>
+                                                   source={currentPage === "ideas" ?
+                                                       require("./../../assets/icons/bulb_active.png") :
+                                                       require("./../../assets/icons/bulb.png")}/>
     },
     {
         name: "dashboard",
@@ -30,7 +28,6 @@ const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode 
 
 export default function TabsLayout() {
     const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
-
 
     return <Tabs
         sceneContainerStyle={{backgroundColor: "transparent"}}

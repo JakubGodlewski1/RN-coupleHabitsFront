@@ -20,7 +20,7 @@ export default function Tabs<T extends string>({options, onPress, initialValue =
                               className={`grow justify-center rounded-lg ${selected === option ? "bg-primary" : ""}`}
                               key={option}>
                 <Text
-                    classNames={{text: `text-center ${selected === option ? "text-white font-mainBold" : "text-[#828282]"}`}}>{option}</Text>
+                    classNames={{text: `text-center ${selected === option ? "text-white font-mainBold" : "text-backgroundItem"}`}}>{option}</Text>
             </TouchableOpacity>
         ))}
     </View>

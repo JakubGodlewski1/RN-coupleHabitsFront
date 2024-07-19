@@ -33,7 +33,7 @@ export default function Input({placeholder, onChangeText, value, type = "text", 
                 keyboardType={typeMap[type]}
                 value={value}
                 onChangeText={onChangeText}
-                placeholderTextColor="#5A5A5A"
+                placeholderTextColor="#828282"
                 placeholder={placeholder}
                 className="p-4 grow"
             />
@@ -47,8 +47,6 @@ export default function Input({placeholder, onChangeText, value, type = "text", 
                                     <Entypo size={24} name="eye"/>
                             }
                         </TouchableOpacity>
-
-
                     }
                 </>
 

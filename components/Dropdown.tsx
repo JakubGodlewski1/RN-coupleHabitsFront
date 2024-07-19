@@ -14,7 +14,7 @@ export default function Dropdown({options}: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState(options[0]);
 
-    return <View className="relative">
+    return <View className="relative z-10">
         <TouchableOpacity
             onPress={() => setIsOpen(p => !p)}
             className="p-3 border-[1px] flex-row border-skip rounded-xl items-center justify-between h-[55px]">
@@ -22,7 +22,7 @@ export default function Dropdown({options}: Props) {
             <Entypo size={24} name={isOpen ? "chevron-small-up" : "chevron-small-down"}/>
         </TouchableOpacity>
         {isOpen && (
-            <View className="border-[1px] border-skip rounded-xl  mt-1 p-2 absolute top-14 w-full">
+            <View className="border-[1px] border-skip rounded-xl z-10 bg-white mt-1 p-2 absolute top-14 w-full">
                 {options.map(o => (
                     <TouchableOpacity
                         className={`flex-row justify-between items-center rounded-lg py-2 px-3 ${selected.key === o.key && "bg-[#FF5545]"}`}
