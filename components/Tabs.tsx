@@ -7,13 +7,13 @@ type Option<T extends string> = {
     label: string;
 };
 
-type Props<T extends string, D extends T> = {
+type Props<T extends string> = {
     options: Option<T>[];
     onPress: (key: T) => void;
-    value: D;
+    value: T;
 };
 
-export default function Tabs<T extends string, D extends T>({options, onPress, value}: Props<T, D>) {
+export default function Tabs<T extends string>({options, onPress, value}: Props<T>) {
     const [selected, setSelected] = useState<T>(value)
 
     return <View className="flex-row space-x-2 justify-evenly bg-white p-2 h-14 rounded-xl border-[1px] border-skip">

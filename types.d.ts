@@ -34,5 +34,7 @@ type User = {
     strike: number
 };
 
-//Dashboard page
-type DashboardTab = "todo" | "completed" | "all"
+//Tabs
+type DashboardTabKey = "todo" | "completed" | "all"
+type SpecificDaysMultiSelectKey = 0 | 1 | 2 | 3 | 4 | 5 | 6
+
