@@ -6,8 +6,10 @@ import PageTitle from "@/components/PageTitle";
 import Input from "@/components/Input";
 import Tabs from "@/components/Tabs";
 import Dropdown from "@/components/Dropdown";
+import Button from "@/components/Button";
+import {router} from "expo-router";
 
-export default function AddHabit() {
+export default function Modal() {
     const [theSameLabel, setTheSameLabel] = React.useState(false);
 
     return <View className="p-4 bg-white grow">
@@ -35,5 +37,11 @@ export default function AddHabit() {
             }}/>
             <Dropdown options={[{label: "Daily", key: "daily"}, {label: "Weekly", key: "weekly"}]}/>
         </View>
+        <View style={{gap: 8}} className="flex-row mt-auto mb-2">
+            <Button classNames={{wrapper: "flex-1"}} onPress={() => router.back()} title="Cancel" type="skip"/>
+            <Button classNames={{wrapper: "flex-1"}} onPress={() => {
+            }} title="Create"/>
+        </View>
+
     </View>
 }
