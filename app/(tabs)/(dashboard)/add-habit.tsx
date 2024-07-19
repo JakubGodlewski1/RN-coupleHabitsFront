@@ -1,16 +1,24 @@
 import {TouchableOpacity, View} from "react-native";
 import Text from "@/components/Text";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import React from "react";
+import React, {useEffect} from "react";
 import PageTitle from "@/components/PageTitle";
 import Input from "@/components/Input";
 import Tabs from "@/components/Tabs";
 import Dropdown from "@/components/Dropdown";
 import Button from "@/components/Button";
 import {router} from "expo-router";
+import {useTabBarContext} from "@/hooks/useTabBarContext";
 
 export default function AddHabit() {
     const [theSameLabel, setTheSameLabel] = React.useState(false);
+    const {setIsVisible} = useTabBarContext()
+
+    //hide tabBar
+    useEffect(() => {
+        setIsVisible(false)
+        return () => setIsVisible(true)
+    }, []);
 
     return <View className="p-4 bg-white grow">
         <PageTitle>Create a habit</PageTitle>

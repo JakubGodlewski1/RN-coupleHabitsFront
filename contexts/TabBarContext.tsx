@@ -1,4 +1,5 @@
-import {createContext, PropsWithChildren, useContext, useState} from "react";
+import {createContext, PropsWithChildren, useState} from "react";
+import {Platform} from "react-native";
 
 type TabBarContextType = {
     isVisible: boolean;
@@ -15,7 +16,7 @@ export const TabBarContextProvider = ({children}: PropsWithChildren) => {
     const [isVisible, setIsVisible] = useState(true);
 
     return <TabBarContext.Provider value={{
-        isVisible,
+        isVisible: Platform.OS === "ios" ? true : isVisible,
         setIsVisible: (isVisible) => setIsVisible(isVisible)
     }}>
         {children}

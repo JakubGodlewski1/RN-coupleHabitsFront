@@ -1,8 +1,9 @@
 import {useFonts} from 'expo-font';
-import {router, Stack} from 'expo-router';
+import {Stack} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
+import Providers from "@/app/utils/Providers";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,13 +28,14 @@ export default function RootLayout() {
     }
 
     return (
-        <Stack
-            screenOptions={{
-                contentStyle: {backgroundColor: "#E5F6FE"},
-                headerShown: false
-            }}
-        >
-        </Stack>
-
+        <Providers>
+            <Stack
+                screenOptions={{
+                    contentStyle: {backgroundColor: "#E5F6FE"},
+                    headerShown: false
+                }}
+            >
+            </Stack>
+        </Providers>
     );
 }
