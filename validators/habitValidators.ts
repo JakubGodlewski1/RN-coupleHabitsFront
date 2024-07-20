@@ -5,13 +5,13 @@ export const repeatValidator = z.enum(["daily", "weekly"]);
 
 // Define Specific_days type validator
 export const specificDaysValidator = z.object({
-    1: z.boolean(),
-    2: z.boolean(),
-    3: z.boolean(),
-    4: z.boolean(),
-    5: z.boolean(),
-    6: z.boolean(),
-    0: z.boolean(),
+    monday: z.boolean(),
+    tuesday: z.boolean(),
+    wednesday: z.boolean(),
+    thursday: z.boolean(),
+    friday: z.boolean(),
+    saturday: z.boolean(),
+    sunday: z.boolean(),
 });
 
 // Define FrequencyType type validator

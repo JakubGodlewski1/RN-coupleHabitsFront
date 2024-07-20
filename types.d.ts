@@ -36,5 +36,5 @@ type User = {
 
 //Tabs
 type DashboardTabKey = "todo" | "completed" | "all"
-type SpecificDaysMultiSelectKey = 0 | 1 | 2 | 3 | 4 | 5 | 6
+type SpecificDaysMultiSelectKey = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
 

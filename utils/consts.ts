@@ -1,4 +1,4 @@
-import {CreateHabit, DashboardTabKey, Repeat, SpecificDaysMultiSelectKey} from "@/types";
+import {CreateHabit, DashboardTabKey, FrequencyType, Repeat} from "@/types";
 
 export const DASHBOARD_TABS: {
     key: DashboardTabKey,
@@ -18,6 +18,20 @@ export const DASHBOARD_TABS: {
     }
 ]
 
+export const HOW_OFTEN_TABS: {
+    key: FrequencyType,
+    label: string
+}[] = [
+    {
+        key: "repeat",
+        label: "Repeat"
+    },
+    {
+        key: "specific days",
+        label: "Specific days"
+    },
+]
+
 export const REPEAT_DROPDOWN_OPTIONS: {
     key: Repeat,
     label: string
@@ -31,49 +45,6 @@ export const REPEAT_DROPDOWN_OPTIONS: {
         label: "Weekly"
     },
 ]
-
-export const SPECIFIC_DAYS_MULTISELECT_OPTIONS: {
-    key: SpecificDaysMultiSelectKey;
-    label: string;
-    isSelected: boolean;
-}[] =
-    [
-        {
-            key: 1,
-            label: "Mo",
-            isSelected: true
-        },
-        {
-            key: 2,
-            label: "Tu",
-            isSelected: false
-        },
-        {
-            key: 3,
-            label: "We",
-            isSelected: false
-        },
-        {
-            key: 4,
-            label: "Th",
-            isSelected: false
-        },
-        {
-            key: 5,
-            label: "Fr",
-            isSelected: false
-        },
-        {
-            key: 6,
-            label: "Sa",
-            isSelected: false
-        },
-        {
-            key: 0,
-            label: "Su",
-            isSelected: false
-        },
-    ]
 
 
 export const DEFAULT_CREATE_HABIT: CreateHabit = {

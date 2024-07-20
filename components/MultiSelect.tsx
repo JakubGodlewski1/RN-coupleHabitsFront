@@ -1,21 +1,21 @@
 import {TouchableOpacity, View} from "react-native";
 import Text from "@/components/Text";
 
-type Option<T> = {
+type Option<T extends string> = {
     key: T;
     label: string;
     isSelected: boolean;
 }
 
-type Props<T> = {
+type Props<T extends string> = {
     options: Option<T>[],
     onPress: (key: T) => void
 }
 
-export default function MultiSelect<T extends string | number>({options, onPress}: Props<T>) {
+export default function MultiSelect<T extends string>({options, onPress}: Props<T>) {
 
     const handlePress = (option: Option<T>) => {
-        if (options.length === 1 && option.isSelected) {
+        if (options.filter(o => o.isSelected).length === 1 && option.isSelected) {
             return
         }
         onPress(option.key);
