@@ -4,6 +4,7 @@ import Text from "@/components/Text";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import * as Clipboard from 'expo-clipboard';
 import {Shadows} from "@/styles/Shadows";
+import {copyToClipboard} from "@/utils/copyToClipboard";
 
 
 const examplHabits = [
@@ -73,13 +74,12 @@ export default function Ideas() {
 
 
 const IdeaCard = ({habitTitle}: { habitTitle: string }) => {
-    const copyToClipboard = async () => {
-        await Clipboard.setStringAsync(habitTitle);
-        Alert.alert("Copied to clipboard", `Habit "${habitTitle}" has been copied to your clipboard.`);
-    };
 
     return (
-        <TouchableOpacity style={{...Shadows}} onPress={copyToClipboard}
+        <TouchableOpacity style={{...Shadows}} onPress={() => copyToClipboard({
+            textToCopy: habitTitle,
+            message: `"Copied to clipboard", Habit "${habitTitle}" has been copied to your clipboard.`
+        })}
                           className="bg-white flex-1 p-4 rounded-lg items-center justify-center">
             <Text classNames={{text: "shrink text-center leading-7"}}>
                 {habitTitle}

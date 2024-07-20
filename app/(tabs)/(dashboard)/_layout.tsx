@@ -1,5 +1,4 @@
 import {Stack} from "expo-router";
-import {Platform} from "react-native";
 
 export default function () {
 
@@ -20,6 +19,11 @@ export default function () {
             }}
             name="add-habit"
         />
-
+        <Stack.Screen
+            options={{
+                presentation: "modal"
+            }}
+            name="connect-with-partner"
+        />
     </Stack>
 }

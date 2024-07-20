@@ -2,6 +2,7 @@ import {View, Image} from "react-native";
 import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
+import {router} from "expo-router";
 
 export default function ConnectWithPartnerDisplay() {
 
@@ -19,8 +20,7 @@ export default function ConnectWithPartnerDisplay() {
             </View>
             <Button
                 classNames={{wrapper: "mx-auto"}}
-                onPress={() => {
-                }} title="Connect with your partner">
+                onPress={() => router.push("connect-with-partner")} title="Connect with your partner">
                 <Image className="w-6 h-6 mr-2" source={require("@/assets/icons/hands_puzzles.png")}/>
             </Button>
         </View>

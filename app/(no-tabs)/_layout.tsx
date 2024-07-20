@@ -9,6 +9,7 @@ export default function NoTabsLayout() {
                 contentStyle: {backgroundColor: "#E5F6FE"},
                 headerShown: false
             }}
-        />
+        >
+        </Stack>
     </SafeAreaWrapper>
 }

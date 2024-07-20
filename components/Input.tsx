@@ -13,7 +13,7 @@ type Props = {
     classNames?: {
         wrapper: string
     },
-    label: string
+    label?: string
 }
 
 const typeMap: Record<InputType, "email-address" | "default"> = {
@@ -26,7 +26,7 @@ export default function Input({placeholder, onChangeText, value, type = "text", 
     const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
     return <View className={classNames?.wrapper}>
-        <Text classNames={{text: "font-mainBold"}}>{label}</Text>
+        {label && <Text classNames={{text: "font-mainBold"}}>{label}</Text>}
         <View
             className={`flex-row bg-white border-[1px] border-skip rounded-xl items-center pr-4 overflow-hidden`}>
             <TextInput

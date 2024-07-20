@@ -10,13 +10,14 @@ type Props = {
     onPress: () => void,
     children?: ReactNode,
     iconPosition?: "left" | "right",
-    title: String,
+    title: string,
     classNames?: {
-        wrapper?: String
+        wrapper?: string,
+        text?: string
     }
 }
 
-const typeStylesMap: Record<BtnType, { bg: String, text: String }> = {
+const typeStylesMap: Record<BtnType, { bg: string, text: string }> = {
     primary: {
         bg: "bg-primary",
         text: "text-white"
@@ -44,10 +45,10 @@ export default function Button({children, iconPosition = "left", title, onPress,
     return <TouchableOpacity onPress={onPress} style={{...Shadows}}
                              className={`flex-row  items-center justify-center space-x-5  rounded-[20px] p-4 ${typeStylesMap[type].bg} ${classNames?.wrapper}`}>
         {iconPosition === "right" &&
-            <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text}`}}>{title}</Text>}
+            <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text} ${classNames?.text}`}}>{title}</Text>}
         {children && children}
         {iconPosition === "left" &&
-            <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text}`}}>{title}</Text>}
+            <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text} ${classNames?.text}`}}>{title}</Text>}
 
     </TouchableOpacity>
 
