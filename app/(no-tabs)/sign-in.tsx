@@ -4,13 +4,12 @@ import Button from "@/components/Button";
 import DividerOr from "@/components/DividerOr";
 import GoogleButton from "@/components/GoogleButton";
 import {Link, router} from "expo-router";
-import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import Text from "@/components/Text";
 import PageTitle from "@/components/PageTitle";
 
 export default function SignIn() {
 
-    return <SafeAreaWrapper>
+    return <>
         <PageTitle>Sign in</PageTitle>
         <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
         }} placeholder="emazing@email.com"/>
@@ -27,5 +26,5 @@ export default function SignIn() {
                 className="text-primary font-mainBold" href="/(no-tabs)/sign-up">Sign up</Link></Text>
             <Button type="skip" onPress={() => router.replace("/(tabs)")} title="Skip for now"/>
         </View>
-    </SafeAreaWrapper>
+    </>
 }

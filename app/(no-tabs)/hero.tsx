@@ -7,26 +7,25 @@ import Button from "@/components/Button";
 import {Feather} from "@expo/vector-icons";
 import {router} from "expo-router";
 
-export default function Hero(){
+export default function Hero() {
 
-    return <SafeAreaWrapper>
+    return <>
         <View className="mt-11">
-            <Text type="h1" classNames={{text:"text-center"}}>
+            <Text type="h1" classNames={{text: "text-center"}}>
                 Them for You, {"\n"}
                 You for Them. {"\n"}
                 Get better together
             </Text>
-            <Text type="h3" classNames={{text:"text-center mt-2"}}>
+            <Text type="h3" classNames={{text: "text-center mt-2"}}>
                 Habit app for couples
             </Text>
         </View>
-
-            <Image
-                className="mt-auto mb-10 mx-auto"
-                source={couple}
-            />
-            <Button title="Explore the app" iconPosition="right" onPress={()=>router.push("/info-screen")} >
-                <Feather style={{color:"white"}} size={24} name="arrow-right"/>
-            </Button>
-    </SafeAreaWrapper>
+        <Image
+            className="mt-auto mb-10 mx-auto"
+            source={couple}
+        />
+        <Button title="Explore the app" iconPosition="right" onPress={() => router.push("/info-screen")}>
+            <Feather style={{color: "white"}} size={24} name="arrow-right"/>
+        </Button>
+    </>
 }

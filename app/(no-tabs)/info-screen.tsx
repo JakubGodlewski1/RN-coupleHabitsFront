@@ -50,7 +50,7 @@ const habits: Habit[] = [
 
 export default function InfoScreen() {
 
-    return <SafeAreaWrapper>
+    return <>
         <PageTitle>How to play</PageTitle>
         <View className="space-y-8">
             <View>
@@ -74,7 +74,7 @@ export default function InfoScreen() {
         <Button classNames={{wrapper: "mt-auto"}} iconPosition="right" onPress={() => {
             router.push("/(no-tabs)/sign-up")
         }} title="Next"/>
-    </SafeAreaWrapper>
+    </>
 }
 
 const NumberedRow = ({text, number}: { text: String, number: String }) => {

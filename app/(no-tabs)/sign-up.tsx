@@ -1,4 +1,3 @@
-import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import Input from "@/components/Input";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
@@ -10,7 +9,7 @@ import PageTitle from "@/components/PageTitle";
 
 export default function SignUp() {
 
-    return <SafeAreaWrapper>
+    return <>
         <PageTitle>Sign up</PageTitle>
         <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
         }} placeholder="super@email.com"/>
@@ -29,5 +28,5 @@ export default function SignUp() {
                 className="text-primary font-mainBold" href="/(no-tabs)/sign-in">Sign in</Link></Text>
             <Button type="skip" onPress={() => router.replace("/(tabs)")} title="Skip for now"/>
         </View>
-    </SafeAreaWrapper>
+    </>
 }
