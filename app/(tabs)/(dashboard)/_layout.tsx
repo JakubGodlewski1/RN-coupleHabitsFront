@@ -25,5 +25,11 @@ export default function () {
             }}
             name="connect-with-partner"
         />
+        <Stack.Screen
+            options={{
+                presentation: "modal"
+            }}
+            name="pricing"
+        />
     </Stack>
 }

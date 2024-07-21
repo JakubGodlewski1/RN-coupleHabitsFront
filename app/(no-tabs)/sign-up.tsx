@@ -3,13 +3,13 @@ import Text from "@/components/Text";
 import Button from "@/components/Button";
 import GoogleButton from "@/components/GoogleButton";
 import DividerOr from "@/components/DividerOr";
-import {View} from "react-native";
+import {ScrollView, View} from "react-native";
 import {Link, router} from "expo-router";
 import PageTitle from "@/components/PageTitle";
 
 export default function SignUp() {
 
-    return <>
+    return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <PageTitle>Sign up</PageTitle>
         <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
         }} placeholder="super@email.com"/>
@@ -26,7 +26,8 @@ export default function SignUp() {
         <View className="mt-auto">
             <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
                 className="text-primary font-mainBold" href="/(no-tabs)/sign-in">Sign in</Link></Text>
-            <Button type="skip" onPress={() => router.replace("/(tabs)")} title="Skip for now"/>
+            <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("../intro")}
+                    title="Skip for now"/>
         </View>
-    </>
+    </ScrollView>
 }

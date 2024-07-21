@@ -13,8 +13,8 @@ export default function ConnectWithPartnerDisplay() {
         </View>
         <View className="items-center">
             <Image className="w-[65vw] h-[40vw]" source={require("@/assets/illustrations/couple_handshaking.png")}/>
-            <Text classNames={{text: "text-center font-mainBold text-sm mt-2"}}>
-                Connect with your partner to discover and track the habits of both you and your partner here.
+            <Text classNames={{text: "text-center font-mainBold  mt-2"}}>
+                Connect with your partner to add and see your habits.
             </Text>
         </View>
         <Button

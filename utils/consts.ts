@@ -1,4 +1,4 @@
-import {CreateHabit, DashboardTabKey, FrequencyType, Repeat} from "@/types";
+import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat} from "@/types";
 
 export const DASHBOARD_TABS: {
     key: DashboardTabKey,
@@ -61,5 +61,24 @@ export const DEFAULT_CREATE_HABIT: CreateHabit = {
     frequency: {
         type: "repeat",
         repeatOption: "daily"
+    }
+}
+
+
+export const EXAMPLE_HABIT: Habit = {
+    id: "0",
+    frequency: {
+        type: "repeat",
+        repeatOption: "daily"
+    },
+    details: {
+        mine: {
+            label: "Run for at least 10 minutes",
+            completed: false
+        },
+        partner: {
+            label: "Run for at least 10 minutes",
+            completed: false
+        },
     }
 }
