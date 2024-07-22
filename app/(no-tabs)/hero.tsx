@@ -24,7 +24,7 @@ export default function Hero() {
             className="mt-auto mb-10 mx-auto"
             source={couple}
         />
-        <Button title="Explore the app" iconPosition="right" onPress={() => router.push("/info-screen")}>
+        <Button title="Explore the app" iconPosition="right" onPress={() => router.push("/sign-up")}>
             <Feather style={{color: "white"}} size={24} name="arrow-right"/>
         </Button>
     </>

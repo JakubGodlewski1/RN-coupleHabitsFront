@@ -7,6 +7,7 @@ import {Shadows} from "@/styles/Shadows";
 import Button from "@/components/Button";
 import {router} from "expo-router";
 import PageTitle from "@/components/PageTitle";
+import {NumberedRow} from "@/components/NumberedRow";
 
 
 const habits: Habit[] = [
@@ -48,9 +49,9 @@ const habits: Habit[] = [
     }
 ]
 
-export default function InfoScreen() {
+export default function HowToPlay() {
 
-    return <>
+    return <SafeAreaWrapper>
         <PageTitle>How to play</PageTitle>
         <View className="space-y-8">
             <View>
@@ -71,17 +72,8 @@ export default function InfoScreen() {
         {/*    <Text classNames={{text:"font-mainBold text-white"}}>Take day off</Text>*/}
         {/*    <Text classNames={{text:"text-white"}}>930 points</Text>*/}
         {/*</View>*/}
-        <Button classNames={{wrapper: "mt-auto"}} iconPosition="right" onPress={() => {
-            router.push("/(no-tabs)/sign-up")
+        <Button classNames={{wrapper: "mt-auto mb-2"}} iconPosition="right" onPress={() => {
+            router.push("cards-management")
         }} title="Next"/>
-    </>
-}
-
-const NumberedRow = ({text, number}: { text: String, number: String }) => {
-    return <View className="flex-row space-x-2 mb-2">
-        <View style={{...Shadows}} className="bg-primary rounded-md h-6 w-6 justify-center items-center mr-2">
-            <Text classNames={{text: "text-white -mt-0.5 font-mainBold"}}>{number}</Text>
-        </View>
-        <Text classNames={{text: "flex-1"}}>{text}</Text>
-    </View>
+    </SafeAreaWrapper>
 }

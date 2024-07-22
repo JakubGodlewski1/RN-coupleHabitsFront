@@ -24,9 +24,9 @@ export default function SignUp() {
         <GoogleButton onPress={() => {
         }}/>
         <View className="mt-auto">
-            <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
+            <Text classNames={{text: "text-center mb-3"}}>Have account already? Let's <Link
                 className="text-primary font-mainBold" href="/(no-tabs)/sign-in">Sign in</Link></Text>
-            <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("../intro-cards")}
+            <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("(intro)/how-to-play")}
                     title="Skip for now"/>
         </View>
     </ScrollView>
