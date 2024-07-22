@@ -26,7 +26,7 @@ export default function SignUp() {
         <View className="mt-auto">
             <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
                 className="text-primary font-mainBold" href="/(no-tabs)/sign-in">Sign in</Link></Text>
-            <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("../intro")}
+            <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("../intro-cards")}
                     title="Skip for now"/>
         </View>
     </ScrollView>

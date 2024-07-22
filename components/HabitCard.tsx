@@ -1,9 +1,10 @@
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import Text from "@/components/Text";
 import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
+import {Feather} from "@expo/vector-icons";
 
 type Props = {
     habit: Habit,
