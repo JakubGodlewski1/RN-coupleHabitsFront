@@ -27,11 +27,17 @@ type Habit = CreateHabit & { id: string }
 
 //user (data from the server containing all the necessary information)
 type User = {
-    email: string
-    avatar?: string
-    partnerAvatar?: string
-    habits: Habit[]
-    strike: number
+    avatar: null | string;
+    partner: {
+        avatar: null | string;
+    } | null
+    connectionCode: string,
+    email: string,
+    habits: ToFrontendHabit[],
+    gameAccount: {
+        strike: number,
+        points: number
+    } | null
 };
 
 //Tabs

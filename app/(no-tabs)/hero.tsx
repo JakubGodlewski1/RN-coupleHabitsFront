@@ -1,4 +1,3 @@
-import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import Text from "@/components/Text";
 import {Image, View} from "react-native";
 // @ts-ignore
@@ -9,7 +8,7 @@ import {router} from "expo-router";
 import {useCreateUser} from "@/api/hooks/useCreateUser";
 
 export default function Hero() {
-    useCreateUser()
+    const {isPending} = useCreateUser()
 
     return <>
         <View className="mt-11">
@@ -26,7 +25,8 @@ export default function Hero() {
             className="mt-auto mb-10 mx-auto"
             source={couple}
         />
-        <Button title="Explore the app" iconPosition="right" onPress={() => router.push("/sign-up")}>
+        <Button disabled={isPending} title="Explore the app" iconPosition="right"
+                onPress={() => router.push("/sign-up")}>
             <Feather style={{color: "white"}} size={24} name="arrow-right"/>
         </Button>
     </>

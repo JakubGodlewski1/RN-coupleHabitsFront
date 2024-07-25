@@ -1,9 +1,15 @@
-import {Redirect} from "expo-router";
+import {router} from "expo-router";
+import {useUserExists} from "@/hooks/useUserExists";
+import {ActivityIndicator} from "react-native";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 //redirect user to the intended init page which is hero section
 const Index = () => {
-    return <Redirect href="/(no-tabs)/hero"/>;
+    useUserExists({
+        onUserExists: () => router.push("/(tabs)/(dashboard)"),
+        onUserNotExists: () => router.push("/(no-tabs)/hero"),
+    })
 
-
+    return <CenteredActivityIndicator/>
 };
 export default Index;
