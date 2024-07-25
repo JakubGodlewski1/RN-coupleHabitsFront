@@ -4,10 +4,16 @@ import Tabs from "@/components/Tabs";
 import ConnectWithPartnerDisplay from "@/components/ConnectWithPartnerDisplay";
 import {DASHBOARD_TABS} from "@/utils/consts";
 import {DashboardTabKey} from "@/types";
-import {View} from "react-native";
+import {ActivityIndicator, View} from "react-native";
 import {router} from "expo-router";
+import {useUser} from "@/api/hooks/useUser";
 
 export default function Dashboard() {
+    const {data, isLoading} = useUser()
+
+    if (isLoading) {
+        return <ActivityIndicator/>
+    }
 
     return <SafeAreaWrapper classNames={{wrapper: "relative"}} style={{gap: 16}}
                             options={{disableBottomSafeArea: true}}>

@@ -1,8 +1,8 @@
-import {PropsWithChildren} from "react";
+import React, {PropsWithChildren} from "react";
 import {TabBarContextProvider} from "@/contexts/TabBarContext";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
-import {QueryClientProvider} from "react-query";
 import {queryClient} from "@/api/queryClient";
+import {QueryClientProvider} from "@tanstack/react-query";
 
 export default function Providers({children}: PropsWithChildren) {
 
