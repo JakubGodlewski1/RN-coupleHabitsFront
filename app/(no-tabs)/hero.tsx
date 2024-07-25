@@ -6,8 +6,10 @@ import couple from "@/assets/illustrations/hero.png"
 import Button from "@/components/Button";
 import {Feather} from "@expo/vector-icons";
 import {router} from "expo-router";
+import {useCreateUser} from "@/api/hooks/useCreateUser";
 
 export default function Hero() {
+    useCreateUser()
 
     return <>
         <View className="mt-11">
