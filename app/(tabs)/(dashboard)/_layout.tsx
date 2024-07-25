@@ -17,7 +17,7 @@ export default function () {
                 title: "Create a habit",
                 presentation: "modal"
             }}
-            name="add-habit"
+            name="habit-form"
         />
         <Stack.Screen
             options={{

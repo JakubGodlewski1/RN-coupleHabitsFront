@@ -11,7 +11,7 @@ export default function TopBar() {
             <Text>🔥Strike: <Text classNames={{text: "font-mainBold"}}>0 Days</Text></Text>
             <Text>Points: <Text classNames={{text: "font-mainBold"}}>0</Text> </Text>
         </View>
-        <TouchableOpacity onPress={() => router.push("add-habit")}
+        <TouchableOpacity onPress={() => router.push("habit-form")}
                           className="h-full w-14 rounded-xl bg-tertiary items-center justify-center">
             <AntDesign size={24} color="white" name="plus"/>
         </TouchableOpacity>

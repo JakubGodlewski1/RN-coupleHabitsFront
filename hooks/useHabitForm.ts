@@ -3,12 +3,31 @@ import {CreateHabit, FrequencyType, SpecificDays, SpecificDaysMultiSelectKey} fr
 import {DEFAULT_CREATE_HABIT} from "@/utils/consts";
 import {produce} from "immer";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
+import {useCreateHabit} from "@/api/hooks/useCreateHabit";
+import {createHabitValidator} from "@/validators/habitValidators";
+import {Alert} from "react-native";
+import {useUser} from "@/api/hooks/useUser";
 
 
 export default function useHabitForm() {
     const [data, setData] = useState<CreateHabit>(DEFAULT_CREATE_HABIT)
     const [errors, setErrors] = useState({});
     const [theSameLabel, setTheSameLabel] = React.useState(false);
+    const {data: {partner}} = useUser()
+
+
+    const onSubmit = (submitFn: (habit: CreateHabit) => void) => {
+        if (!partner) {
+            return Alert.alert("You have to connect with your partner first!")
+        }
+
+        const result = createHabitValidator.safeParse(data)
+        if (result.success) {
+            submitFn(data)
+        } else {
+            Alert.alert("Provided data is not correct, check the form and try again")
+        }
+    }
 
     //hide tabBar on android when page is opened
     useHandleTabBar(true)
@@ -59,6 +78,7 @@ export default function useHabitForm() {
     }
 
     return {
+        onSubmit,
         setData,
         errors,
         data,

@@ -13,15 +13,19 @@ import {produce} from "immer";
 import {HOW_OFTEN_TABS} from "@/utils/consts";
 import useHabitForm from "@/hooks/useHabitForm";
 import SpecificDaysMultiSelect from "@/components/SpecificDaysMultiSelect";
+import {useCreateHabit} from "@/api/hooks/useCreateHabit";
 
-export default function AddHabit() {
+export default function HabitForm() {
     const {
+        onSubmit,
         data,
         setData,
         isTheSameLabel,
         handleToggleTheSameLabel,
         handleFrequencyTypeChange,
     } = useHabitForm()
+
+    const {createHabit, isPending} = useCreateHabit()
 
     return <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1} className="p-4 bg-white grow">
         <PageTitle>Create a habit</PageTitle>
@@ -71,9 +75,14 @@ export default function AddHabit() {
             )}
         </View>
         <View style={{gap: 8}} className="flex-row mt-auto mb-2">
-            <Button classNames={{wrapper: "flex-1"}} onPress={() => router.back()} title="Cancel" type="skip"/>
-            <Button classNames={{wrapper: "flex-1"}} onPress={() => {
-            }} title="Create"/>
+            <Button disabled={isPending} classNames={{wrapper: "flex-1"}} onPress={() => router.back()} title="Cancel"
+                    type="skip"/>
+            <Button
+                disabled={isPending}
+                classNames={{wrapper: "flex-1"}}
+                onPress={() => onSubmit(createHabit)}
+                title="Create"
+            />
         </View>
     </TouchableOpacity>
 }
