@@ -6,6 +6,7 @@ import Text from "@/components/Text";
 type BtnType = "primary" | "secondary" | "tertiary" | "skip" | "white"
 
 type Props = {
+    disabled?: boolean,
     type?: BtnType,
     onPress: () => void,
     children?: ReactNode,
@@ -40,10 +41,20 @@ const typeStylesMap: Record<BtnType, { bg: string, text: string }> = {
     }
 }
 
-export default function Button({children, iconPosition = "left", title, onPress, classNames, type = "primary"}: Props) {
+export default function Button({
+                                   children,
+                                   iconPosition = "left",
+                                   title,
+                                   onPress,
+                                   classNames,
+                                   type = "primary",
+                                   disabled
+                               }: Props) {
 
-    return <TouchableOpacity onPress={onPress} style={{...Shadows}}
-                             className={`flex-row  items-center justify-center space-x-5  rounded-[20px] p-4 ${typeStylesMap[type].bg} ${classNames?.wrapper}`}>
+    return <TouchableOpacity
+        disabled={disabled}
+        onPress={onPress} style={{...Shadows}}
+        className={`flex-row  items-center justify-center space-x-5  rounded-[20px] p-4 ${typeStylesMap[type].bg} ${classNames?.wrapper}`}>
         {iconPosition === "right" &&
             <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text} ${classNames?.text}`}}>{title}</Text>}
         {children && children}
