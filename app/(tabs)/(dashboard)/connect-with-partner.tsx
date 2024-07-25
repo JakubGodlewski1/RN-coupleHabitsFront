@@ -8,10 +8,15 @@ import Input from "@/components/Input";
 import {copyToClipboard} from "@/utils/copyToClipboard";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {router} from "expo-router";
+import {useConnectPartner} from "@/api/hooks/useConnectPartner";
+import {useState} from "react";
+import {useUser} from "@/api/hooks/useUser";
 
 export default function ConnectWithPartner() {
+    const [code, setCode] = useState<string>("");
     useHandleTabBar(true)
-
+    const {connect, isPending} = useConnectPartner()
+    const user = useUser().user!
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1} className="p-4 bg-white grow">
@@ -28,25 +33,26 @@ export default function ConnectWithPartner() {
                 </Text>
                 <Button classNames={{text: "text-2xl font-mainBold", wrapper: "p-4"}} iconPosition="right"
                         onPress={() => copyToClipboard({
-                            textToCopy: "R312R32",
+                            textToCopy: user.connectionCode,
                             message: "Your connection code has been copied to clipboard"
-                        })} title="E3FT3R">
+                        })} title={user.connectionCode}>
                     <MaterialCommunityIcons size={24} color="white" name="content-copy"/>
                 </Button>
                 <DividerOr/>
                 <View style={{gap: 8}} className="self-stretch grow">
                     <Input
+                        value={code}
                         placeholder="e.g. 3ED5E3"
-
-                        value=""
-                        onChangeText={() => {
-                        }}
+                        onChangeText={value => setCode(value)}
                         label="Enter the code from your partner"
                     />
                     <Button
-                        onPress={() => {
-                        }} type="secondary" title="Connect"/>
-                    <Button classNames={{wrapper: "mt-auto"}} type="skip" onPress={router.back} title="Skip"/>
+                        disabled={isPending}
+                        onPress={() => connect(code)}
+                        type="secondary"
+                        title="Connect"
+                    />
+                    <Button classNames={{wrapper: "mt-auto"}} type="skip" onPress={router.back} title="Later"/>
                 </View>
 
             </KeyboardAwareScrollView>

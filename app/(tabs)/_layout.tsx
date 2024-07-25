@@ -4,6 +4,9 @@ import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {ReactNode, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
+import {useUser} from "@/api/hooks/useUser";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import {useSecureStore} from "@/hooks/useSecureStore";
 
 type CurrentPage = "ideas" | "dashboard" | "settings"
 
@@ -28,8 +31,19 @@ const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode 
 ]
 
 export default function TabsLayout() {
+
+
     const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
     const {isVisible} = useTabBarContext()
+    const {isLoading, user} = useUser()
+    if (isLoading) {
+        return <CenteredActivityIndicator/>
+    }
+
+
+    if (!user) {
+        router.navigate("../(no-tabs)/hero")
+    }
 
     return <Tabs
         sceneContainerStyle={{backgroundColor: "transparent"}}

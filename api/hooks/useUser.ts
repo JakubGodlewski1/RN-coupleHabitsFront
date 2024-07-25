@@ -9,11 +9,14 @@ export const useUser = () => {
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
+
+        retry: 3,
         queryFn: async () => {
             const api = await getAxiosInstance();
+            console.log("use user api fires")
             return await api.get("/users/user")
         },
     })
 
-    return {isLoading, error, isError, data: data?.data.data as User, refetch}
+    return {isLoading, error, isError, user: data?.data?.data as User | undefined, refetch}
 }

@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 
 // Base configuration for Axios
 const baseConfig = {
-    baseURL: 'http://localhost:3000/api/v1',
+    baseURL: 'https://570e-89-64-8-107.ngrok-free.app/api/v1',
     headers: {
         'x-auth-type': 'simple-auth',
     },
@@ -16,7 +16,6 @@ const api = axios.create(baseConfig);
 export const getAxiosInstance = async () => {
     // Retrieve the token from secure storage
     const value = await SecureStore.getItemAsync('auth-token');
-    console.log(value)
     // If no token is found, return the initial Axios instance
     if (!value) {
         return api;

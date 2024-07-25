@@ -13,11 +13,10 @@ export default function useHabitForm() {
     const [data, setData] = useState<CreateHabit>(DEFAULT_CREATE_HABIT)
     const [errors, setErrors] = useState({});
     const [theSameLabel, setTheSameLabel] = React.useState(false);
-    const {data: {partner}} = useUser()
-
-
+    const {user} = useUser()
+    
     const onSubmit = (submitFn: (habit: CreateHabit) => void) => {
-        if (!partner) {
+        if (!user?.partner) {
             return Alert.alert("You have to connect with your partner first!")
         }
 

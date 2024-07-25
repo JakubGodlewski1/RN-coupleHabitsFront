@@ -7,16 +7,11 @@ import {DashboardTabKey} from "@/types";
 import {View} from "react-native";
 import {router} from "expo-router";
 import {useUser} from "@/api/hooks/useUser";
-import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 import Avatar from "@/components/Avatar";
 import HabitCard from "@/components/HabitCard";
 
 export default function Dashboard() {
-    const {data: user, isLoading} = useUser()
-
-    if (isLoading) {
-        return <CenteredActivityIndicator/>
-    }
+    const {user} = useUser()
 
     return <SafeAreaWrapper classNames={{wrapper: "relative"}} style={{gap: 16}}
                             options={{disableBottomSafeArea: true}}>
@@ -24,7 +19,7 @@ export default function Dashboard() {
         <Tabs<DashboardTabKey> value="todo" onPress={() => router.push("/pricing")} options={DASHBOARD_TABS}/>
         <View className="grow bg-white -mx-4 p-4 rounded-t-3xl">
             {
-                user.partner ? <>
+                user?.gameAccount ? <>
                         <View className="flex-row justify-around ">
                             <Avatar text="You"/>
                             <Avatar text="Partner"/>

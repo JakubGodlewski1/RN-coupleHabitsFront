@@ -15,12 +15,11 @@ export const useCreateUser = () => {
             return await api.post("/auth/sign-up")
         },
         onSuccess: async (data) => {
-            //save jwt
             await saveString("auth-token", data.headers["x-auth-token"])
-            //update cache
+
             queryClient.setQueryData(
                 [queryKeys.useUser],
-                data?.data.data
+                data
             )
         }
     })
