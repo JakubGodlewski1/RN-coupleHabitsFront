@@ -2,6 +2,8 @@ import {getAxiosInstance} from "@/api/axiosInstance";
 import {useQuery} from "@tanstack/react-query";
 import {queryKeys} from "@/api/queryKeys";
 import {User} from "@/types";
+import {useEffect} from "react";
+import {Alert} from "react-native";
 
 export const useUser = () => {
 
@@ -9,14 +11,19 @@ export const useUser = () => {
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
-
         retry: 3,
         queryFn: async () => {
             const api = await getAxiosInstance();
             console.log("use user api fires")
             return await api.get("/users/user")
-        },
+        }
     })
+
+    useEffect(() => {
+        if (isError) {
+            Alert.alert("We could not load your data, try again later")
+        }
+    }, [isError]);
 
     return {isLoading, error, isError, user: data?.data?.data as User | undefined, refetch}
 }

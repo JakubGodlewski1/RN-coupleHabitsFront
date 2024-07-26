@@ -31,6 +31,7 @@ export const frequencyValidator = z.union([
 
 // Define CreateHabit type validator
 export const createHabitValidator = z.object({
+    strike: z.number().min(0),
     frequency: frequencyValidator,
     details: z.object({
         mine: z.object({

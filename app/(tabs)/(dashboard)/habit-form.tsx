@@ -7,8 +7,8 @@ import Input from "@/components/Input";
 import Tabs from "@/components/Tabs";
 import Dropdown from "@/components/Dropdown";
 import Button from "@/components/Button";
-import {router} from "expo-router";
-import {FrequencyType} from "@/types";
+import {router, useLocalSearchParams} from "expo-router";
+import {FrequencyType, HabitFormType} from "@/types";
 import {produce} from "immer";
 import {HOW_OFTEN_TABS} from "@/utils/consts";
 import useHabitForm from "@/hooks/useHabitForm";
@@ -16,6 +16,8 @@ import SpecificDaysMultiSelect from "@/components/SpecificDaysMultiSelect";
 import {useCreateHabit} from "@/api/hooks/useCreateHabit";
 
 export default function HabitForm() {
+    const {type, initHabitJSON} = useLocalSearchParams() as HabitFormType
+
     const {
         onSubmit,
         data,
@@ -23,7 +25,7 @@ export default function HabitForm() {
         isTheSameLabel,
         handleToggleTheSameLabel,
         handleFrequencyTypeChange,
-    } = useHabitForm()
+    } = useHabitForm({type, initHabitJSON})
 
     const {createHabit, isPending} = useCreateHabit()
 
@@ -81,7 +83,7 @@ export default function HabitForm() {
                 disabled={isPending}
                 classNames={{wrapper: "flex-1"}}
                 onPress={() => onSubmit(createHabit)}
-                title="Create"
+                title={isPending ? "Creating..." : "create"}
             />
         </View>
     </TouchableOpacity>

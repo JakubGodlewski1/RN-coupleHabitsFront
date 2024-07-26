@@ -9,6 +9,7 @@ import {router} from "expo-router";
 import {useUser} from "@/api/hooks/useUser";
 import Avatar from "@/components/Avatar";
 import HabitCard from "@/components/HabitCard";
+import Text from "@/components/Text";
 
 export default function Dashboard() {
     const {user} = useUser()
@@ -16,7 +17,8 @@ export default function Dashboard() {
     return <SafeAreaWrapper classNames={{wrapper: "relative"}} style={{gap: 16}}
                             options={{disableBottomSafeArea: true}}>
         <TopBar/>
-        <Tabs<DashboardTabKey> value="todo" onPress={() => router.push("/pricing")} options={DASHBOARD_TABS}/>
+        <Tabs<DashboardTabKey> value="todo" onPress={() => {
+        }} options={DASHBOARD_TABS}/>
         <View className="grow bg-white -mx-4 p-4 rounded-t-3xl">
             {
                 user?.gameAccount ? <>
@@ -25,7 +27,13 @@ export default function Dashboard() {
                             <Avatar text="Partner"/>
                         </View>
                         <View style={{gap: 8}} className="mt-4">
-                            <HabitCard habit={EXAMPLE_HABIT}/>
+                            {user.habits.map(h => (
+                                <HabitCard key={h.id} habit={h}/>
+                            ))}
+                            {user.habits.length === 0 && (
+                                <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first habit, you will
+                                    see it here.</Text>
+                            )}
                         </View>
                     </> :
                     <ConnectWithPartnerDisplay/>

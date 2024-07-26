@@ -48,6 +48,7 @@ export const REPEAT_DROPDOWN_OPTIONS: {
 
 
 export const DEFAULT_CREATE_HABIT: CreateHabit = {
+    strike: 0,
     details: {
         mine: {
             label: "",
@@ -66,6 +67,7 @@ export const DEFAULT_CREATE_HABIT: CreateHabit = {
 
 
 export const EXAMPLE_HABIT: Habit = {
+    strike: 0,
     id: "0",
     frequency: {
         type: "repeat",

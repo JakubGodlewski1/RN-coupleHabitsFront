@@ -29,18 +29,24 @@ type Habit = CreateHabit & { id: string }
 type User = {
     avatar: null | string;
     partner: {
+        connected: boolean,
         avatar: null | string;
-    } | null
+    }
     connectionCode: string,
     email: string,
-    habits: ToFrontendHabit[],
+    habits: Habit[],
     gameAccount: {
         strike: number,
         points: number
-    } | null
+    }
 };
 
 //Tabs
 type DashboardTabKey = "todo" | "completed" | "all"
 type SpecificDaysMultiSelectKey = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"
 
+//habit form
+type HabitFormType = {
+    type: "create" | "update",
+    initHabitJSON: string
+}

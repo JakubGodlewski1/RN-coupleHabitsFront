@@ -1,22 +1,20 @@
-import React, {useCallback, useState} from "react";
-import {CreateHabit, FrequencyType, SpecificDays, SpecificDaysMultiSelectKey} from "@/types";
-import {DEFAULT_CREATE_HABIT} from "@/utils/consts";
+import React, {useState} from "react";
+import {CreateHabit, FrequencyType, HabitFormType} from "@/types";
 import {produce} from "immer";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
-import {useCreateHabit} from "@/api/hooks/useCreateHabit";
 import {createHabitValidator} from "@/validators/habitValidators";
 import {Alert} from "react-native";
 import {useUser} from "@/api/hooks/useUser";
 
 
-export default function useHabitForm() {
-    const [data, setData] = useState<CreateHabit>(DEFAULT_CREATE_HABIT)
+export default function useHabitForm({type, initHabitJSON}: HabitFormType) {
+    const [data, setData] = useState<CreateHabit>(JSON.parse(initHabitJSON))
     const [errors, setErrors] = useState({});
     const [theSameLabel, setTheSameLabel] = React.useState(false);
     const {user} = useUser()
-    
+
     const onSubmit = (submitFn: (habit: CreateHabit) => void) => {
-        if (!user?.partner) {
+        if (!user?.partner.connected) {
             return Alert.alert("You have to connect with your partner first!")
         }
 

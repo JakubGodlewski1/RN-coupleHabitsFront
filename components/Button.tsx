@@ -50,10 +50,11 @@ export default function Button({
                                    type = "primary",
                                    disabled
                                }: Props) {
-
+    
     return <TouchableOpacity
         disabled={disabled}
-        onPress={onPress} style={{...Shadows}}
+        onPress={onPress}
+        style={{...Shadows, opacity: disabled ? 0.6 : 1}}
         className={`flex-row  items-center justify-center space-x-5  rounded-[20px] p-4 ${typeStylesMap[type].bg} ${classNames?.wrapper}`}>
         {iconPosition === "right" &&
             <Text classNames={{text: `font-mainBold ${typeStylesMap[type].text} ${classNames?.text}`}}>{title}</Text>}
