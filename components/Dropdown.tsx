@@ -3,16 +3,18 @@ import {useState} from "react";
 import Text from "@/components/Text";
 import {AntDesign, Entypo} from "@expo/vector-icons";
 
-type Props = {
+type Props<T extends string> = {
+    selectedKey: T;
+    onPress: (key: T) => void;
     options: {
-        key: string,
+        key: T,
         label: string
     }[]
 }
 
-export default function Dropdown({options}: Props) {
+export default function Dropdown<T extends string>({options, onPress, selectedKey}: Props<T>) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState(options[0]);
+    const selected = options.find(el => el.key === selectedKey)!
 
     return <View className="relative z-10">
         <TouchableOpacity
@@ -28,7 +30,7 @@ export default function Dropdown({options}: Props) {
                         className={`flex-row justify-between items-center rounded-lg py-2 px-3 ${selected.key === o.key && "bg-[#FF5545]"}`}
                         key={o.key}
                         onPress={() => {
-                            setSelected(o)
+                            onPress(o.key)
                             setIsOpen(false)
                         }}>
                         <Text

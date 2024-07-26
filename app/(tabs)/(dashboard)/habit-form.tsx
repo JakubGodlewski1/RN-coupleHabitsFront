@@ -1,7 +1,6 @@
 import {Keyboard, TouchableOpacity, View} from "react-native";
 import Text from "@/components/Text";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import React from "react";
 import PageTitle from "@/components/PageTitle";
 import Input from "@/components/Input";
 import Tabs from "@/components/Tabs";
@@ -15,6 +14,11 @@ import useHabitForm from "@/hooks/useHabitForm";
 import SpecificDaysMultiSelect from "@/components/SpecificDaysMultiSelect";
 import {useCreateHabit} from "@/api/hooks/useCreateHabit";
 import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
+
+const dropdownOptions: { key: "daily" | "weekly", label: string }[] = [{label: "Daily", key: "daily"}, {
+    label: "Weekly",
+    key: "weekly"
+}]
 
 export default function HabitForm() {
     const {type, initHabitJSON} = useLocalSearchParams() as HabitFormType
@@ -69,7 +73,13 @@ export default function HabitForm() {
             <Tabs<FrequencyType> value={data.frequency.type} options={HOW_OFTEN_TABS}
                                  onPress={handleFrequencyTypeChange}/>
             {data.frequency.type === "repeat" && (
-                <Dropdown options={[{label: "Daily", key: "daily"}, {label: "Weekly", key: "weekly"}]}/>
+                <Dropdown
+                    selectedKey={data.frequency.repeatOption}
+                    onPress={(key) => setData(produce(draft => {
+                        draft.frequency = {type: "repeat", repeatOption: key}
+                    }))}
+                    options={dropdownOptions}
+                />
             )}
             {data.frequency.type === "specific days" && (
                 <SpecificDaysMultiSelect

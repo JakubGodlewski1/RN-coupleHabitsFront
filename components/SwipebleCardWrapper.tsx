@@ -2,7 +2,7 @@ import {View, TouchableOpacity, Alert} from "react-native";
 import Animated, {useAnimatedStyle, useSharedValue, withSpring} from "react-native-reanimated";
 import {Feather} from "@expo/vector-icons";
 import {PanGestureHandler, Swipeable} from "react-native-gesture-handler";
-import {PropsWithChildren, ReactNode, useState} from "react";
+import {PropsWithChildren, ReactNode, useEffect, useRef, useState} from "react";
 import Text from "@/components/Text";
 import {Habit, HabitFormType} from "@/types";
 import {useDeleteHabit} from "@/api/hooks/useDeleteHabit";
@@ -13,6 +13,7 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
     const translateY = useSharedValue(0);
     const [isSwipedUp, setIsSwipedUp] = useState(false);
     const {isDeleting, deleteHabit} = useDeleteHabit()
+    const swipeableRef = useRef(null)
 
     const gestureHandler = (event: any) => {
         if (event.nativeEvent.translationY < -20) {
@@ -52,13 +53,17 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
                 <Feather color={isDeleting ? "gray/30" : "white"} size={20} name="trash-2"/>
             </TouchableOpacity>
             <TouchableOpacity
-                onPress={() => router.push({
-                    pathname: "habit-form",
-                    params: {
-                        type: "update",
-                        initHabitJSON: JSON.stringify(habit)
-                    } as HabitFormType
-                })}
+                onPress={() => {
+                    router.push({
+                        pathname: "habit-form",
+                        params: {
+                            type: "update",
+                            initHabitJSON: JSON.stringify(habit)
+                        } as HabitFormType
+                    })
+                    // @ts-ignore
+                    swipeableRef.current?.close()
+                }}
                 className="bg-tertiary flex-1 rounded-xl items-center justify-center"
             >
                 <Feather color="white" size={20} name="edit"/>
@@ -76,6 +81,7 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
         <PanGestureHandler onGestureEvent={gestureHandler}>
             <Animated.View style={[{overflow: "hidden"}, animatedStyle]}>
                 <Swipeable
+                    ref={swipeableRef}
                     renderRightActions={rightSwipe}
                 >
                     {children}
