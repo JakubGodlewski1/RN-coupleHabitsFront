@@ -4,8 +4,10 @@ import {Feather} from "@expo/vector-icons";
 import {PanGestureHandler, Swipeable} from "react-native-gesture-handler";
 import {PropsWithChildren, ReactNode, useState} from "react";
 import Text from "@/components/Text";
-import {Habit} from "@/types";
+import {Habit, HabitFormType} from "@/types";
 import {useDeleteHabit} from "@/api/hooks/useDeleteHabit";
+import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
+import {router} from "expo-router";
 
 export default function SwipebleCardWrapper({habit, children}: { habit: Habit, children: ReactNode }) {
     const translateY = useSharedValue(0);
@@ -49,7 +51,16 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
             >
                 <Feather color={isDeleting ? "gray/30" : "white"} size={20} name="trash-2"/>
             </TouchableOpacity>
-            <TouchableOpacity className="bg-tertiary flex-1 rounded-xl items-center justify-center">
+            <TouchableOpacity
+                onPress={() => router.push({
+                    pathname: "habit-form",
+                    params: {
+                        type: "update",
+                        initHabitJSON: JSON.stringify(habit)
+                    } as HabitFormType
+                })}
+                className="bg-tertiary flex-1 rounded-xl items-center justify-center"
+            >
                 <Feather color="white" size={20} name="edit"/>
             </TouchableOpacity>
         </View>

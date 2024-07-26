@@ -14,6 +14,7 @@ import {HOW_OFTEN_TABS} from "@/utils/consts";
 import useHabitForm from "@/hooks/useHabitForm";
 import SpecificDaysMultiSelect from "@/components/SpecificDaysMultiSelect";
 import {useCreateHabit} from "@/api/hooks/useCreateHabit";
+import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
 
 export default function HabitForm() {
     const {type, initHabitJSON} = useLocalSearchParams() as HabitFormType
@@ -28,9 +29,10 @@ export default function HabitForm() {
     } = useHabitForm({type, initHabitJSON})
 
     const {createHabit, isPending} = useCreateHabit()
+    const {updateHabit, isUpdating} = useUpdateHabit()
 
     return <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1} className="p-4 bg-white grow">
-        <PageTitle>Create a habit</PageTitle>
+        <PageTitle>{type === "create" ? "Create" : "Update"} a habit</PageTitle>
         <View style={{gap: 8}}>
             <TouchableOpacity activeOpacity={90} onPress={handleToggleTheSameLabel}
                               className="flex-row space-x-2">
@@ -80,10 +82,14 @@ export default function HabitForm() {
             <Button disabled={isPending} classNames={{wrapper: "flex-1"}} onPress={() => router.back()} title="Cancel"
                     type="skip"/>
             <Button
-                disabled={isPending}
+                disabled={isPending || isUpdating}
                 classNames={{wrapper: "flex-1"}}
-                onPress={() => onSubmit(createHabit)}
-                title={isPending ? "Creating..." : "create"}
+                onPress={() => onSubmit(() => type === "create" ? createHabit(data) : updateHabit({
+                    ...data,
+                    id: JSON.parse(initHabitJSON).id
+                }))}
+                type="primary"
+                title={type === "create" ? isPending ? "Creating" : "Create" : isUpdating ? "Updating" : "Update"}
             />
         </View>
     </TouchableOpacity>
