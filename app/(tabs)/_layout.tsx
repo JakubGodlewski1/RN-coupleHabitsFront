@@ -1,12 +1,11 @@
 import {router, Tabs} from "expo-router";
-import {Image, Platform, TouchableOpacity, View} from "react-native";
+import {Image, Platform, ScrollView, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {ReactNode, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
 import {useUser} from "@/api/hooks/useUser";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
-import {useSecureStore} from "@/hooks/useSecureStore";
 
 type CurrentPage = "ideas" | "dashboard" | "settings"
 
@@ -46,6 +45,7 @@ export default function TabsLayout() {
     }
 
     return <Tabs
+
         sceneContainerStyle={{backgroundColor: "transparent"}}
         screenOptions={{
             headerShown: false,

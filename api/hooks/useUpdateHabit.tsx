@@ -6,14 +6,16 @@ import {queryKeys} from "@/api/queryKeys";
 import {Alert} from "react-native";
 import {router} from "expo-router";
 
-export const useUpdateHabit = () => {
+export const useUpdateHabit = ({isToggle}: { isToggle: boolean } = {isToggle: false}) => {
 
     const updateHabit = async (habit: Habit) => {
-        // //optimistic update
-        // queryClient.setQueryData(
-        //     [queryKeys.useUser],
-        //     (data: User): User => ({...data, habits: data.habits.map(h => h.id === habit.id ? habit : h)})
-        // )
+        //optimistic update
+        if (isToggle) {
+            queryClient.setQueryData(
+                [queryKeys.useUser],
+                (data: User): User => ({...data, habits: data.habits.map(h => h.id === habit.id ? habit : h)})
+            )
+        }
 
         //real
         const api = await getAxiosInstance()
@@ -27,9 +29,7 @@ export const useUpdateHabit = () => {
                 queryKey: [queryKeys.useUser]
             })
         },
-        onSuccess: () => {
-            router.back()
-        },
+        onSuccess: () => isToggle ? {} : router.back(),
         onError: () => {
             Alert.alert("Something went wrong, try again later")
         }
