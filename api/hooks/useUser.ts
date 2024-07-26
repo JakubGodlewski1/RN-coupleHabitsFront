@@ -15,7 +15,8 @@ export const useUser = () => {
         queryFn: async () => {
             const api = await getAxiosInstance();
             console.log("use user api fires")
-            return await api.get("/users/user")
+            const res = await api.get("/users/user")
+            return res.data.data
         }
     })
 
@@ -25,5 +26,5 @@ export const useUser = () => {
         }
     }, [isError]);
 
-    return {isLoading, error, isError, user: data?.data?.data as User | undefined, refetch}
+    return {isLoading, error, isError, user: data as User | undefined, refetch}
 }

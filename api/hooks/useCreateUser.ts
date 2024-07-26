@@ -16,11 +16,7 @@ export const useCreateUser = () => {
         },
         onSuccess: async (data) => {
             await saveString("auth-token", data.headers["x-auth-token"])
-
-            queryClient.setQueryData(
-                [queryKeys.useUser],
-                data
-            )
+            queryClient.invalidateQueries({queryKey: [queryKeys.useUser]})
         }
     })
 

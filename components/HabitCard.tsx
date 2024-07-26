@@ -1,27 +1,15 @@
-import {Alert, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import Text from "@/components/Text";
 import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
-import {Feather} from "@expo/vector-icons";
 
-type Props = {
-    habit: Habit,
-
-    options?: {
-        disabled?: boolean,
-        noCheckboxes?: boolean,
-    }
-}
-
-const defaultOptions = {disabled: false, noCheckboxes: false};
-
-const HabitCard = ({habit, options = defaultOptions}: Props) => {
+const HabitCard = ({habit}: { habit: Habit }) => {
 
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
         <View style={{...Shadows}} className="m-2 rounded-2xl bg-white">
-            <SwipebleCardWrapper>
+            <SwipebleCardWrapper habit={habit}>
                 <View className="flex-row bg-white h-[88px] rounded-2xl ">
                     <TouchableOpacity
                         activeOpacity={100}
@@ -55,8 +43,6 @@ const HabitCard = ({habit, options = defaultOptions}: Props) => {
                     </View>
                 </View>
             </SwipebleCardWrapper>
-
-
         </View>
     </View>
 };
