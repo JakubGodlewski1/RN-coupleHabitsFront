@@ -11,7 +11,6 @@ export const useUser = () => {
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
-        retry: 3,
         queryFn: async () => {
             const api = await getAxiosInstance();
             console.log("use user api fires")

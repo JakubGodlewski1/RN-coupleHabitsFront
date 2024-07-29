@@ -34,15 +34,6 @@ export default function TabsLayout() {
 
     const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
     const {isVisible} = useTabBarContext()
-    const {isLoading, user} = useUser()
-    if (isLoading) {
-        return <CenteredActivityIndicator/>
-    }
-
-
-    if (!user) {
-        router.navigate("../(no-tabs)/hero")
-    }
 
     return <Tabs
 
