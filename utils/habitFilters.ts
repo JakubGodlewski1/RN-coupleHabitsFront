@@ -1,6 +1,12 @@
 import {Habit, SpecificDays} from "@/types";
 
 
+//LEGEND
+//todo - not completed
+//assigned = both completed and uncompleted
+//completed - completed
+
+
 const daysOfTheWeek: { [key: number]: keyof SpecificDays } = {
     0: "sunday",
     1: "monday",
@@ -11,57 +17,92 @@ const daysOfTheWeek: { [key: number]: keyof SpecificDays } = {
     6: "saturday",
 }
 
-const todayInSpecificDays = (specificDays: SpecificDays): boolean => {
+const assignedForTodayFromSpecificDays = (habit: Habit) => {
     const todayDayOfTheWeek = new Date().getDay();
-    return specificDays[daysOfTheWeek[todayDayOfTheWeek]]
-};
-
-const habitCompleted = (habit: Habit) => habit.details.partner.completed && habit.details.mine.completed
-const habitUncompleted = (habit: Habit) => !habit.details.partner.completed || !habit.details.mine.completed
-const todoThisWeek = (habit: Habit) => habit.frequency = {type: "repeat", repeatOption: "weekly"}
-
-//check if the habit is to be done today
-const todoTodayHelper = (habit: Habit, includeWeekly: boolean) => {
-    const frequency = habit.frequency;
-    const today = new Date().getDay();
-
-
-}
-
-const todoTodayWithThisWeek = (habit: Habit) => {
-    return todoTodayHelper(habit, true);
-}
-
-const todoTodayWithoutThisWeek = (habit: Habit) => {
-    return todoTodayHelper(habit, false);
+    return (habit.frequency.type === "specific days" && habit.frequency.specificDaysOption[daysOfTheWeek[todayDayOfTheWeek]])
 }
 
 const daily = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequency.repeatOption === "daily"
 const weekly = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequency.repeatOption === "weekly"
 const specificDays = (habit: Habit) => habit.frequency.type === "specific days"
 
-//logical filters, mostly for interaction with db etc
-const habitFiltersLogical = {
-    completed: (habits: Habit[]) => habits.filter(habitCompleted),
-    uncompleted: (habits: Habit[]) => habits.filter(habitUncompleted),
-    assignedForToday: (habits: Habit[]) => habits.filter(todoTodayWithThisWeek),
+const assignedForTodayWithoutWeekly = (habit: Habit) => assignedForTodayFromSpecificDays(habit) || daily(habit)
+
+const habitCompleted = (habit: Habit) => habit.details.partner.completed && habit.details.mine.completed
+const habitUncompleted = (habit: Habit) => !habit.details.partner.completed || !habit.details.mine.completed
+
+const assignedForThisWeek = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequency.repeatOption === "weekly"
+const notAssignedForThisWeek = (habit: Habit) => habit.frequency.type === "specific days" || (habit.frequency.type === "repeat" && habit.frequency.repeatOption === "daily")
+
+const completedTodayWithoutWeekly = (habit: Habit) => habitCompleted(habit) && notAssignedForThisWeek(habit)
+const completedTodayOnlyWeekly = (habit: Habit) => habitCompleted(habit) && assignedForThisWeek(habit)
+
+const todoTodayWithoutWeekly = (habit: Habit) => habitUncompleted(habit) && assignedForTodayWithoutWeekly(habit)
+const todoTodayOnlyWeekly = (habit: Habit) => habitUncompleted(habit) && weekly(habit)
+
+
+/*all tabs sections*/
+const allTabOptions = [
+    {
+        label: "Daily",
+        filter: daily
+    },
+    {
+        label: "Weekly",
+        filter: weekly
+    },
+    {
+        label: "Specific days",
+        filter: specificDays
+    }
+]
+
+export const allTabSections = (habits: Habit[]) => {
+    return allTabOptions.map(frequencyType => ({
+        label: frequencyType.label,
+        data: habits.filter(frequencyType.filter)
+    }))
 }
 
-//filters for displaying proper habits on the ui
-const habitFiltersUI = {
-    todoThisWeekUncompleted: (habits: Habit[]) => habits.filter(habitUncompleted).filter(todoThisWeek),
-    todoThisWeekCompleted: (habits: Habit[]) => habits.filter(habitCompleted).filter(todoThisWeek),
-    todoTodayUncompleted: (habits: Habit[]) => habits.filter(habitUncompleted).filter(todoTodayWithoutThisWeek),
-    todoTodayCompleted: (habits: Habit[]) => habits.filter(habitCompleted).filter(todoTodayWithoutThisWeek),
-    daily: (habits: Habit[]) => habits.filter(daily),
-    weekly: (habits: Habit[]) => habits.filter(weekly),
-    specificDays: (habits: Habit[]) => habits.filter(specificDays),
 
+/*completed tab sections*/
+const completedTabOptions = [
+    {
+        label: "Today",
+        filter: completedTodayWithoutWeekly
+    },
+    {
+        label: "This week",
+        filter: completedTodayOnlyWeekly
+    }
+]
+
+export const completedTabSections = (habits: Habit[]) => {
+    return completedTabOptions.map(frequencyType => ({
+        label: frequencyType.label,
+        data: habits.filter(frequencyType.filter)
+    }))
 }
 
-export const habitFilters = {
-    logical: habitFiltersLogical,
-    UI: habitFiltersUI
+/*tab sections todo*/
+const todoTabOptions = [
+    {
+        label: "Today",
+        filter: todoTodayWithoutWeekly
+    },
+    {
+        label: "This week",
+        filter: todoTodayOnlyWeekly
+    }
+]
+
+export const todoTabSections = (habits: Habit[]) => {
+    return todoTabOptions.map(frequencyType => ({
+        label: frequencyType.label,
+        data: habits.filter(frequencyType.filter)
+    }))
 }
+
+
 
 

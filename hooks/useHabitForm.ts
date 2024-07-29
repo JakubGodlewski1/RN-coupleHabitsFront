@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CreateHabit, FrequencyType, HabitFormType} from "@/types";
 import {produce} from "immer";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
@@ -8,9 +8,14 @@ import {useUser} from "@/api/hooks/useUser";
 
 
 export default function useHabitForm({type, initHabitJSON}: HabitFormType) {
+    const InitialStateOfTheSameLabel = () => type === "update" && (data.details.mine.label === data.details.partner.label) && data.details.partner.label.length > 0;
+
     const [data, setData] = useState<CreateHabit>(JSON.parse(initHabitJSON))
     const [errors, setErrors] = useState({});
-    const [theSameLabel, setTheSameLabel] = React.useState(false);
+    const [theSameLabel, setTheSameLabel] = React.useState(InitialStateOfTheSameLabel);
+
+    //if its habit update, set the same label to true if the habits are the same
+
     const {user} = useUser()
 
     const onSubmit = (submitFn: (habit: CreateHabit) => void) => {

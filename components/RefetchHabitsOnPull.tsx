@@ -1,5 +1,5 @@
-import {RefreshControl, ScrollView} from "react-native";
-import {PropsWithChildren, useCallback, useState} from "react";
+import React, {PropsWithChildren, useCallback, useState, Children, ReactElement} from "react";
+import {FlatList, RefreshControl, View} from "react-native";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
 
@@ -12,14 +12,29 @@ export default function RefetchHabitsOnPull({children}: PropsWithChildren) {
             queryKey: [queryKeys.useUser]
         }, {
             throwOnError: false
-        })
+        });
         setRefreshing(false);
     }, []);
 
-    return <ScrollView
-        refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
-        } contentContainerStyle={{flexGrow: 1, overflow: "visible"}}>
-        {children}
-    </ScrollView>
+    const childArray: ReactElement[] = Children.toArray(children) as ReactElement[];
+
+    const renderItem = ({item}: { item: ReactElement }) => {
+        return item;
+    };
+
+    return (
+        <FlatList
+            nestedScrollEnabled={true}
+            CellRendererComponent={({children, style}) => (
+                <View style={[style, {flex: 1}]} children={children}/>
+            )}
+            contentContainerStyle={{flexGrow: 1, maxHeight: 100}}
+            data={childArray}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>
+            }
+        />
+    );
 }
