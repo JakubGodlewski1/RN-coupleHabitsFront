@@ -1,9 +1,10 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import {DEFAULT_URL} from "@/utils/consts";
 
 // Base configuration for Axios
 const baseConfig = {
-    baseURL: 'https://570e-89-64-8-107.ngrok-free.app/api/v1',
+    baseURL: DEFAULT_URL,
     headers: {
         'x-auth-type': 'simple-auth',
     },

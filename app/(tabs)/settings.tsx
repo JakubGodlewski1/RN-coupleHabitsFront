@@ -6,6 +6,7 @@ import {useState} from "react";
 import PageTitle from "@/components/PageTitle";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import {router} from "expo-router";
+import {uploadImage} from "@/utils/uploadImage";
 
 export default function Settings() {
     const [showHabitCard, setShowHabitCard] = useState(false);
@@ -26,8 +27,11 @@ export default function Settings() {
                 <Text classNames={{text: "text-white"}}><Text
                     classNames={{text: "font-mainBold"}}>⭐️ 900</Text> Points</Text>
             </Button>
-            <Button classNames={{wrapper: "justify-between"}} iconPosition="right" type="white" onPress={() => {
-            }} title="Change profile picture">
+            <Button
+                classNames={{wrapper: "justify-between"}}
+                iconPosition="right"
+                type="white"
+                onPress={uploadImage} title="Change profile picture">
                 <Entypo size={24} name="chevron-small-right"/>
             </Button>
             {/*<View style={{...Shadows}}*/}
