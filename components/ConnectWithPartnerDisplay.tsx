@@ -3,13 +3,14 @@ import Avatar from "@/components/Avatar";
 import Button from "@/components/Button";
 import Text from "@/components/Text";
 import {router} from "expo-router";
+import {User} from "@/types";
 
-export default function ConnectWithPartnerDisplay() {
+export default function ConnectWithPartnerDisplay({user}: { user: User }) {
 
     return <View className="border-[1px] border-skip grow mb-8 rounded-xl bg-skip/10 p-4 space-y-3 justify-between">
         <View className="flex-row justify-around ">
-            <Avatar text="You"/>
-            <Avatar text="Partner"/>
+            <Avatar url={user.avatar} text="You"/>
+            <Avatar url={user.partner.avatar} text="Partner"/>
         </View>
         <View className="items-center">
             <Image className="w-[65vw] h-[40vw]" source={require("@/assets/illustrations/couple_handshaking.png")}/>

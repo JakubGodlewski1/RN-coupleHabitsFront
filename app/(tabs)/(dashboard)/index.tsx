@@ -8,8 +8,7 @@ import {useUser} from "@/api/hooks/useUser";
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import {SafeAreaView} from "react-native-safe-area-context";
-import RefetchHabitsOnPull from "@/components/RefetchHabitsOnPull";
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
@@ -21,8 +20,12 @@ export default function Dashboard() {
         return <CenteredActivityIndicator/>;
     }
 
-    if (isLoading) {
-        return <CenteredActivityIndicator/>
+    if (!user) {
+        return <View className="grow items-center justify-center">
+            <Text>
+                Something went wrong, try again later
+            </Text>
+        </View>
     }
 
     return <SafeAreaView className="grow" edges={["top"]}>
@@ -39,8 +42,8 @@ export default function Dashboard() {
                 {
                     user?.partner.connected ? <>
                             <View className="flex-row justify-around ">
-                                <Avatar text="You"/>
-                                <Avatar text="Partner"/>
+                                <Avatar url={user.avatar} text="You"/>
+                                <Avatar url={user.partner.avatar} text="Partner"/>
                             </View>
                             <View style={{gap: 8}} className="mt-4 grow">
                                 {user.habits.length !== 0 ?
@@ -54,7 +57,7 @@ export default function Dashboard() {
                                     )}
                             </View>
                         </> :
-                        <ConnectWithPartnerDisplay/>
+                        <ConnectWithPartnerDisplay user={user!}/>
                 }
             </View>
         </View>
