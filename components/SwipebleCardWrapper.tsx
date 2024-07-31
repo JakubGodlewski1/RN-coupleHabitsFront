@@ -1,17 +1,33 @@
-import {View, TouchableOpacity, Alert} from "react-native";
-import Animated, {useAnimatedStyle, useSharedValue, withSpring} from "react-native-reanimated";
+import {Alert, TouchableOpacity, View} from "react-native";
 import {Feather} from "@expo/vector-icons";
-import {PanGestureHandler, Swipeable} from "react-native-gesture-handler";
-import {PropsWithChildren, ReactNode, useEffect, useRef, useState} from "react";
+import {Swipeable} from "react-native-gesture-handler";
+import {ReactNode, RefObject, useEffect, useRef} from "react";
 import Text from "@/components/Text";
 import {Habit, HabitFormType} from "@/types";
 import {useDeleteHabit} from "@/api/hooks/useDeleteHabit";
-import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
 import {router} from "expo-router";
 
-export default function SwipebleCardWrapper({habit, children}: { habit: Habit, children: ReactNode }) {
+type Props = {
+    habit: Habit,
+    children: ReactNode,
+    options?: {
+        animate?: (swipeableRef: RefObject<Swipeable>) => NodeJS.Timeout | undefined
+    }
+}
+
+export default function SwipebleCardWrapper({habit, children, options}: Props) {
     const {isDeleting, deleteHabit} = useDeleteHabit()
-    const swipeableRef = useRef(null)
+
+    //animate the card
+    const swipeableRef = useRef<Swipeable>(null)
+
+    useEffect(() => {
+        let id = undefined as NodeJS.Timeout | undefined
+        if (options?.animate && swipeableRef)
+            id = options.animate(swipeableRef)
+
+        return () => clearTimeout(id)
+    }, [swipeableRef.current]);
 
     const leftSwipe = () => {
         return <View className="my-auto items-center justify-center w-24">
@@ -42,7 +58,6 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
                             initHabitJSON: JSON.stringify(habit)
                         } as HabitFormType
                     })
-                    // @ts-ignore
                     swipeableRef.current?.close()
                 }}
                 className="bg-tertiary flex-1 rounded-xl items-center justify-center"

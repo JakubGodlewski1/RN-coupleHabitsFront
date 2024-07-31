@@ -85,4 +85,5 @@ export const EXAMPLE_HABIT: Habit = {
     }
 }
 
-export const DEFAULT_URL = "https://smart-toes-write.loca.lt/api/v1"
+const localhost = "http://localhost:3000"
+export const DEFAULT_URL = `${localhost}/api/v1`

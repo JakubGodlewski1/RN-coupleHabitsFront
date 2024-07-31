@@ -26,7 +26,7 @@ export default function Hero() {
             source={couple}
         />
         <Button disabled={isPending} title="Explore the app" iconPosition="right"
-                onPress={() => router.push("/sign-up")}>
+                onPress={() => router.push("/(intro)/how-to-play")}>
             <Feather style={{color: "white"}} size={24} name="arrow-right"/>
         </Button>
     </>

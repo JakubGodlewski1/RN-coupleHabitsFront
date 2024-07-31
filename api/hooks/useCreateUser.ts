@@ -14,14 +14,18 @@ export const useCreateUser = () => {
             const api = await getAxiosInstance()
             return await api.post("/auth/sign-up")
         },
+        onError: () => Alert.alert("We could not create the account, your data will not be saved"),
         onSuccess: async (data) => {
             await saveString("auth-token", data.headers["x-auth-token"])
-            queryClient.invalidateQueries({queryKey: [queryKeys.useUser]})
+            await queryClient.invalidateQueries({queryKey: [queryKeys.useUser]})
         }
     })
 
     useEffect(() => {
         if (secureStoreError || isError) {
+            if (secureStoreError) {
+                console.log("secure store error: " + secureStoreError)
+            } else console.log("network error: " + error?.message)
             Alert.alert("Something went wrong, try again later")
         }
     }, [secureStoreError, isError]);
