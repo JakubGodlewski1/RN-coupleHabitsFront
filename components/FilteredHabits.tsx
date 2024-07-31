@@ -47,7 +47,10 @@ export default function FilteredHabits({currentTab, habits}: Props) {
         sections={options[currentTab]}
         keyExtractor={item => item.id}
         renderItem={(item) => (
-            <HabitCard habit={item.item}/>
+            <View className="mb-3">
+                <HabitCard habit={item.item}/>
+            </View>
+
         )}
         renderSectionHeader={({section: {data, label}}) => {
             return data.length > 0 ? <View className="bg-[#F6F6F6] px-4 py-2 rounded-full mx-auto my-2">

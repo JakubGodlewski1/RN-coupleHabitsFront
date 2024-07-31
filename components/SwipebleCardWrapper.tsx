@@ -78,16 +78,16 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
                     classNames={{text: "font-mainBold"}}>12</Text></Text>
             </View>
         )}
-        {/*<PanGestureHandler onGestureEvent={gestureHandler}>*/}
-        <Animated.View style={[{overflow: "hidden"}, animatedStyle]}>
-            <Swipeable
-                ref={swipeableRef}
-                renderRightActions={rightSwipe}
-            >
-                {children}
-            </Swipeable>
-        </Animated.View>
-        {/*</PanGestureHandler>*/}
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+            <Animated.View style={[{overflow: "hidden"}, animatedStyle]}>
+                <Swipeable
+                    ref={swipeableRef}
+                    renderRightActions={rightSwipe}
+                >
+                    {children}
+                </Swipeable>
+            </Animated.View>
+        </PanGestureHandler>
     </>
 
 

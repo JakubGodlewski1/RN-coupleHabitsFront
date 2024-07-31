@@ -4,6 +4,7 @@ import {queryKeys} from "@/api/queryKeys";
 import {User} from "@/types";
 import {useEffect} from "react";
 import {Alert} from "react-native";
+import {locationForIndex} from "sucrase/dist/types/parser/traverser/base";
 
 export const useUser = () => {
 
@@ -14,8 +15,13 @@ export const useUser = () => {
         queryFn: async () => {
             const api = await getAxiosInstance();
             console.log("use user api fires")
-            const res = await api.get("/users/user")
-            return res.data.data
+            try {
+                const res = await api.get("/users/user")
+                return res.data.data
+            } catch (err) {
+                Alert.alert("Something went wrong while fetching your data, try again later")
+            }
+            return null
         }
     })
 

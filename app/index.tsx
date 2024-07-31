@@ -6,7 +6,7 @@ import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 const Index = () => {
 
     useUserExists({
-        onUserExists: () => router.push("/(tabs)/(dashboard)"),
+        onUserExists: () => router.push('/(tabs)/(dashboard)'),
         onUserNotExists: () => router.push("/(no-tabs)/hero"),
     })
 

@@ -28,7 +28,7 @@ export default function RefetchHabitsOnPull({children}: PropsWithChildren) {
             CellRendererComponent={({children, style}) => (
                 <View style={[style, {flex: 1}]} children={children}/>
             )}
-            contentContainerStyle={{flexGrow: 1, maxHeight: 100}}
+            contentContainerStyle={{flexGrow: 1, maxHeight: "100%"}}
             data={childArray}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}

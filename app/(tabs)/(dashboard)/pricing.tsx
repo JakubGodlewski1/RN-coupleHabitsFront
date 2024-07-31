@@ -55,7 +55,7 @@ const AndroidWrapper = ({children, classNames, style}: {
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {Platform.OS === "android" ?
             <SafeAreaWrapper style={style} classNames={{wrapper: classNames?.wrapper}}>{children}</SafeAreaWrapper> :
-            <View style={style} className={`${classNames?.wrapper} bg-blue-400`}>{children}</View>}
+            <View style={style} className={`${classNames?.wrapper}`}>{children}</View>}
     </ScrollView>
 
 

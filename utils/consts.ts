@@ -85,4 +85,4 @@ export const EXAMPLE_HABIT: Habit = {
     }
 }
 
-export const DEFAULT_URL = "https://570e-89-64-8-107.ngrok-free.app/api/v1"
+export const DEFAULT_URL = "https://thirty-lights-repeat.loca.lt/api/v1"

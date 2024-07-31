@@ -8,9 +8,10 @@ import {useUser} from "@/api/hooks/useUser";
 import Avatar from "@/components/Avatar";
 import Text from "@/components/Text";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {useState} from "react";
+import React, {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import RefetchHabitsOnPull from "@/components/RefetchHabitsOnPull";
 
 export default function Dashboard() {
     const {user, isLoading} = useUser()
