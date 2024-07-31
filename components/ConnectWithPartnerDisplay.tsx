@@ -9,7 +9,7 @@ export default function ConnectWithPartnerDisplay({user}: { user: User }) {
 
     return <View className="border-[1px] border-skip grow mb-8 rounded-xl bg-skip/10 p-4 space-y-3 justify-between">
         <View className="flex-row justify-around ">
-            <Avatar url={user.avatar} text="You"/>
+            <Avatar ownership="main" url={user.avatar} text="You"/>
             <Avatar url={user.partner.avatar} text="Partner"/>
         </View>
         <View className="items-center">

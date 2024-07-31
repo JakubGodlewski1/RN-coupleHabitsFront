@@ -2,14 +2,21 @@ import Text from "@/components/Text";
 import {View} from "react-native";
 import Button from "@/components/Button";
 import {Entypo} from "@expo/vector-icons";
-import {useState} from "react";
 import PageTitle from "@/components/PageTitle";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import {router} from "expo-router";
-import {uploadImage} from "@/utils/uploadImage";
+import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
+import {pickAvatar} from "@/utils/pickAvatar";
 
 export default function Settings() {
-    const [showHabitCard, setShowHabitCard] = useState(false);
+    const {updateAvatar} = useUpdateAvatar()
+
+    const handleUpdateAvatar = async () => {
+        const uri = await pickAvatar()
+        if (uri) {
+            updateAvatar(uri)
+        }
+    }
 
     return <SafeAreaWrapper>
         <PageTitle>Settings</PageTitle>
@@ -31,23 +38,9 @@ export default function Settings() {
                 classNames={{wrapper: "justify-between"}}
                 iconPosition="right"
                 type="white"
-                onPress={uploadImage} title="Change profile picture">
+                onPress={handleUpdateAvatar} title="Change profile picture">
                 <Entypo size={24} name="chevron-small-right"/>
             </Button>
-            {/*<View style={{...Shadows}}*/}
-            {/*      className={`flex-row  items-center justify-between space-x-5 bg-white rounded-[20px] p-4`}>*/}
-            {/*    <Text classNames={{text: "font-mainBold "}}>Show habit card's stats</Text>*/}
-            {/*    {Platform.OS === "ios" ?*/}
-            {/*        <Switch trackColor={{true: "#FF5545"}}*/}
-            {/*                onValueChange={visible => setShowHabitCard(visible)}*/}
-            {/*                value={showHabitCard}/> :*/}
-            {/*        <Switch*/}
-            {/*            style={{marginVertical: -8}}*/}
-            {/*            thumbColor="#FF5545" trackColor={{true: "#ffbbb5"}}*/}
-            {/*            onValueChange={visible => setShowHabitCard(visible)}*/}
-            {/*            value={showHabitCard}/>*/}
-            {/*    }*/}
-            {/*</View>*/}
         </View>
 
 

@@ -43,8 +43,8 @@ export default function Dashboard() {
                 {
                     user?.partner.connected ? <>
                             <View style={ShadowsLight} className="flex-row justify-around bg-white p-2 rounded-2xl">
-                                <Avatar url={user.avatar} text="You"/>
-                                <Avatar url={user.partner.avatar} text="Partner"/>
+                                <Avatar ownership="main" url={user.avatar} text="You"/>
+                                <Avatar ownership="partner" url={user.partner.avatar} text="Partner"/>
                             </View>
                             <View style={{gap: 8}} className="grow p-2">
                                 {user.habits.length !== 0 ?
