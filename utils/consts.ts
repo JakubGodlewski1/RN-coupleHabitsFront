@@ -85,4 +85,4 @@ export const EXAMPLE_HABIT: Habit = {
     }
 }
 
-export const DEFAULT_URL = "https://thirty-lights-repeat.loca.lt/api/v1"
+export const DEFAULT_URL = "https://smart-toes-write.loca.lt/api/v1"

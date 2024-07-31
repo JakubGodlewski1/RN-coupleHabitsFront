@@ -10,7 +10,7 @@ import {produce} from "immer";
 const HabitCard = ({habit}: { habit: Habit }) => {
     const {updateHabit, isUpdating} = useUpdateHabit({isToggle: true})
 
-    const onToggle = () => {
+    const onToggleCheckbox = () => {
         updateHabit(produce(habit, draft => {
             draft.details.mine.completed = !habit.details.mine.completed
         }))
@@ -19,11 +19,11 @@ const HabitCard = ({habit}: { habit: Habit }) => {
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
         <View style={{...Shadows}} className="m-2 rounded-2xl bg-white">
             <SwipebleCardWrapper habit={habit}>
-                <View className="flex-row bg-white h-[88px] rounded-2xl ">
+                <View className="flex-row bg-white h-[88px] rounded-2xl border-x-[0.5px] border-skip shadow-md">
                     <TouchableOpacity
                         disabled={isUpdating}
                         activeOpacity={100}
-                        onPress={onToggle}
+                        onPress={onToggleCheckbox}
                         className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px]"
                     >
                         <Text
@@ -34,7 +34,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                             fillColor="#6EC166"
                             disableBuiltInState={true}
                             isChecked={habit.details.mine.completed}
-                            onPress={onToggle}
+                            onPress={onToggleCheckbox}
                             size={20}
                             innerIconStyle={{
                                 borderRadius: 4,

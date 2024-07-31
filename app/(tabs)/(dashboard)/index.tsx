@@ -11,7 +11,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
-import RefetchHabitsOnPull from "@/components/RefetchHabitsOnPull";
+import {Shadows, ShadowsLight} from "@/styles/Shadows";
 
 export default function Dashboard() {
     const {user, isLoading} = useUser()
@@ -39,14 +39,14 @@ export default function Dashboard() {
                     onPress={(tab) => setCurrentTab(tab)}
                     options={DASHBOARD_TABS}/>
             </View>
-            <View className="grow bg-white p-4 rounded-t-3xl">
+            <View className="grow bg-white p-2 rounded-t-3xl">
                 {
                     user?.partner.connected ? <>
-                            <View className="flex-row justify-around ">
+                            <View style={ShadowsLight} className="flex-row justify-around bg-white p-2 rounded-2xl">
                                 <Avatar url={user.avatar} text="You"/>
                                 <Avatar url={user.partner.avatar} text="Partner"/>
                             </View>
-                            <View style={{gap: 8}} className="mt-4 grow">
+                            <View style={{gap: 8}} className="grow p-2">
                                 {user.habits.length !== 0 ?
                                     <FilteredHabits habits={user.habits} currentTab={currentTab}/> :
                                     (

@@ -10,35 +10,16 @@ import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
 import {router} from "expo-router";
 
 export default function SwipebleCardWrapper({habit, children}: { habit: Habit, children: ReactNode }) {
-    const translateY = useSharedValue(0);
-    const [isSwipedUp, setIsSwipedUp] = useState(false);
     const {isDeleting, deleteHabit} = useDeleteHabit()
     const swipeableRef = useRef(null)
 
-    const gestureHandler = (event: any) => {
-        if (event.nativeEvent.translationY < -20) {
-            setIsSwipedUp(true)
-            translateY.value = withSpring(-50, {
-                damping: 20,
-                stiffness: 300,
-                mass: 0.5
-            })
-        } else {
-            setIsSwipedUp(false)
-            translateY.value = withSpring(0,
-                {
-                    damping: 20,
-                    stiffness: 300,
-                    mass: 0.5
-                })
-        }
-    };
-
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{translateY: translateY.value}],
-        };
-    });
+    const leftSwipe = () => {
+        return <View className="my-auto items-center justify-center w-24">
+            <Text classNames={{text: "text-center"}}>Strike: </Text>
+            <Text
+                classNames={{text: "font-mainBold text-center"}}>🔥12 days</Text>
+        </View>
+    }
 
     const rightSwipe = () => {
         return <View style={{gap: 4}} className=" w-16 p-1">
@@ -71,24 +52,13 @@ export default function SwipebleCardWrapper({habit, children}: { habit: Habit, c
         </View>
     }
 
-    return <>
-        {isSwipedUp && (
-            <View className="absolute bottom-0 w-[94%] mx-[3%] mb-1 flex-row border-t-[0.6px] border-skip pt-[2px]">
-                <Text classNames={{text: "mr-auto"}}>Strike: 🔥 <Text
-                    classNames={{text: "font-mainBold"}}>12</Text></Text>
-            </View>
-        )}
-        <PanGestureHandler onGestureEvent={gestureHandler}>
-            <Animated.View style={[{overflow: "hidden"}, animatedStyle]}>
-                <Swipeable
-                    ref={swipeableRef}
-                    renderRightActions={rightSwipe}
-                >
-                    {children}
-                </Swipeable>
-            </Animated.View>
-        </PanGestureHandler>
-    </>
+    return <Swipeable
+        ref={swipeableRef}
+        renderRightActions={rightSwipe}
+        renderLeftActions={leftSwipe}
+    >
+        {children}
+    </Swipeable>
 
 
 }
