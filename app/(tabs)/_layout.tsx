@@ -28,13 +28,22 @@ const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode 
 ]
 
 export default function TabsLayout() {
-
-
     const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
     const {isVisible} = useTabBarContext()
 
-    return <Tabs
+    const onPress = (icon: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode }) => {
+        if (icon.name === currentPage && currentPage !== "dashboard") {
+            setCurrentPage("dashboard")
+            router.push("/(dashboard)")
+        } else if (icon.name === currentPage) {
+            return
+        } else {
+            setCurrentPage(icon.name)
+            router.replace(`/${icon.name === "dashboard" ? "(dashboard)" : icon.name}`)
+        }
+    }
 
+    return <Tabs
         sceneContainerStyle={{backgroundColor: "transparent"}}
         screenOptions={{
             headerShown: false,
@@ -53,10 +62,7 @@ export default function TabsLayout() {
                      ${currentPage === icon.name ? "bg-white" : ""}
                      ${Platform.OS === "android" ? "-mb-4" : "-mb-2"}
                      `}
-                                    onPress={() => {
-                                        setCurrentPage(icon.name)
-                                        router.replace(`/(tabs)/${icon.name === "dashboard" ? "(dashboard)" : icon.name}`)
-                                    }}>
+                                    onPress={() => onPress(icon)}>
                                     {icon.body(currentPage)}
                                 </TouchableOpacity>
                             ))}
