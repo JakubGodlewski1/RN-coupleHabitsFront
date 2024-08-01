@@ -17,10 +17,10 @@ export default function CardsManagement() {
                 <IntroCard animationDirection="right"/>
             </View>
             <View>
-                <NumberedRow text="Swipe up to see the habit's stats." number="2"/>
+                <NumberedRow text="Swipe right to see the habit's stats." number="2"/>
                 <IntroCard animationDirection="left"/>
             </View>
         </View>
-        <Button classNames={{wrapper: "mt-auto mb-2"}} onPress={() => router.push("pic-slides")} title="Next"/>
+        <Button classNames={{wrapper: "mt-auto mb-2"}} onPress={() => router.push("/dashboard-info")} title="Next"/>
     </SafeAreaWrapper>
 }

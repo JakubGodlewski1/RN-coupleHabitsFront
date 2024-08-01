@@ -16,6 +16,9 @@ const IntroCard = ({animationDirection}: { animationDirection: "left" | "right" 
             const animate = animationDirection === "left" ? swipeLeft : swipeRight
             const close = ref.current?.close
 
+            animate()
+            setTimeout(close, 800)
+
             return setInterval(() => {
                 animate()
                 setTimeout(close, 800)

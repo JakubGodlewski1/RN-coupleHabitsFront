@@ -24,7 +24,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                         disabled={isUpdating}
                         activeOpacity={100}
                         onPress={onToggleCheckbox}
-                        className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px]"
+                        className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
                     >
                         <Text
                             classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.mine.label}</Text>
@@ -44,7 +44,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                         />
                     </TouchableOpacity>
                     <View
-                        className={`p-2 flex-1 bg-white border-r-4 rounded-r-xl
+                        className={`px-4 py-2 flex-1 bg-white border-r-4 rounded-r-xl
                      ${habit.details.partner.completed ? "border-secondary" : "border-primary"}`}
                     >
                         <Text

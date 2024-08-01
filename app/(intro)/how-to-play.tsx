@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import {router} from "expo-router";
 import PageTitle from "@/components/PageTitle";
 import {NumberedRow} from "@/components/NumberedRow";
+import TopBar from "@/components/TopBar";
 
 
 const habits: Habit[] = [
@@ -69,11 +70,6 @@ export default function HowToPlay() {
                 <NumberedRow text="Trade the points for days off without losing your global strike!" number="3"/>
             </View>
         </View>
-
-        {/*<View className="p-4 bg-secondary flex-row justify-between rounded-2xl">*/}
-        {/*    <Text classNames={{text:"font-mainBold text-white"}}>Take day off</Text>*/}
-        {/*    <Text classNames={{text:"text-white"}}>930 points</Text>*/}
-        {/*</View>*/}
         <Button classNames={{wrapper: "mt-auto mb-2"}} iconPosition="right" onPress={() => {
             router.push("cards-management")
         }} title="Next"/>

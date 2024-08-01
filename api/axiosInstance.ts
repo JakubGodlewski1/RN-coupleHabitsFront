@@ -10,6 +10,8 @@ const baseConfig = {
     },
 };
 
+console.log({baseConfig});
+
 // Create the initial Axios instance
 const api = axios.create(baseConfig);
 

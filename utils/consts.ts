@@ -1,4 +1,5 @@
 import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat} from "@/types";
+import {Platform} from "react-native";
 
 export const DASHBOARD_TABS: {
     key: DashboardTabKey,
@@ -85,5 +86,8 @@ export const EXAMPLE_HABIT: Habit = {
     }
 }
 
-const localhost = "http://localhost:3000"
-export const DEFAULT_URL = `${localhost}/api/v1`
+const IOS = "http://localhost:3000"
+const ANDROID = "http://10.0.2.2:3000"
+
+
+export const DEFAULT_URL = `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`

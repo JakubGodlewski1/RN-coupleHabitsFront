@@ -12,7 +12,11 @@ export const useCreateUser = () => {
     const {mutate: createAccount, isPending, isError, error} = useMutation({
         mutationFn: async () => {
             const api = await getAxiosInstance()
-            return await api.post("/auth/sign-up")
+            return await api.post("/auth/sign-up", {}, {
+                headers: {
+                    "content-type": "application/json"
+                }
+            })
         },
         onError: () => Alert.alert("We could not create the account, your data will not be saved"),
         onSuccess: async (data) => {
@@ -25,8 +29,7 @@ export const useCreateUser = () => {
         if (secureStoreError || isError) {
             if (secureStoreError) {
                 console.log("secure store error: " + secureStoreError)
-            } else console.log("network error: " + error?.message)
-            Alert.alert("Something went wrong, try again later")
+            } else console.log("network error: " + error?.stack)
         }
     }, [secureStoreError, isError]);
 
