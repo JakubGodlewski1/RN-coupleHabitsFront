@@ -20,7 +20,7 @@ export default function ConnectWithPartnerDisplay({user}: { user: User }) {
         </View>
         <Button
             classNames={{wrapper: "mx-auto"}}
-            onPress={() => router.push("connect-with-partner")} title="Connect with your partner">
+            onPress={() => router.push("/connect-with-partner")} title="Connect with your partner">
             <Image className="w-6 h-6 mr-2" source={require("@/assets/icons/hands_puzzles.png")}/>
         </Button>
     </View>

@@ -25,8 +25,6 @@ export const useConnectPartner = () => {
             queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]
             })
-            router.back()
-            Alert.alert("Connection successful!", "Create your first habit now!")
         },
         onError: () => {
             Alert.alert("Something went wrong, try again later")

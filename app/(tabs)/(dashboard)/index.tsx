@@ -41,7 +41,7 @@ export default function Dashboard() {
             </View>
             <View className="grow bg-white p-2 rounded-t-3xl">
                 {
-                    user?.partner.connected ? <>
+                    user?.partner?.connected ? <>
                             <View style={ShadowsLight} className="flex-row justify-around bg-white p-2 rounded-2xl">
                                 <Avatar ownership="main" url={user.avatar} text="You"/>
                                 <Avatar ownership="partner" url={user.partner.avatar} text="Partner"/>

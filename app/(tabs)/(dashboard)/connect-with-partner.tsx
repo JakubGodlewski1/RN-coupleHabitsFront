@@ -1,4 +1,4 @@
-import {Image, Keyboard, ScrollView, TouchableOpacity, View} from "react-native";
+import {Alert, Image, Keyboard, ScrollView, TouchableOpacity, View} from "react-native";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
@@ -9,14 +9,25 @@ import {copyToClipboard} from "@/utils/copyToClipboard";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {router} from "expo-router";
 import {useConnectPartner} from "@/api/hooks/useConnectPartner";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useUser} from "@/api/hooks/useUser";
 
 export default function ConnectWithPartner() {
     const [code, setCode] = useState<string>("");
     useHandleTabBar(true)
     const {connect, isPending} = useConnectPartner()
-    const user = useUser().user!
+    const {user, refetch, isLoading} = useUser()
+
+    useEffect(() => {
+        if (user?.partner.connected) {
+            router.back()
+            Alert.alert("Connection successful!", "Create your first habit now!")
+        }
+    }, [user?.partner.connected]);
+
+    if (!user) {
+        return Alert.alert("Something went wrong, try again later");
+    }
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1} className="p-4 bg-white grow">
@@ -31,13 +42,21 @@ export default function ConnectWithPartner() {
                 <Text classNames={{text: "font-mainExtraBold text-center text-xl leading-6"}}>
                     Either give the {"\n"}code to your partner
                 </Text>
-                <Button classNames={{text: "text-2xl font-mainBold", wrapper: "p-4"}} iconPosition="right"
-                        onPress={() => copyToClipboard({
-                            textToCopy: user.connectionCode,
-                            message: "Your connection code has been copied to clipboard"
-                        })} title={user.connectionCode}>
-                    <MaterialCommunityIcons size={24} color="white" name="content-copy"/>
-                </Button>
+                <View style={{gap: 8}} className="flex-row">
+                    <Button classNames={{text: "text-2xl font-mainBold", wrapper: "p-4 flex-1"}} iconPosition="right"
+                            onPress={() => copyToClipboard({
+                                textToCopy: user.connectionCode,
+                                message: "Your connection code has been copied to clipboard"
+                            })} title={user.connectionCode}>
+                        <MaterialCommunityIcons size={24} color="white" name="content-copy"/>
+                    </Button>
+                    <Button
+                        disabled={isLoading}
+                        classNames={{wrapper: "flex-1"}}
+                        type="secondary" onPress={refetch}
+                        title={isLoading ? "Checking" : "Connected!"}/>
+                </View>
+
                 <DividerOr/>
                 <View style={{gap: 8}} className="self-stretch grow">
                     <Input
@@ -53,8 +72,8 @@ export default function ConnectWithPartner() {
                         title="Connect"
                     />
                     <Button classNames={{wrapper: "mt-auto"}} type="skip" onPress={router.back} title="Later"/>
-                </View>
 
+                </View>
             </KeyboardAwareScrollView>
         </TouchableOpacity>
     </ScrollView>

@@ -22,6 +22,8 @@ export const useUser = () => {
                 Alert.alert("Something went wrong while fetching your data, try again later")
             }
             return null
+        },
+        initialData: () => {
         }
     })
 

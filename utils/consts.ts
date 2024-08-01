@@ -1,4 +1,4 @@
-import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat} from "@/types";
+import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat, User} from "@/types";
 import {Platform} from "react-native";
 
 export const DASHBOARD_TABS: {
@@ -88,6 +88,7 @@ export const EXAMPLE_HABIT: Habit = {
 
 const IOS = "http://localhost:3000"
 const ANDROID = "http://10.0.2.2:3000"
+const external = "https://plenty-mice-kick.loca.lt/api/v1"
+const isExternal = true
 
-
-export const DEFAULT_URL = `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
+export const DEFAULT_URL = isExternal ? external : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`

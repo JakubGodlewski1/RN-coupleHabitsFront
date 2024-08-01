@@ -1,13 +1,15 @@
 import {getAxiosInstance} from "@/api/axiosInstance";
 import {useSecureStore} from "@/hooks/useSecureStore";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Alert} from "react-native";
 import {useMutation} from "@tanstack/react-query";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
+import {User} from "@/types";
 
 export const useCreateUser = () => {
     const {getString, saveString, error: secureStoreError} = useSecureStore()
+    const [user, setUser] = useState<User | null>(null);
 
     const {mutate: createAccount, isPending, isError, error} = useMutation({
         mutationFn: async () => {
@@ -20,6 +22,7 @@ export const useCreateUser = () => {
         },
         onError: () => Alert.alert("We could not create the account, your data will not be saved"),
         onSuccess: async (data) => {
+            setUser(data.data.data)
             await saveString("auth-token", data.headers["x-auth-token"])
             await queryClient.invalidateQueries({queryKey: [queryKeys.useUser]})
         }
@@ -45,5 +48,5 @@ export const useCreateUser = () => {
     }, []);
 
 
-    return {isPending}
+    return {isPending, user}
 }
