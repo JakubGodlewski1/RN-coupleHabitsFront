@@ -82,7 +82,7 @@ export default function DashboardInfo() {
                     </View>
                 </View>
                 <View className={`${transparency} px-4`}>
-                    <Button classNames={{wrapper: "mt-auto mb-2"}} onPress={() => router.push("/dashboard-info")}
+                    <Button classNames={{wrapper: "mt-auto mb-2"}} onPress={() => router.push("/avatar-info")}
                             title="Next"/>
                 </View>
             </SafeAreaView>
