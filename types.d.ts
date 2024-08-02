@@ -50,3 +50,5 @@ type HabitFormType = {
     type: "create" | "update",
     initHabitJSON: string
 }
+
+type GlobalStrike = { url: string, data: { habit: Habit, action: "increase" | "decrease" } | Habit }

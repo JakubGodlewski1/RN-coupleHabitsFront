@@ -5,19 +5,19 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
 import {produce} from "immer";
-import {useUser} from "@/api/hooks/useUser";
 import {useToggleCheckbox} from "@/api/hooks/useToggleCheckbox";
+import {useIsGlobalStrike} from "@/api/hooks/useIsGlobalStrike";
 
 const HabitCard = ({habit}: { habit: Habit }) => {
+    const {isGlobalStrike} = useIsGlobalStrike()
     const {toggleCheckbox, isUpdating} = useToggleCheckbox()
-    const {user} = useUser()
 
     const onToggleCheckbox = () => {
         const updatedHabit = produce(habit, draft => {
             draft.details.mine.completed = !habit.details.mine.completed
         })
-
-        toggleCheckbox(updatedHabit)
+        const {url, data} = isGlobalStrike(updatedHabit)
+        toggleCheckbox({url, data})
 
     }
 

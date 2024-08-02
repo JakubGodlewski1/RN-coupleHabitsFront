@@ -26,7 +26,11 @@ const daily = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequ
 const weekly = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequency.repeatOption === "weekly"
 const specificDays = (habit: Habit) => habit.frequency.type === "specific days"
 
+const weeklyAndIsSunday = (habit: Habit) => weekly(habit) && new Date().getDay() === 0
+
+
 const assignedForTodayWithoutWeekly = (habit: Habit) => assignedForTodayFromSpecificDays(habit) || daily(habit)
+const assignedForTodayWithWeekly = (habit: Habit) => assignedForTodayWithoutWeekly(habit) || weeklyAndIsSunday(habit)
 
 const habitCompleted = (habit: Habit) => habit.details.partner.completed && habit.details.mine.completed
 const habitUncompleted = (habit: Habit) => !habit.details.partner.completed || !habit.details.mine.completed
@@ -38,8 +42,25 @@ const completedTodayWithoutWeekly = (habit: Habit) => habitCompleted(habit) && n
 const completedTodayOnlyWeekly = (habit: Habit) => habitCompleted(habit) && assignedForThisWeek(habit)
 
 const todoTodayWithoutWeekly = (habit: Habit) => habitUncompleted(habit) && assignedForTodayWithoutWeekly(habit)
-const todoTodayOnlyWeekly = (habit: Habit) => habitUncompleted(habit) && weekly(habit)
+const todoWeekly = (habit: Habit) => habitUncompleted(habit) && weekly(habit)
 
+export const filters = {
+    assignedForTodayFromSpecificDays,
+    daily,
+    weekly,
+    specificDays,
+    weeklyAndIsSunday,
+    assignedForTodayWithoutWeekly,
+    assignedForTodayWithWeekly,
+    habitCompleted,
+    habitUncompleted,
+    assignedForThisWeek,
+    notAssignedForThisWeek,
+    completedTodayWithoutWeekly,
+    completedTodayOnlyWeekly,
+    todoTodayWithoutWeekly,
+    todoWeekly
+}
 
 /*all tabs sections*/
 const allTabOptions = [
@@ -92,7 +113,7 @@ const todoTabOptions = [
     },
     {
         label: "This week",
-        filter: todoTodayOnlyWeekly
+        filter: todoWeekly
     }
 ]
 

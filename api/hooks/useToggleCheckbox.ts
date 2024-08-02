@@ -1,12 +1,15 @@
 import {useMutation} from "@tanstack/react-query";
 import {getAxiosInstance} from "@/api/axiosInstance";
-import {Habit, User} from "@/types";
+import {GlobalStrike, Habit, User} from "@/types";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
 import {Alert} from "react-native";
+import habitCard from "@/components/HabitCard";
 
 export const useToggleCheckbox = () => {
-    const toggleCheckbox = async (habit: Habit) => {
+    const toggleCheckbox = async ({url, data}: GlobalStrike) => {
+        // @ts-ignore
+        const habit = data?.action ? data.habit : data
         //optimistic update
         queryClient.setQueryData(
             [queryKeys.useUser],
@@ -14,11 +17,12 @@ export const useToggleCheckbox = () => {
         )
 
         const api = await getAxiosInstance()
-        return await api.patch(`/habits/${habit.id}`, habit)
+        return await api.patch(url, data)
+        // return await api.patch(`/habits/${habit.id}`, habit)
     }
 
     const {isPending, mutate} = useMutation({
-        mutationFn: (habit: Habit) => toggleCheckbox(habit),
+        mutationFn: ({url, data}: GlobalStrike) => toggleCheckbox({url, data}),
         onSettled: async () => {
             await queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]
