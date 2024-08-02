@@ -10,7 +10,7 @@ export const useUpdateHabit = () => {
 
     const updateHabit = async (habit: Habit) => {
         const api = await getAxiosInstance()
-        return await api.patch(`/habits/${habit.id}`, habit)
+        return await api.patch(`/habits/${habit.id}`, {type: "habit", data: habit})
     }
 
     const {isPending, mutate} = useMutation({

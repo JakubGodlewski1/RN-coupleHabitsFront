@@ -33,7 +33,7 @@ export default function Dashboard() {
         {/*<RefetchHabitsOnPull>*/}
         <View className="relative grow" style={{gap: 16}}>
             <View style={{gap: 16}} className="px-4">
-                <TopBar/>
+                <TopBar user={user}/>
                 <Tabs<DashboardTabKey>
                     value={currentTab}
                     onPress={(tab) => setCurrentTab(tab)}

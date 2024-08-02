@@ -1,17 +1,16 @@
-import {View, TouchableOpacity} from "react-native";
+import {TouchableOpacity, View} from "react-native";
 import {AntDesign} from "@expo/vector-icons";
 import Text from "@/components/Text";
 import {router} from "expo-router";
-import {HabitFormType} from "@/types";
+import {HabitFormType, User} from "@/types";
 import {DEFAULT_CREATE_HABIT} from "@/utils/consts";
 
-
-export default function TopBar() {
+export default function TopBar({user}: { user?: User }) {
 
     return <View className={`flex-row space-x-4 h-14 `}>
         <View className="bg-white px-4 h-full flex-row justify-between grow rounded-xl items-center">
-            <Text>🔥Strike: <Text classNames={{text: "font-mainBold"}}>0 Days</Text></Text>
-            <Text>Points: <Text classNames={{text: "font-mainBold"}}>0</Text> </Text>
+            <Text>🔥Strike: <Text classNames={{text: "font-mainBold"}}>{user?.gameAccount.strike || 0} Days</Text></Text>
+            <Text>Points: <Text classNames={{text: "font-mainBold"}}>{user?.gameAccount.points || 0}</Text> </Text>
         </View>
         <TouchableOpacity onPress={() => router.push({
             pathname: "/habit-form",

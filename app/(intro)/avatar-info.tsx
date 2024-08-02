@@ -1,12 +1,11 @@
 import TopBar from "@/components/TopBar";
 import Tabs from "@/components/Tabs";
-import {DASHBOARD_TABS, EXAMPLE_HABIT} from "@/utils/consts";
+import {DASHBOARD_TABS} from "@/utils/consts";
 import {DashboardTabKey} from "@/types";
 import {View} from "react-native";
 import Avatar from "@/components/Avatar";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
 import React, {PropsWithChildren} from "react";
-import HabitCard from "@/components/HabitCard";
 import Text from "@/components/Text";
 import {AntDesign} from "@expo/vector-icons";
 import Button from "@/components/Button";
@@ -31,7 +30,6 @@ export default function DashboardInfo() {
 
             <Avatar ownership="main" url={user?.avatar || null} text="You"/>
         </View>
-
     </Surroundings>
 }
 

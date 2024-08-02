@@ -6,23 +6,32 @@ import {queryKeys} from "@/api/queryKeys";
 import {Alert} from "react-native";
 import habitCard from "@/components/HabitCard";
 
+type ToggleCheckboxArguments = {
+    id: string,
+    isChecked: boolean,
+}
+
 export const useToggleCheckbox = () => {
-    const toggleCheckbox = async ({url, data}: GlobalStrike) => {
-        // @ts-ignore
-        const habit = data?.action ? data.habit : data
+    const toggleCheckbox = async ({id, isChecked}: ToggleCheckboxArguments) => {
         //optimistic update
         queryClient.setQueryData(
             [queryKeys.useUser],
-            (data: User): User => ({...data, habits: data.habits.map(h => h.id === habit.id ? habit : h)})
+            (data: User): User => ({
+                ...data,
+                habits: data.habits.map(h => h.id === id ? {
+                    ...h,
+                    details: {...h.details, mine: {...h.details.mine, completed: isChecked}}
+                } : h)
+            })
         )
 
         const api = await getAxiosInstance()
-        return await api.patch(url, data)
-        // return await api.patch(`/habits/${habit.id}`, habit)
+
+        return await api.patch(`/habits/${id}`, {type: "checkbox"})
     }
 
     const {isPending, mutate} = useMutation({
-        mutationFn: ({url, data}: GlobalStrike) => toggleCheckbox({url, data}),
+        mutationFn: ({id, isChecked}: ToggleCheckboxArguments) => toggleCheckbox({id, isChecked}),
         onSettled: async () => {
             await queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]

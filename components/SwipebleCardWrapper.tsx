@@ -6,6 +6,7 @@ import Text from "@/components/Text";
 import {Habit, HabitFormType} from "@/types";
 import {useDeleteHabit} from "@/api/hooks/useDeleteHabit";
 import {router} from "expo-router";
+import {useUser} from "@/api/hooks/useUser";
 
 type Props = {
     habit: Habit,
@@ -33,7 +34,7 @@ export default function SwipebleCardWrapper({habit, children, options}: Props) {
         return <View className="my-auto items-center justify-center w-24">
             <Text classNames={{text: "text-center"}}>Strike: </Text>
             <Text
-                classNames={{text: "font-mainBold text-center"}}>🔥12 days</Text>
+                classNames={{text: "font-mainBold text-center"}}>🔥{habit.strike} days</Text>
         </View>
     }
 
@@ -52,7 +53,7 @@ export default function SwipebleCardWrapper({habit, children, options}: Props) {
             <TouchableOpacity
                 onPress={() => {
                     router.push({
-                        pathname: "habit-form",
+                        pathname: "/habit-form",
                         params: {
                             type: "update",
                             initHabitJSON: JSON.stringify(habit)

@@ -9,17 +9,7 @@ import {useToggleCheckbox} from "@/api/hooks/useToggleCheckbox";
 import {useIsGlobalStrike} from "@/api/hooks/useIsGlobalStrike";
 
 const HabitCard = ({habit}: { habit: Habit }) => {
-    const {isGlobalStrike} = useIsGlobalStrike()
     const {toggleCheckbox, isUpdating} = useToggleCheckbox()
-
-    const onToggleCheckbox = () => {
-        const updatedHabit = produce(habit, draft => {
-            draft.details.mine.completed = !habit.details.mine.completed
-        })
-        const {url, data} = isGlobalStrike(updatedHabit)
-        toggleCheckbox({url, data})
-
-    }
 
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
         <View style={{...Shadows}} className="m-2 rounded-2xl bg-white">
@@ -28,7 +18,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                     <TouchableOpacity
                         disabled={isUpdating}
                         activeOpacity={100}
-                        onPress={onToggleCheckbox}
+                        onPress={() => toggleCheckbox({id: habit.id, isChecked: !habit.details.mine.completed})}
                         className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
                     >
                         <Text
@@ -39,7 +29,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                             fillColor="#6EC166"
                             disableBuiltInState={true}
                             isChecked={habit.details.mine.completed}
-                            onPress={onToggleCheckbox}
+                            onPress={() => toggleCheckbox({id: habit.id, isChecked: !habit.details.mine.completed})}
                             size={20}
                             innerIconStyle={{
                                 borderRadius: 4,
