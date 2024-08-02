@@ -4,16 +4,21 @@ import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
-import {useUpdateHabit} from "@/api/hooks/useUpdateHabit";
 import {produce} from "immer";
+import {useUser} from "@/api/hooks/useUser";
+import {useToggleCheckbox} from "@/api/hooks/useToggleCheckbox";
 
 const HabitCard = ({habit}: { habit: Habit }) => {
-    const {updateHabit, isUpdating} = useUpdateHabit({isToggle: true})
+    const {toggleCheckbox, isUpdating} = useToggleCheckbox()
+    const {user} = useUser()
 
     const onToggleCheckbox = () => {
-        updateHabit(produce(habit, draft => {
+        const updatedHabit = produce(habit, draft => {
             draft.details.mine.completed = !habit.details.mine.completed
-        }))
+        })
+
+        toggleCheckbox(updatedHabit)
+
     }
 
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
