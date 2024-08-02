@@ -2,14 +2,15 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {User} from "@/types";
 import {queryKeys} from "@/api/queryKeys";
 import {Alert} from "react-native";
-import {router} from "expo-router";
+import {router, usePathname} from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import * as FileSystem from "expo-file-system";
-import {DEFAULT_URL} from "@/utils/consts";
 import {FileSystemUploadType} from "expo-file-system";
+import {DEFAULT_URL} from "@/utils/consts";
 
 export const useUpdateAvatar = () => {
     const queryClient = useQueryClient()
+    const pathname = usePathname()
 
     const uploadImage = async (imageUri: string) => {
         //optimistic update
@@ -35,7 +36,9 @@ export const useUpdateAvatar = () => {
     const {isPending, mutate} = useMutation({
         mutationFn: (imageUri: string) => uploadImage(imageUri),
         onSettled: async () => {
-            router.push("/(dashboard)")
+            if (pathname === "/settings") {
+                router.push("/(dashboard)")
+            }
             await queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]
             })
