@@ -4,9 +4,7 @@ import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
-import {produce} from "immer";
 import {useToggleCheckbox} from "@/api/hooks/useToggleCheckbox";
-import {useIsGlobalStrike} from "@/api/hooks/useIsGlobalStrike";
 
 const HabitCard = ({habit}: { habit: Habit }) => {
     const {toggleCheckbox, isUpdating} = useToggleCheckbox()
@@ -18,7 +16,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                     <TouchableOpacity
                         disabled={isUpdating}
                         activeOpacity={100}
-                        onPress={() => toggleCheckbox({id: habit.id, isChecked: !habit.details.mine.completed})}
+                        onPress={() => toggleCheckbox({id: habit.id})}
                         className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
                     >
                         <Text
@@ -29,7 +27,7 @@ const HabitCard = ({habit}: { habit: Habit }) => {
                             fillColor="#6EC166"
                             disableBuiltInState={true}
                             isChecked={habit.details.mine.completed}
-                            onPress={() => toggleCheckbox({id: habit.id, isChecked: !habit.details.mine.completed})}
+                            onPress={() => toggleCheckbox({id: habit.id})}
                             size={20}
                             innerIconStyle={{
                                 borderRadius: 4,

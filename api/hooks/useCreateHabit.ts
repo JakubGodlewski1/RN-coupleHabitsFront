@@ -10,7 +10,7 @@ export const useCreateHabit = () => {
 
     const createHabit = async (habit: CreateHabit) => {
         const api = await getAxiosInstance()
-        return await api.post("/habits", habit)
+        return await api.post("/habits", {type: "habit", data: habit})
     }
 
     const {isPending, mutate} = useMutation({
