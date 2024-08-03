@@ -11,8 +11,9 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
-import {Shadows, ShadowsLight} from "@/styles/Shadows";
+import {ShadowsLight} from "@/styles/Shadows";
 import RefetchHabitsOnPull from "@/components/RefetchHabitsOnPull";
+import {useFocusEffect} from "expo-router";
 
 export default function Dashboard() {
     const {user, isLoading} = useUser()
@@ -29,6 +30,7 @@ export default function Dashboard() {
             </Text>
         </View>
     }
+
 
     return <SafeAreaView className="grow" edges={["top"]}>
         <RefetchHabitsOnPull>

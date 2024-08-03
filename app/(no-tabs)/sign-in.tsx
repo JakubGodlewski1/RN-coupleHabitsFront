@@ -25,7 +25,7 @@ export default function SignIn() {
         }}/>
         <View className="mt-auto">
             <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
-                className="text-primary font-mainBold" href="/(no-tabs)/sign-up">Sign up</Link></Text>
+                className="text-primary font-mainBold" href="/sign-up">Sign up</Link></Text>
             <Button classNames={{wrapper: "mb-2"}} type="skip" onPress={() => router.replace("../intro")}
                     title="Skip for now"/>
         </View>

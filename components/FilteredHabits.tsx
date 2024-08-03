@@ -25,7 +25,7 @@ export default function FilteredHabits({currentTab, habits}: Props) {
         style={{flex: 1}}
     >
         {options[currentTab].map(({label, data}) => (
-            <>
+            <View key={label}>
                 {data.length > 0 ? <View key={label} className="bg-[#F6F6F6] px-4 py-2 rounded-full mx-auto my-2">
                     <Text classNames={{text: "text-sm font-mainSemiBold"}}>{label}</Text>
                 </View> : <></>}
@@ -34,7 +34,7 @@ export default function FilteredHabits({currentTab, habits}: Props) {
                         <HabitCard hideIndicators={currentTab === "all"} key={h.id} habit={h}/>
                     ))
                 }
-            </>
+            </View>
         ))}
         <View className="h-6"></View>
     </ScrollView>

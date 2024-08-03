@@ -5,7 +5,7 @@ import {DashboardTabKey} from "@/types";
 import {View} from "react-native";
 import Avatar from "@/components/Avatar";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
-import React from "react";
+import React, {useEffect} from "react";
 import HabitCard from "@/components/HabitCard";
 import Text from "@/components/Text";
 import {AntDesign} from "@expo/vector-icons";

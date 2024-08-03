@@ -1,9 +1,10 @@
-import {router, Tabs} from "expo-router";
+import {router, Tabs, useFocusEffect} from "expo-router";
 import {Image, Platform, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {ReactNode, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 type CurrentPage = "ideas" | "dashboard" | "settings"
 
@@ -42,6 +43,16 @@ export default function TabsLayout() {
             router.replace(`/${icon.name === "dashboard" ? "(dashboard)" : icon.name}`)
         }
     }
+
+    useFocusEffect(() => {
+        //check strike
+
+        const id = setInterval(() => {
+            //check strike
+        }, 1000 * 60 * 60)
+
+        return () => clearInterval(id)
+    })
 
     return <Tabs
         sceneContainerStyle={{backgroundColor: "transparent"}}
