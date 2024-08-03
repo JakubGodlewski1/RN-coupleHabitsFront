@@ -4,6 +4,7 @@ import {Alert} from "react-native";
 import {getAxiosInstance} from "@/api/axiosInstance";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
+import {getUtcOffsetHours} from "@/utils/getUtcOffset";
 
 export const useConnectPartner = () => {
 
@@ -14,8 +15,8 @@ export const useConnectPartner = () => {
 
         const api = await getAxiosInstance()
         return await api.patch("/users/user", {
-            type: "partner",
-            connectionCode
+            connectionCode,
+            UTC: getUtcOffsetHours()
         })
     }
 
