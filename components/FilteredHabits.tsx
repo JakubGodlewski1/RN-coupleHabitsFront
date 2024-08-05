@@ -29,11 +29,13 @@ export default function FilteredHabits({currentTab, habits}: Props) {
                 {data.length > 0 ? <View key={label} className="bg-[#F6F6F6] px-4 py-2 rounded-full mx-auto my-2">
                     <Text classNames={{text: "text-sm font-mainSemiBold"}}>{label}</Text>
                 </View> : <></>}
-                {
-                    data.map(h => (
+
+                <View style={{gap: 8}}>
+                    {data.map(h => (
                         <HabitCard hideIndicators={currentTab === "all"} key={h.id} habit={h}/>
-                    ))
-                }
+                    ))}
+                </View>
+
             </View>
         ))}
         <View className="h-6"></View>

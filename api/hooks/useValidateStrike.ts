@@ -6,7 +6,7 @@ import {queryKeys} from "@/api/queryKeys";
 export const useValidateStrike = () => {
     const validateStrike = async () => {
         const api = await getAxiosInstance()
-        return await api.patch("/game-accounts", {
+        return await api.patch("/game-accounts/validate-strike", {
             todayDate: new Date().toString()
         })
     }

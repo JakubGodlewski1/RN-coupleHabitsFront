@@ -8,10 +8,12 @@ import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
 import {pickAvatar} from "@/utils/pickAvatar";
 import {router} from "expo-router";
 import {useValidateStrike} from "@/api/hooks/useValidateStrike";
+import {useCompleteAllTasks} from "@/api/hooks/useCompleteAllTasks";
 
 export default function Settings() {
     const {updateAvatar} = useUpdateAvatar()
     const {validate} = useValidateStrike()
+    const {completeAllTasks, isPending} = useCompleteAllTasks()
 
     const handleUpdateAvatar = async () => {
         const uri = await pickAvatar()
@@ -24,13 +26,15 @@ export default function Settings() {
         <PageTitle>Settings</PageTitle>
         <View style={{gap: 16}}>
             <Button
-                onPress={validate}
-                title="validate"
-            />
-            <Button classNames={{wrapper: "justify-between"}} type="secondary" iconPosition="right" onPress={() => {
-            }} title="Take day off">
+                disabled={isPending}
+                classNames={{wrapper: "justify-between"}}
+                type="secondary"
+                iconPosition="right"
+                onPress={completeAllTasks}
+                title="Complete all tasks"
+            >
                 <Text classNames={{text: "text-white"}}><Text
-                    classNames={{text: "font-mainBold"}}>⭐️ 900</Text> Points</Text>
+                    classNames={{text: "font-mainBold"}}>⭐️ 500</Text> Points</Text>
             </Button>
             <Button
                 classNames={{wrapper: "justify-between"}}
