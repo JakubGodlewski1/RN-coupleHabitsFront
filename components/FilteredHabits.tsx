@@ -24,20 +24,22 @@ export default function FilteredHabits({currentTab, habits}: Props) {
         showsVerticalScrollIndicator={false}
         style={{flex: 1}}
     >
-        {options[currentTab].map(({label, data}) => (
-            <View key={label}>
-                {data.length > 0 ? <View key={label} className="bg-[#F6F6F6] px-4 py-2 rounded-full mx-auto my-2">
-                    <Text classNames={{text: "text-sm font-mainSemiBold"}}>{label}</Text>
-                </View> : <></>}
+        {options[currentTab]
+            .filter(({data}) => data.length > 0)
+            .map(({label, data}) => (
+                <View key={label}>
+                    <View key={label} className="bg-[#F6F6F6] px-4 py-2 rounded-full mx-auto my-2">
+                        <Text classNames={{text: "text-sm font-mainSemiBold"}}>{label}</Text>
+                    </View>
 
-                <View style={{gap: 8}}>
-                    {data.map(h => (
-                        <HabitCard hideIndicators={currentTab === "all"} key={h.id} habit={h}/>
-                    ))}
+                    <View style={{gap: 8}}>
+                        {data.map(h => (
+                            <HabitCard hideIndicators={currentTab === "all"} key={h.id} habit={h}/>
+                        ))}
+                    </View>
+
                 </View>
-
-            </View>
-        ))}
+            ))}
         <View className="h-6"></View>
     </ScrollView>
 
