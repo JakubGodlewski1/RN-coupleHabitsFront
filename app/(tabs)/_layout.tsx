@@ -1,10 +1,11 @@
 import {router, Tabs, useFocusEffect} from "expo-router";
 import {Image, Platform, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import {ReactNode, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
-import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import {useValidateStrike} from "@/api/hooks/useValidateStrike";
+import {DateManager} from "@/utils/dateManager";
 
 type CurrentPage = "ideas" | "dashboard" | "settings"
 
@@ -31,6 +32,24 @@ const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode 
 export default function TabsLayout() {
     const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
     const {isVisible} = useTabBarContext()
+    const {validate} = useValidateStrike()
+
+    //validate global strike
+    useEffect(() => {
+        let intervalId: NodeJS.Timeout | undefined
+        validate()
+        const timeoutId = setTimeout(() => {
+            validate()
+            intervalId = setInterval(() => {
+                validate()
+            }, 1000 * 60 * 60 * 24)
+        }, DateManager.millisecondsToMidnight(5))
+
+        return () => {
+            clearInterval(intervalId)
+            clearTimeout(timeoutId)
+        }
+    }, []);
 
     const onPress = (icon: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode }) => {
         if (icon.name === currentPage && currentPage !== "dashboard") {

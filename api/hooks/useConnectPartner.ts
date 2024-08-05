@@ -1,10 +1,9 @@
 import {useMutation} from "@tanstack/react-query";
-import {router} from "expo-router";
 import {Alert} from "react-native";
-import {getAxiosInstance} from "@/api/axiosInstance";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
-import {getUtcOffsetHours} from "@/utils/getUtcOffset";
+import {getAxiosInstance} from "@/api/axiosInstance";
+import {subDays} from "date-fns";
 
 export const useConnectPartner = () => {
 
@@ -16,7 +15,7 @@ export const useConnectPartner = () => {
         const api = await getAxiosInstance()
         return await api.patch("/users/user", {
             connectionCode,
-            UTC: getUtcOffsetHours()
+            lastTimeCompleted: subDays(new Date(), 1).toString()
         })
     }
 

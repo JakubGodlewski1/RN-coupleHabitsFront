@@ -7,9 +7,11 @@ import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
 import {pickAvatar} from "@/utils/pickAvatar";
 import {router} from "expo-router";
+import {useValidateStrike} from "@/api/hooks/useValidateStrike";
 
 export default function Settings() {
     const {updateAvatar} = useUpdateAvatar()
+    const {validate} = useValidateStrike()
 
     const handleUpdateAvatar = async () => {
         const uri = await pickAvatar()
@@ -21,6 +23,10 @@ export default function Settings() {
     return <SafeAreaWrapper>
         <PageTitle>Settings</PageTitle>
         <View style={{gap: 16}}>
+            <Button
+                onPress={validate}
+                title="validate"
+            />
             <Button classNames={{wrapper: "justify-between"}} type="secondary" iconPosition="right" onPress={() => {
             }} title="Take day off">
                 <Text classNames={{text: "text-white"}}><Text

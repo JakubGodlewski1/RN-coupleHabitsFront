@@ -9,7 +9,6 @@ import {produce} from "immer";
 export const useToggleCheckbox = () => {
     const toggleCheckbox = async ({id}: { id: string }) => {
         //optimistic update
-
         queryClient.setQueryData(
             [queryKeys.useUser],
             (data: User): User => ({
@@ -20,8 +19,9 @@ export const useToggleCheckbox = () => {
             })
         )
 
+        //api call
         const api = await getAxiosInstance()
-        return await api.patch(`/habits/${id}`, {type: "checkbox"})
+        return await api.patch(`/habits/${id}`, {type: "checkbox", todayDate: new Date().toString()})
     }
 
     const {isPending, mutate} = useMutation({
