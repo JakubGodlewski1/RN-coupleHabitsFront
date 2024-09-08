@@ -34,4 +34,3 @@ export const getAxiosInstance = async () => {
     // Return a new Axios instance with the modified configuration
     return axios.create(configWithAuthToken);
 };
-

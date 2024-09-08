@@ -86,9 +86,10 @@ export const EXAMPLE_HABIT: Habit = {
     }
 }
 
-const IOS = "http://localhost:3000"
-const ANDROID = "http://10.0.2.2:3000"
-const external = "https://plenty-mice-kick.loca.lt/api/v1"
-const isExternal = false
+//choose localhost or external (production) backend url
+const IOS = "http://localhost:3004"
+const ANDROID = "http://10.0.2.2:3004"
+const external = "https://api.couplehabits.com/api/v1"
+const isExternal = true
 
 export const DEFAULT_URL = isExternal ? external : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
