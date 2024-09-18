@@ -1,38 +1,47 @@
 {
-  "expo": {
-    "name": "coupleHabits",
-    "slug": "coupleHabits",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+  "expo":{
+    "name":"Couple Habits",
+    "slug":"couple-habits",
+    "version":"1.0.0",
+    "orientation":"portrait",
+    "icon":"./assets/images/icon.png",
+    "scheme":"myapp",
+    "userInterfaceStyle":"automatic",
+    "splash":{
+      "image":"./assets/images/splash.png",
+      "resizeMode":"contain",
+      "backgroundColor":"#ffffff"
     },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.coupleHabits"
+    "ios":{
+      "supportsTablet":true,
+      "bundleIdentifier":"com.anonymous.coupleHabits"
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+    "android":{
+      "adaptiveIcon":{
+        "foregroundImage":"./assets/images/icon.png",
+        "backgroundColor":"#ffffff"
+      },
+      "package":"com.anonymous.coupleHabits"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+    "web":{
+      "bundler":"metro",
+      "output":"static",
+      "favicon":"./assets/images/favicon.png"
     },
-    "plugins": [
+    "plugins":[
       "expo-router",
       "expo-secure-store"
     ],
-    "experiments": {
-      "typedRoutes": true
+    "experiments":{
+      "typedRoutes":true
+    },
+    "extra":{
+      "router":{
+        "origin":false
+      },
+      "eas":{
+        "projectId":"2e6a9c12-7a9a-49cd-bb06-53830a8332bb"
+      }
     }
   }
 }

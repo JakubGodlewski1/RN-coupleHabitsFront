@@ -61,8 +61,9 @@ export default function DashboardInfo() {
                                             <AntDesign className="" name="caretup" size={20} color="white"/>
                                         </View>
                                         <Text
-                                            classNames={{text: " text-center text-[16px]"}}>Your partner's
-                                            <Text classNames={{text: "text-[16px] font-mainExtraBold"}}> task </Text>
+                                            classNames={{text: " text-center text-[16px]"}}>
+                                            <Text classNames={{text: "text-[16px] font-mainExtraBold"}}>Your partner's
+                                                task </Text>
                                             and their
                                             <Text
                                                 classNames={{text: "text-[16px] font-mainExtraBold"}}> avatar</Text></Text>
