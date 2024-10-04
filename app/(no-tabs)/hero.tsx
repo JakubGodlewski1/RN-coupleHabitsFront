@@ -1,19 +1,12 @@
 import Text from "@/components/Text";
-import {Alert, Image, View} from "react-native";
+import {Image, View} from "react-native";
 // @ts-ignore
 import couple from "@/assets/illustrations/hero.png"
 import Button from "@/components/Button";
 import {Feather} from "@expo/vector-icons";
 import {router} from "expo-router";
-import {useCreateUser} from "@/api/hooks/useCreateUser";
-import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 export default function Hero() {
-    const {isPending, user} = useCreateUser()
-
-    if (isPending) {
-        return <CenteredActivityIndicator/>
-    }
 
     return <>
         <View className="mt-11">
@@ -30,8 +23,8 @@ export default function Hero() {
             className="mt-auto mb-10 mx-auto"
             source={couple}
         />
-        <Button disabled={isPending || !user} title="Explore the app" iconPosition="right"
-                onPress={() => router.push("/(intro)/how-to-play")}>
+        <Button title="Explore the app" iconPosition="right"
+                onPress={() => router.push("/sign-up")}>
             <Feather style={{color: "white"}} size={24} name="arrow-right"/>
         </Button>
     </>

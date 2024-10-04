@@ -1,15 +1,11 @@
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import HabitCard from "@/components/HabitCard";
 import {Habit} from "@/types";
-import Text from "@/components/Text";
 import {View} from "react-native";
-import {Shadows} from "@/styles/Shadows";
 import Button from "@/components/Button";
 import {router} from "expo-router";
 import PageTitle from "@/components/PageTitle";
 import {NumberedRow} from "@/components/NumberedRow";
-import TopBar from "@/components/TopBar";
-
 
 const habits: Habit[] = [
     {
@@ -71,7 +67,7 @@ export default function HowToPlay() {
             </View>
         </View>
         <Button classNames={{wrapper: "mt-auto mb-2"}} iconPosition="right" onPress={() => {
-            router.push("cards-management")
+            router.push("/(intro)/cards-management")
         }} title="Next"/>
     </SafeAreaWrapper>
 }

@@ -1,5 +1,4 @@
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
-import React from "react";
 import {View} from "react-native";
 import Button from "@/components/Button";
 import {router} from "expo-router";
