@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
 import Providers from "@/utils/Providers";
+import {Slot} from "@radix-ui/react-slot";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

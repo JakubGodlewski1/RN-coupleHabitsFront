@@ -14,3 +14,7 @@ export const signInValidator = z.object({
     password: z.string().min(6, "Password must be at least 6 characters long"),
 })
 
+
+export const codeValidator = z.object({
+    code: z.string().min(6, "The code should be 6 characters long").max(6, "The code should be 6 characters long")
+})

@@ -1,7 +1,13 @@
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
-import {Slot, Stack} from "expo-router";
+import {Redirect, Stack} from "expo-router";
+import {useAuth} from "@clerk/clerk-expo";
 
 export default function NoTabsLayout() {
+    const {isSignedIn} = useAuth()
+
+    if (isSignedIn) {
+        return <Redirect href="/(dashboard)"/>
+    }
 
     return <SafeAreaWrapper>
         <Stack

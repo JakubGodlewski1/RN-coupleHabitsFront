@@ -1,15 +1,18 @@
-import {router} from "expo-router";
-import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
-import {useUserExists} from "@/hooks/useUserExists";
+import {SignedIn, SignedOut} from '@clerk/clerk-expo'
+import React from "react";
+import {View} from "react-native";
+import {Redirect} from "expo-router";
 
-//redirect user to the intended init page which is hero section
+
 const Index = () => {
 
-    useUserExists({
-        onUserExists: () => router.push('/(dashboard)'),
-        onUserNotExists: () => router.push("/hero"),
-    })
-
-    return <CenteredActivityIndicator/>
+    return <View>
+        <SignedIn>
+            <Redirect href="/(dashboard)"/>
+        </SignedIn>
+        <SignedOut>
+            <Redirect href="/hero"/>
+        </SignedOut>
+    </View>
 };
 export default Index;

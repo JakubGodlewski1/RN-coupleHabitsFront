@@ -12,13 +12,20 @@ export default function ForgotPassword() {
         <Text classNames={{text: "mb-8"}}>
             Enter the email address associated with your account and we will send you a link to reset your password
         </Text>
-        <Input label="Email" classNames={{wrapper: "mb-4"}} type="email" value={""} onChangeText={() => {
-        }} placeholder="emazing@email.com"/>
+        <Input
+            label="Email"
+            classNames={{wrapper: "mb-4"}}
+            keyboardType="email-address"
+            value={""}
+            onChangeText={() => {
+            }}
+            placeholder="emazing@email.com"
+        />
 
         <Button onPress={() => {
             Alert.alert("Check your email");
         }} title="Reset password"/>
         <Text classNames={{text: "text-center mt-auto"}}>Don't have an account yet? Let's <Link
-            className="text-primary font-mainBold" href="/(no-tabs)/sign-up">Sign up</Link></Text>
+            className="text-primary font-mainBold" href="/sign-up">Sign up</Link></Text>
     </ScrollView>
 }
