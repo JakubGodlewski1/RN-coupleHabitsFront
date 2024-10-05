@@ -8,9 +8,17 @@ import Text from "@/components/Text";
 import PageTitle from "@/components/PageTitle";
 import {useSignInWithClerk} from "@/hooks/useSignInWithClerk";
 import {Controller} from "react-hook-form";
+import {useGoogleAuthWithClerk} from "@/hooks/useGoogleAuthWithClerk";
 
 export default function SignIn() {
-    const {errors, clerkErrors, handleSignIn, control} = useSignInWithClerk()
+    const {errors, clerkErrors, handleSignIn, control, isLoading: isLoadingForm} = useSignInWithClerk()
+
+    const {
+        isLoading: isLoadingAuth,
+        startAuth
+    } = useGoogleAuthWithClerk()
+
+    const isLoading = isLoadingAuth || isLoadingForm
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <PageTitle>Sign in</PageTitle>
@@ -51,12 +59,15 @@ export default function SignIn() {
             <Text classNames={{text: "text-sm ml-auto mb-4"}}>Forgot password?</Text>
         </TouchableOpacity>
         <Button
+            disabled={isLoading}
             onPress={handleSignIn}
             title="Sign in"
         />
         <DividerOr classNames={{wrapper: "my-4"}}/>
-        <GoogleButton onPress={() => {
-        }}/>
+        <GoogleButton
+            disabled={isLoading}
+            onPress={startAuth}
+        />
         <View className="mt-auto">
             <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
                 className="text-primary font-mainBold" href="/sign-up">Sign up</Link></Text>

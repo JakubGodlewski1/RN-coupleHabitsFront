@@ -8,6 +8,7 @@ import {Link} from "expo-router";
 import PageTitle from "@/components/PageTitle";
 import {Controller} from "react-hook-form";
 import {useSignUpWithClerk} from "@/hooks/useSignUpWithClerk";
+import {useGoogleAuthWithClerk} from "@/hooks/useGoogleAuthWithClerk";
 
 export default function SignUp() {
     const {
@@ -19,8 +20,14 @@ export default function SignUp() {
         onCodeFormSubmit,
         pendingVerification,
         clerkErrors,
-        isLoaded
+        isLoaded,
+        isLoading: isLoadingForm
     } = useSignUpWithClerk()
+
+    const {
+        isLoading: isLoadingAuth,
+        startAuth
+    } = useGoogleAuthWithClerk()
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <PageTitle>Sign up</PageTitle>
@@ -75,14 +82,14 @@ export default function SignUp() {
             />
 
             <Button
-                disabled={!isLoaded}
+                disabled={isLoadingForm || isLoadingAuth}
                 onPress={onSignUpFormSubmit}
                 title="Sign up"
             />
             <DividerOr classNames={{wrapper: "my-4"}}/>
             <GoogleButton
-                onPress={() => {
-                }}
+                disabled={isLoadingForm || isLoadingAuth}
+                onPress={startAuth}
             />
             <View className="mt-auto">
                 <Text classNames={{text: "text-center mb-3"}}>Already Have an account? Let's <Link
@@ -109,7 +116,7 @@ export default function SignUp() {
                     }}
                     name="code"
                 />
-                <Button disabled={!isLoaded} title="Verify Email" onPress={onCodeFormSubmit}/>
+                <Button disabled={isLoadingForm || isLoadingAuth} title="Verify Email" onPress={onCodeFormSubmit}/>
             </View>
         )}
     </ScrollView>

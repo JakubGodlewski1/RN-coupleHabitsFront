@@ -16,6 +16,8 @@ type ClerkErrors = {
 
 export const useSignInWithClerk = () => {
     const [clerkErrors, setClerkErrors] = useState<ClerkErrors>({email: undefined, password: undefined})
+    const [isLoading, setIsLoading] = useState(false)
+
     const {control, handleSubmit, watch, formState: {errors}} = useForm<SignInForm>({
         resolver: zodResolver(signInValidator)
     })
@@ -48,6 +50,8 @@ export const useSignInWithClerk = () => {
             return
         }
 
+        setIsLoading(true)
+
         // Start the sign-in process using the email and password provided
         try {
             const signInAttempt = await signIn.create({
@@ -68,6 +72,7 @@ export const useSignInWithClerk = () => {
         } catch (err: any) {
             if (isClerkAPIResponseError(err)) {
                 assignClerkErrors(err)
+                setIsLoading(false)
             }
 
             console.error(JSON.stringify(err, null, 2))
@@ -79,6 +84,7 @@ export const useSignInWithClerk = () => {
         control,
         handleSignIn,
         errors,
-        clerkErrors
+        clerkErrors,
+        isLoading
     }
 }

@@ -22,6 +22,7 @@ type ClerkErrors = {
 }
 
 export const useSignUpWithClerk = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const {isLoaded, signUp, setActive} = useSignUp()
     const router = useRouter()
 
@@ -98,6 +99,8 @@ export const useSignUpWithClerk = () => {
             return
         }
 
+        setIsLoading(true)
+
         try {
             const completeSignUp = await signUp.attemptEmailAddressVerification({
                 code,
@@ -112,6 +115,7 @@ export const useSignUpWithClerk = () => {
         } catch (err: any) {
             setClerkErrors(p => ({...p, code: err.errors[0].message}))
             console.error(JSON.stringify(err, null, 2))
+            setIsLoading(false)
         }
     }
 
@@ -128,6 +132,7 @@ export const useSignUpWithClerk = () => {
         clerkErrors,
         signUpFormErrors,
         codeFormErrors,
-        isLoaded
+        isLoaded,
+        isLoading
     }
 }
