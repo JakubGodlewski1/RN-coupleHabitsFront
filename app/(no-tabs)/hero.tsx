@@ -1,7 +1,7 @@
 import Text from "@/components/Text";
 import {Image, View} from "react-native";
 // @ts-ignore
-import couple from "@/assets/illustrations/hero.png"
+import couple from "@/assets/illustrations/intro.png"
 import Button from "@/components/Button";
 import {Feather} from "@expo/vector-icons";
 import {router} from "expo-router";
@@ -20,10 +20,12 @@ export default function Hero() {
             </Text>
         </View>
         <Image
-            className="mt-auto mb-10 mx-auto"
+            // style={{height: 400, width: 300}}
+            resizeMode="contain"
+            className="mt-auto mb-10 mx-auto w-[85vw] h-[400px]"
             source={couple}
         />
-        <Button title="Explore the app" iconPosition="right"
+        <Button title="Start the change" iconPosition="right"
                 onPress={() => router.push("/sign-up")}>
             <Feather style={{color: "white"}} size={24} name="arrow-right"/>
         </Button>

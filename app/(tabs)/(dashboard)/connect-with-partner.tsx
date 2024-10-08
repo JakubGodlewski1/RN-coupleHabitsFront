@@ -1,4 +1,4 @@
-import {Alert, Image, Keyboard, ScrollView, TouchableOpacity, View} from "react-native";
+import {Alert, Image, Keyboard, Platform, ScrollView, TouchableOpacity, View} from "react-native";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
 import Text from "@/components/Text";
 import Button from "@/components/Button";
@@ -30,10 +30,13 @@ export default function ConnectWithPartner() {
     }
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <TouchableOpacity onPress={() => Keyboard.dismiss()} activeOpacity={1} className="p-4 bg-white grow">
+        <TouchableOpacity onPress={() => Keyboard.dismiss()}
+                          activeOpacity={1}
+                          className={`p-4 bg-white grow ${Platform.OS === "android" && "pt-8"}`}>
             <KeyboardAwareScrollView
                 contentContainerStyle={{gap: 16, alignItems: "center", flexGrow: 1, paddingBottom: 10}}>
-                <Image className="w-[50vw] h-[50vw]" source={require("../../../assets/illustrations/hands.png")}/>
+                <Image resizeMode="contain" className="w-[60vw] h-[40vw]"
+                       source={require("../../../assets/illustrations/couple2.png")}/>
                 <Text classNames={{text: "font-mainExtraBold"}} type="h3">
                     Let's <Text type="h3" classNames={{text: "text-primary font-mainExtraBold"}}>connect</Text> with
                     your
