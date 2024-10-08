@@ -2,15 +2,15 @@ import {View} from 'react-native';
 import Text from "@/components/Text";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
-import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
-import {EXAMPLE_HABIT} from "@/utils/consts";
 import {RefObject} from "react";
 import {Swipeable} from "react-native-gesture-handler";
+import SwipebleIntroCardWrapper from "@/components/IntroCard/SwipeableIntroCardWrapper";
+import {Habit} from "@/types";
 
-const IntroCard = ({animationDirection}: { animationDirection: "left" | "right" }) => {
-    const habit = EXAMPLE_HABIT
+const IntroCard = ({animationDirection, habit}: { animationDirection?: "left" | "right", habit: Habit }) => {
     const animate = (ref: RefObject<Swipeable>) => {
-        if (ref.current) {
+
+        if (ref.current && animationDirection) {
             const swipeLeft = ref.current?.openLeft
             const swipeRight = ref.current?.openRight
             const animate = animationDirection === "left" ? swipeLeft : swipeRight
@@ -28,22 +28,22 @@ const IntroCard = ({animationDirection}: { animationDirection: "left" | "right" 
 
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
         <View style={{...Shadows}} className="m-2 rounded-2xl bg-white">
-            <SwipebleCardWrapper options={{animate}} habit={habit}>
+            <SwipebleIntroCardWrapper options={animationDirection ? {animate} : {}} habit={habit}>
                 <View className="flex-row bg-white h-[88px] rounded-2xl border-x-[0.5px] border-skip shadow-md">
                     <View
                         className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px]"
                     >
                         <Text
-                            classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.mine.label}</Text>
+                            classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.user.label}</Text>
                         <BouncyCheckbox
                             style={{marginRight: "auto"}}
                             fillColor="#6EC166"
                             disableBuiltInState={true}
-                            isChecked={habit.details.mine.completed}
+                            isChecked={habit.details.user.completed}
                             size={20}
                             innerIconStyle={{
                                 borderRadius: 4,
-                                borderColor: habit.details.mine.completed ? "#6EC166" : "gray"
+                                borderColor: habit.details.user.completed ? "#6EC166" : "gray"
                             }}
                             iconStyle={{borderRadius: 4}}
                         />
@@ -56,7 +56,7 @@ const IntroCard = ({animationDirection}: { animationDirection: "left" | "right" 
                             classNames={{text: "shrink text-center text-sm font-mainBold"}}>{habit.details.partner.label}</Text>
                     </View>
                 </View>
-            </SwipebleCardWrapper>
+            </SwipebleIntroCardWrapper>
         </View>
     </View>
 };
