@@ -4,7 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
 import 'react-native-reanimated';
 import Providers from "@/utils/Providers";
-import {StatusBar} from "react-native";
+import {StatusBar} from "expo-status-bar";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,7 +37,10 @@ export default function RootLayout() {
                 }}
             >
             </Stack>
-            <StatusBar barStyle="dark-content" translucent={false}/>
+            <StatusBar
+                style={"dark"}
+                translucent={true}
+            />
         </Providers>
     );
 }
