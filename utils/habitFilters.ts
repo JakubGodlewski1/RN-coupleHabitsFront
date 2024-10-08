@@ -32,8 +32,8 @@ const weeklyAndIsSunday = (habit: Habit) => weekly(habit) && new Date().getDay()
 const assignedForTodayWithoutWeekly = (habit: Habit) => assignedForTodayFromSpecificDays(habit) || daily(habit)
 const assignedForTodayWithWeekly = (habit: Habit) => assignedForTodayWithoutWeekly(habit) || weeklyAndIsSunday(habit)
 
-const habitCompleted = (habit: Habit) => habit.details.partner.completed && habit.details.mine.completed
-const habitUncompleted = (habit: Habit) => !habit.details.partner.completed || !habit.details.mine.completed
+const habitCompleted = (habit: Habit) => habit.details.partner.completed && habit.details.user.completed
+const habitUncompleted = (habit: Habit) => !habit.details.partner.completed || !habit.details.user.completed
 
 const assignedForThisWeek = (habit: Habit) => habit.frequency.type === "repeat" && habit.frequency.repeatOption === "weekly"
 const notAssignedForThisWeek = (habit: Habit) => habit.frequency.type === "specific days" || (habit.frequency.type === "repeat" && habit.frequency.repeatOption === "daily")

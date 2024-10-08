@@ -13,10 +13,10 @@ import {useEffect, useState} from "react";
 import {useUser} from "@/api/hooks/useUser";
 
 export default function ConnectWithPartner() {
-    const [code, setCode] = useState<string>("");
+    const [code, setCode] = useState("");
     useHandleTabBar(true)
     const {connect, isPending} = useConnectPartner()
-    const {user, refetch, isLoading} = useUser()
+    const {user} = useUser({polling: true})
 
     useEffect(() => {
         if (user?.partner.connected) {
@@ -50,11 +50,6 @@ export default function ConnectWithPartner() {
                             })} title={user.connectionCode}>
                         <MaterialCommunityIcons size={24} color="white" name="content-copy"/>
                     </Button>
-                    <Button
-                        disabled={isLoading}
-                        classNames={{wrapper: "flex-1"}}
-                        type="secondary" onPress={refetch}
-                        title={isLoading ? "Checking" : "Connected!"}/>
                 </View>
 
                 <DividerOr/>

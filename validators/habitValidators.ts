@@ -31,16 +31,16 @@ export const frequencyValidator = z.union([
 
 // Define CreateHabit type validator
 export const createHabitValidator = z.object({
-    strike: z.number().min(0),
+    strike: z.number().min(0).default(0),
     frequency: frequencyValidator,
     details: z.object({
-        mine: z.object({
-            label: z.string().min(2, "Label is too short.").max(30, "Label is too long. max 30 characters"),
-            completed: z.boolean(),
+        user: z.object({
+            label: z.string().min(2, "Label is too short.").max(50, "Label is too long. max 50 characters"),
+            completed: z.boolean().default(false),
         }),
         partner: z.object({
-            label: z.string().min(2, "Label is too short.").max(30, "Label is too long. max 30 characters"),
-            completed: z.boolean(),
+            label: z.string().min(2, "Label is too short.").max(50, "Label is too long. max 50 characters"),
+            completed: z.boolean().default(false),
         })
     })
 });

@@ -1,4 +1,4 @@
-import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat, User} from "@/types";
+import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat} from "@/types";
 import {Platform} from "react-native";
 
 export const DASHBOARD_TABS: {
@@ -51,7 +51,7 @@ export const REPEAT_DROPDOWN_OPTIONS: {
 export const DEFAULT_CREATE_HABIT: CreateHabit = {
     strike: 0,
     details: {
-        mine: {
+        user: {
             label: "",
             completed: false
         },
@@ -75,12 +75,12 @@ export const EXAMPLE_HABIT: Habit = {
         repeatOption: "daily"
     },
     details: {
-        mine: {
-            label: "Run for at least 10 minutes",
+        user: {
+            label: "Work out",
             completed: false
         },
         partner: {
-            label: "Run for at least 10 minutes",
+            label: "Read a book for at least 20 minutes",
             completed: false
         },
     }

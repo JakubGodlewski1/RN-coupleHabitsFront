@@ -1,11 +1,12 @@
 import {useMutation} from "@tanstack/react-query";
-import {getAxiosInstance} from "@/api/axiosInstance";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
-import {Alert} from "react-native";
 import {User} from "@/types";
+import {useAxios} from "@/api/hooks/useAxios";
+import {handleError} from "@/utils/handleError";
 
 export const useDeleteHabit = () => {
+    const {getAxiosInstance} = useAxios()
 
     const deleteHabit = async (habitId: string) => {
         queryClient.setQueryData(
@@ -19,14 +20,12 @@ export const useDeleteHabit = () => {
 
     const {isPending, mutate} = useMutation({
         mutationFn: (habitId: string) => deleteHabit(habitId),
-        onSettled: async () => {
+        onSuccess: async () => {
             await queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]
             })
         },
-        onError: () => {
-            Alert.alert("Something went wrong, try again later")
-        }
+        onError: (error) => handleError(error)
     })
 
     return {isDeleting: isPending, deleteHabit: mutate}

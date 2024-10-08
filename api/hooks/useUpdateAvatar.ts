@@ -1,16 +1,17 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {User} from "@/types";
 import {queryKeys} from "@/api/queryKeys";
-import {Alert} from "react-native";
 import {router, usePathname} from "expo-router";
-import * as SecureStore from "expo-secure-store";
 import * as FileSystem from "expo-file-system";
 import {FileSystemUploadType} from "expo-file-system";
 import {DEFAULT_URL} from "@/utils/consts";
+import {useAuth} from "@clerk/clerk-expo";
+import {handleError} from "@/utils/handleError";
 
 export const useUpdateAvatar = () => {
     const queryClient = useQueryClient()
     const pathname = usePathname()
+    const {getToken} = useAuth()
 
     const uploadImage = async (imageUri: string) => {
         //optimistic update
@@ -19,15 +20,9 @@ export const useUpdateAvatar = () => {
             (data: User) => ({...data, avatar: imageUri} as User)
         )
 
-        const value = await SecureStore.getItemAsync('auth-token');
-        if (!value) {
-            throw new Error("You don't have enough permissions to upload your photo. Contact support.")
-        }
-        return await FileSystem.uploadAsync(DEFAULT_URL + "/avatars", imageUri, {
-            httpMethod: "POST",
-            headers: {
-                "x-auth-token": value
-            },
+        return await FileSystem.uploadAsync(DEFAULT_URL + "/users/avatar", imageUri, {
+            httpMethod: "PATCH",
+            headers: {Authorization: `Bearer ${await getToken()}`},
             uploadType: FileSystemUploadType.MULTIPART,
             fieldName: "avatar"
         })
@@ -43,7 +38,7 @@ export const useUpdateAvatar = () => {
                 queryKey: [queryKeys.useUser]
             })
         },
-        onError: (error) => Alert.alert(error.message)
+        onError: (error) => handleError(error)
     })
 
     return {isUpdating: isPending, updateAvatar: mutate}

@@ -1,23 +1,34 @@
-import {getAxiosInstance} from "@/api/axiosInstance";
 import {useQuery} from "@tanstack/react-query";
 import {queryKeys} from "@/api/queryKeys";
 import {User} from "@/types";
-import {useEffect} from "react";
-import {Alert} from "react-native";
-import {locationForIndex} from "sucrase/dist/types/parser/traverser/base";
+import {useEffect, useState} from "react";
+import {Alert, AppState} from "react-native";
+import {useAxios} from "@/api/hooks/useAxios";
 
-export const useUser = () => {
+export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
+    const {getAxiosInstance} = useAxios()
+    const [appState, setAppState] = useState(AppState.currentState);
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            console.log(appState)
+            setAppState(nextAppState);
+        });
+        return () => {
+            subscription.remove();
+        };
+    }, []);
 
     const {isError, error, isLoading, data, refetch} = useQuery({
+        refetchInterval: appState === "active" && polling ? 1500 : false,
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
         queryFn: async () => {
             const api = await getAxiosInstance();
-            console.log("use user api fires")
             try {
-                const res = await api.get("/users/user")
-                return res.data.data
+                const res = await api.get("/users")
+                return res.data
             } catch (err) {
                 Alert.alert("Something went wrong while fetching your data, try again later")
             }

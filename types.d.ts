@@ -37,7 +37,8 @@ type User = {
     habits: Habit[],
     gameAccount: {
         strike: number,
-        points: number
+        points: number,
+        dayOffPrice: number
     }
 };
 
@@ -52,3 +53,5 @@ type HabitFormType = {
 }
 
 type GlobalStrike = { url: string, data: { habit: Habit, action: "increase" | "decrease" } | Habit }
+
+type CurrentTabBarPage = "ideas" | "dashboard" | "settings"

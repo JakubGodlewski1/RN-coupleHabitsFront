@@ -1,16 +1,17 @@
 import {useMutation} from "@tanstack/react-query";
-import {getAxiosInstance} from "@/api/axiosInstance";
 import {CreateHabit} from "@/types";
 import {queryClient} from "@/api/queryClient";
 import {queryKeys} from "@/api/queryKeys";
-import {Alert} from "react-native";
 import {router} from "expo-router";
+import {useAxios} from "@/api/hooks/useAxios";
+import {handleError} from "@/utils/handleError";
 
 export const useCreateHabit = () => {
+    const {getAxiosInstance} = useAxios()
 
     const createHabit = async (habit: CreateHabit) => {
         const api = await getAxiosInstance()
-        return await api.post("/habits", {type: "habit", data: habit})
+        return await api.post("/habits", habit)
     }
 
     const {isPending, mutate} = useMutation({
@@ -21,9 +22,7 @@ export const useCreateHabit = () => {
             })
             router.back()
         },
-        onError: () => {
-            Alert.alert("Something went wrong, try again later")
-        }
+        onError: (error) => handleError(error)
     })
 
     return {isPending, createHabit: mutate}
