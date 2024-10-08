@@ -1,5 +1,4 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {User} from "@/types";
 import {queryKeys} from "@/api/queryKeys";
 import {router, usePathname} from "expo-router";
 import * as FileSystem from "expo-file-system";
@@ -8,17 +7,17 @@ import {DEFAULT_URL} from "@/utils/consts";
 import {useAuth} from "@clerk/clerk-expo";
 import {handleError} from "@/utils/handleError";
 
+export const MUTATION_KEY = "update-avatar"
+
 export const useUpdateAvatar = () => {
     const queryClient = useQueryClient()
-    const pathname = usePathname()
     const {getToken} = useAuth()
+    const pathname = usePathname()
 
     const uploadImage = async (imageUri: string) => {
-        //optimistic update
-        await queryClient.setQueryData(
-            [queryKeys.useUser],
-            (data: User) => ({...data, avatar: imageUri} as User)
-        )
+        if (pathname === "/settings") {
+            router.push("/(dashboard)")
+        }
 
         return await FileSystem.uploadAsync(DEFAULT_URL + "/users/avatar", imageUri, {
             httpMethod: "PATCH",
@@ -29,12 +28,10 @@ export const useUpdateAvatar = () => {
     };
 
     const {isPending, mutate} = useMutation({
-        mutationFn: (imageUri: string) => uploadImage(imageUri),
+        mutationKey: [MUTATION_KEY],
+        mutationFn: async (imageUri: string) => await uploadImage(imageUri),
         onSettled: async () => {
-            if (pathname === "/settings") {
-                router.push("/(dashboard)")
-            }
-            await queryClient.invalidateQueries({
+            return queryClient.invalidateQueries({
                 queryKey: [queryKeys.useUser]
             })
         },

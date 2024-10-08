@@ -1,7 +1,8 @@
 import {Alert, Image, TouchableOpacity} from "react-native";
 import Text from "@/components/Text";
-import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
+import {MUTATION_KEY, useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
 import {pickAvatar} from "@/utils/pickAvatar";
+import {useMutationState} from "@tanstack/react-query";
 
 type Props = {
     url: string | null,
@@ -10,6 +11,12 @@ type Props = {
 }
 export default function Avatar({url, text, ownership = "partner"}: Props) {
     const {updateAvatar} = useUpdateAvatar()
+    const [optimisticUpdateAvatar] = useMutationState({
+        filters: {mutationKey: [MUTATION_KEY], status: "pending"},
+        select: (mutation) => mutation.state.variables
+    }) as string[] | null[]
+
+    const avatarUrl = (ownership === "main" && optimisticUpdateAvatar) ? optimisticUpdateAvatar : url as string
 
     const handleUpdateAvatar = async () => {
         const uri = await pickAvatar()
@@ -17,6 +24,7 @@ export default function Avatar({url, text, ownership = "partner"}: Props) {
             updateAvatar(uri)
         }
     }
+
 
     return <TouchableOpacity
         onPress={() => ownership === "partner" ? () => {
@@ -33,7 +41,7 @@ export default function Avatar({url, text, ownership = "partner"}: Props) {
         }
         className="bg-skip rounded-full h-[72px] w-[72px]  items-center justify-center overflow-hidden">
         {url ? <Image className="w-full h-full" source={{
-                uri: url,
+                uri: avatarUrl,
             }}/> :
             <Text classNames={{text: "font-mainBold text-sm"}}>{text}</Text>
         }

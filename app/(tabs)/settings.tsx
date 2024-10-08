@@ -27,7 +27,7 @@ export default function Settings() {
 
     return <SafeAreaWrapper>
         <PageTitle>Settings</PageTitle>
-        <Text>{email}</Text>
+        {/*<Text>{email}</Text>*/}
         <View style={{gap: 16, flexGrow: 1}}>
             {
                 partner.connected && (
