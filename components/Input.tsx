@@ -1,4 +1,4 @@
-import {KeyboardTypeOptions, TextInput, TouchableOpacity, View} from "react-native";
+import {KeyboardTypeOptions, Platform, TextInput, TouchableOpacity, View} from "react-native";
 import {Entypo} from "@expo/vector-icons";
 import {useState} from "react";
 import Text from "@/components/Text";
@@ -38,7 +38,7 @@ export default function Input({
             <TextInput
                 autoCapitalize={autoCapitalize}
                 secureTextEntry={!passwordVisible && keyboardType === "visible-password"}
-                keyboardType={keyboardType}
+                keyboardType={Platform.OS === "android" ? "default" : keyboardType}
                 value={value}
                 onChangeText={onChangeText}
                 placeholderTextColor="#828282"

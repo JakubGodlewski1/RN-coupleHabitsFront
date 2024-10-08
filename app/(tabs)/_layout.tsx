@@ -1,57 +1,38 @@
-import {router, Tabs, useFocusEffect} from "expo-router";
-import {Image, Platform, TouchableOpacity, View} from "react-native";
-import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import {ReactNode, useEffect, useState} from "react";
+import {Redirect, router, Tabs} from "expo-router";
+import {Platform, TouchableOpacity, View} from "react-native";
+import {ReactNode, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
-import {useValidateStrike} from "@/api/hooks/useValidateStrike";
-import {DateManager} from "@/utils/dateManager";
-
-type CurrentPage = "ideas" | "dashboard" | "settings"
-
-const icons: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode }[] = [
-    {
-        name: "ideas",
-        body: (currentPage: CurrentPage) => <Image className="w-10 h-10"
-                                                   source={currentPage === "ideas" ?
-                                                       require("./../../assets/icons/bulb_active.png") :
-                                                       require("./../../assets/icons/bulb.png")}/>
-    },
-    {
-        name: "dashboard",
-        body: (currentPage) => <MaterialCommunityIcons color={currentPage === "dashboard" ? "#413085" : "#5CBFEC"}
-                                                       size={40} name="view-dashboard"/>
-    },
-    {
-        name: "settings",
-        body: (currentPage) => <Ionicons size={40} color={currentPage === "settings" ? "#413085" : "#5CBFEC"}
-                                         name="settings-sharp"/>
-    }
-]
+import {CurrentTabBarPage} from "@/types";
+import {tabBarIcons} from "@/utils/tabBarIcons";
+import {useUser} from "@/api/hooks/useUser";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import Text from "@/components/Text";
+import {useAfterIntro} from "@/hooks/useAfterIntro";
 
 export default function TabsLayout() {
-    const [currentPage, setCurrentPage] = useState<CurrentPage>("dashboard");
+    const [currentPage, setCurrentPage] = useState<CurrentTabBarPage>("dashboard");
     const {isVisible} = useTabBarContext()
-    const {validate} = useValidateStrike()
+    const {isLoading: gettingToken, token} = useAfterIntro()
 
-    //validate global strike
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout | undefined
-        validate()
-        const timeoutId = setTimeout(() => {
-            validate()
-            intervalId = setInterval(() => {
-                validate()
-            }, 1000 * 60 * 60 * 24)
-        }, DateManager.millisecondsToMidnight(5))
+    const {user, isLoading} = useUser()
 
-        return () => {
-            clearInterval(intervalId)
-            clearTimeout(timeoutId)
-        }
-    }, []);
+    if (isLoading || gettingToken)
+        return <CenteredActivityIndicator/>
 
-    const onPress = (icon: { name: CurrentPage, body: (currentPage: CurrentPage) => ReactNode }) => {
+    if (!token) {
+        return <Redirect href="/(intro)/how-to-play"/>
+    }
+
+    if (!user) {
+        return <View className="h-full items-center justify-center text-center mx-10">
+            <Text classNames={{text: "text-center"}}>We could not get your user data. Try again later. If problem
+                persists, contact our support team at
+                help@couplehabits.com</Text>
+        </View>
+    }
+
+    const onPress = (icon: { name: CurrentTabBarPage, body: (currentPage: CurrentTabBarPage) => ReactNode }) => {
         if (icon.name === currentPage && currentPage !== "dashboard") {
             setCurrentPage("dashboard")
             router.push("/(dashboard)")
@@ -63,16 +44,6 @@ export default function TabsLayout() {
         }
     }
 
-    useFocusEffect(() => {
-        //check strike
-
-        const id = setInterval(() => {
-            //check strike
-        }, 1000 * 60 * 60)
-
-        return () => clearInterval(id)
-    })
-
     return <Tabs
         sceneContainerStyle={{backgroundColor: "transparent"}}
         screenOptions={{
@@ -83,7 +54,7 @@ export default function TabsLayout() {
                 (
                     <View className="h-20 relative">
                         <View className="z-20 items-start justify-evenly flex-row -top-3">
-                            {icons.map(icon => (
+                            {tabBarIcons.map(icon => (
                                 <TouchableOpacity
                                     key={icon.name}
                                     activeOpacity={100}
