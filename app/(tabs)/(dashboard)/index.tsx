@@ -12,11 +12,10 @@ import React, {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 import {ShadowsLight} from "@/styles/Shadows";
-import RefetchHabitsOnPull from "@/components/RefetchHabitsOnPull";
-import {useFocusEffect} from "expo-router";
+import {filters} from "@/utils/habitFilters";
 
 export default function Dashboard() {
-    const {user, isLoading} = useUser()
+    const {user, isLoading} = useUser({polling: true})
     const [currentTab, setCurrentTab] = useState<DashboardTabKey>("todo")
 
     if (isLoading) {
@@ -25,47 +24,53 @@ export default function Dashboard() {
 
     if (!user) {
         return <View className="grow items-center justify-center">
-            <Text>
-                Something went wrong, try again later
+            <Text classNames={{text: "text-center mx-4"}}>
+                We were unable to retrieve your user data. Please contact our support team at
+                <Text classNames={{text: "font-mainBold"}}> help@couplehabits.com
+                </Text>
             </Text>
         </View>
     }
 
-
     return <SafeAreaView className="grow" edges={["top"]}>
-        <RefetchHabitsOnPull>
-            <View className="relative grow" style={{gap: 16}}>
-                <View style={{gap: 16}} className="px-4">
-                    <TopBar user={user}/>
-                    <Tabs<DashboardTabKey>
-                        value={currentTab}
-                        onPress={(tab) => setCurrentTab(tab)}
-                        options={DASHBOARD_TABS}/>
-                </View>
-                <View className="grow bg-white p-2 rounded-t-3xl">
-                    {
-                        user?.partner?.connected ? <>
-                                <View style={ShadowsLight} className="flex-row justify-around bg-white p-2 rounded-2xl">
-                                    <Avatar ownership="main" url={user.avatar} text="You"/>
-                                    <Avatar ownership="partner" url={user.partner.avatar} text="Partner"/>
-                                </View>
-                                <View style={{gap: 8}} className="grow p-2">
-                                    {user.habits.length !== 0 ?
-                                        <FilteredHabits habits={user.habits} currentTab={currentTab}/> :
-                                        (
-                                            <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first
-                                                habit,
-                                                you
-                                                will
-                                                see it here.</Text>
-                                        )}
-                                </View>
-                            </> :
-                            <ConnectWithPartnerDisplay user={user!}/>
-                    }
-                </View>
+        <View className="relative grow" style={{gap: 16}}>
+            <View style={{gap: 16}} className="px-4">
+                <TopBar user={user}/>
+                <Tabs<DashboardTabKey>
+                    value={currentTab}
+                    onPress={(tab) => setCurrentTab(tab)}
+                    options={DASHBOARD_TABS}/>
             </View>
-        </RefetchHabitsOnPull>
+            <View className="grow bg-white p-2 rounded-t-3xl">
+                {
+                    user?.partner?.connected ? <>
+                            <View style={ShadowsLight} className="flex-row justify-around bg-white p-2 rounded-2xl">
+                                <Avatar ownership="main" url={user.avatar} text="You"/>
+                                <Avatar ownership="partner" url={user.partner.avatar} text="Partner"/>
+                            </View>
+                            <View style={{gap: 8}} className="grow p-2">
+                                {user.habits.length === 0 && (
+                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first
+                                        habit, you will see it here.</Text>
+                                )}
+                                {(
+                                    user.habits.filter(filters.assignedForTodayWithWeekly).length === 0 &&
+                                    currentTab === "todo" &&
+                                    user.habits.length > 0
+                                ) ? (
+                                        <Text classNames={{text: "text-center mt-4 mx-14"}}>You don't have any habits
+                                            scheduled for today</Text>
+                                    )
+                                    :
+                                    <FilteredHabits habits={user.habits} currentTab={currentTab}/>
+                                }
+                            </View>
+                        </> :
+                        <ConnectWithPartnerDisplay user={user!}/>
+                }
+            </View>
+        </View>
+        {/*</RefetchHabitsOnPull>*/}
     </SafeAreaView>
 }
 

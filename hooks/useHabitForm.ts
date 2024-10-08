@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import {useState} from "react";
 import {CreateHabit, FrequencyType, HabitFormType} from "@/types";
 import {produce} from "immer";
 import {useHandleTabBar} from "@/hooks/useHandleTabBar";
@@ -8,11 +8,14 @@ import {useUser} from "@/api/hooks/useUser";
 
 
 export default function useHabitForm({type, initHabitJSON}: HabitFormType) {
-    const InitialStateOfTheSameLabel = () => type === "update" && (data.details.mine.label === data.details.partner.label) && data.details.partner.label.length > 0;
+    const InitialStateOfTheSameLabel = () => type === "update" && (data.details.user.label === data.details.partner.label) && data.details.partner.label.length > 0;
 
     const [data, setData] = useState<CreateHabit>(JSON.parse(initHabitJSON))
-    const [errors, setErrors] = useState({});
-    const [theSameLabel, setTheSameLabel] = React.useState(InitialStateOfTheSameLabel);
+    const [errors, setErrors] = useState<{ userLabel: string | undefined, partnerLabel: string | undefined }>({
+        userLabel: undefined,
+        partnerLabel: undefined,
+    });
+    const [theSameLabel, setTheSameLabel] = useState(InitialStateOfTheSameLabel);
 
     //if its habit update, set the same label to true if the habits are the same
 
@@ -27,7 +30,12 @@ export default function useHabitForm({type, initHabitJSON}: HabitFormType) {
         if (result.success) {
             submitFn(data)
         } else {
-            Alert.alert("Provided data is not correct, check the form and try again")
+            const userLabel = result.error.format().details?.user?.label?._errors[0]
+            const partnerLabel = result.error.format().details?.partner?.label?._errors[0]
+            setErrors({
+                partnerLabel,
+                userLabel
+            })
         }
     }
 
@@ -67,7 +75,7 @@ export default function useHabitForm({type, initHabitJSON}: HabitFormType) {
         setTheSameLabel((p) => {
             if (!p) {
                 setData(produce(draft => {
-                    draft.details.partner.label = draft.details.mine.label
+                    draft.details.partner.label = draft.details.user.label
                 }))
             } else {
                 setData(produce(draft => {
