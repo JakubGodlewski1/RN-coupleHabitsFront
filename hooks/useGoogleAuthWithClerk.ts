@@ -20,12 +20,11 @@ export const useGoogleAuthWithClerk = () => {
 
     const {startOAuthFlow} = useOAuth({strategy: 'oauth_google'})
 
-
     const onPress = useCallback(async () => {
         setIsLoading(true)
         try {
             const {createdSessionId, setActive} = await startOAuthFlow({
-                redirectUrl: Linking.createURL('/(tabs)/(dashboard)', {scheme: 'myapp'}),
+                redirectUrl: Linking.createURL("/(tabs)/(dashboard)", {scheme: 'myapp'}),
             })
 
             if (createdSessionId) {

@@ -1,13 +1,5 @@
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
-import {FileSystemUploadType} from 'expo-file-system';
-import * as SecureStore from "expo-secure-store";
-import {DEFAULT_URL} from "@/utils/consts";
 import {Alert} from "react-native";
-import {QueryClient} from "@tanstack/query-core";
-import {queryClient} from "@/api/queryClient";
-import {queryKeys} from "@/api/queryKeys";
-import {User} from "@/types";
 
 export const pickAvatar = async () => {
     let imageUri = "";
@@ -31,8 +23,8 @@ export const pickAvatar = async () => {
         return Alert.alert("Please upload a file");
     }
 
-    if (pic.fileSize! > 4000000) {
-        return Alert.alert("Avatar is too big, max size is 4mb", `Your avatar has ${Math.round(result.assets![0].fileSize! / 10000) / 100} mb`);
+    if (pic.fileSize! > 5000000) {
+        return Alert.alert("Avatar is too big, max size is 5mb", `Your avatar has ${Math.round(result.assets![0].fileSize! / 10000) / 100} mb`);
     }
 
     if (!result.canceled)

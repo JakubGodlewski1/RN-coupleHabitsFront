@@ -5,7 +5,6 @@ import {DashboardTabKey} from "@/types";
 import {View} from "react-native";
 import Avatar from "@/components/Avatar";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
-import React, {useEffect} from "react";
 import HabitCard from "@/components/HabitCard";
 import Text from "@/components/Text";
 import {AntDesign} from "@expo/vector-icons";
@@ -64,9 +63,10 @@ export default function DashboardInfo() {
                                             classNames={{text: " text-center text-[16px]"}}>
                                             <Text classNames={{text: "text-[16px] font-mainExtraBold"}}>Your partner's
                                                 task </Text>
-                                            and their
+                                            and
                                             <Text
-                                                classNames={{text: "text-[16px] font-mainExtraBold"}}> avatar</Text></Text>
+                                                classNames={{text: "text-[16px] font-mainExtraBold"}}> their
+                                                avatar</Text></Text>
                                     </View>
                                 </View>
                             </View>

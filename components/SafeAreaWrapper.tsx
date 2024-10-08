@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import {StatusBar, ViewStyle} from "react-native";
+import {ViewStyle} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 type Props = {
@@ -18,7 +18,7 @@ export const SafeAreaWrapper = ({children, classNames, style, options = {disable
                           className={`px-4 py-2 grow ${classNames?.wrapper}`}>
                 {children}
             </SafeAreaView>
-            <StatusBar translucent={false}/>
+            
         </>
     )
 }

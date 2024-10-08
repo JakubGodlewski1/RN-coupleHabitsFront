@@ -1,7 +1,7 @@
-import {TouchableOpacity, View} from "react-native";
+import {Keyboard, TouchableOpacity, View} from "react-native";
 import {useState} from "react";
 import Text from "@/components/Text";
-import {AntDesign, Entypo} from "@expo/vector-icons";
+import {Entypo} from "@expo/vector-icons";
 
 type Props<T extends string> = {
     selectedKey: T;
@@ -18,7 +18,10 @@ export default function Dropdown<T extends string>({options, onPress, selectedKe
 
     return <View className="relative z-10">
         <TouchableOpacity
-            onPress={() => setIsOpen(p => !p)}
+            onPress={() => {
+                Keyboard.dismiss()
+                setIsOpen(p => !p)
+            }}
             className="p-3 border-[1px] flex-row border-skip rounded-xl items-center justify-between h-[55px]">
             <Text>{selected.label}</Text>
             <Entypo size={24} name={isOpen ? "chevron-small-up" : "chevron-small-down"}/>

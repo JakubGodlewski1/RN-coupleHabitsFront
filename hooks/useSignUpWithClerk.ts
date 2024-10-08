@@ -108,7 +108,7 @@ export const useSignUpWithClerk = () => {
 
             if (completeSignUp.status === 'complete') {
                 await setActive({session: completeSignUp.createdSessionId})
-                router.replace('/(dashboard)')
+                router.replace('/(intro)/how-to-play')
             } else {
                 console.error(JSON.stringify(completeSignUp, null, 2))
             }

@@ -1,4 +1,4 @@
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import Text from "@/components/Text";
 import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -17,7 +17,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                         className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
                     >
                         <Text
-                            classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.mine.label}</Text>
+                            classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.user.label}</Text>
                         {
                             !hideIndicators &&
                             <BouncyCheckbox
@@ -25,12 +25,15 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                                 style={{marginRight: "auto"}}
                                 fillColor="#6EC166"
                                 disableBuiltInState={true}
-                                isChecked={habit.details.mine.completed}
-                                onPress={() => toggleCheckbox({id: habit.id})}
+                                isChecked={habit.details.user.completed}
+                                onPress={() => toggleCheckbox({
+                                    id: habit.id,
+                                    isCompleted: !habit.details.user.completed
+                                })}
                                 size={20}
                                 innerIconStyle={{
                                     borderRadius: 4,
-                                    borderColor: habit.details.mine.completed ? "#6EC166" : "gray"
+                                    borderColor: habit.details.user.completed ? "#6EC166" : "gray"
                                 }}
                                 iconStyle={{borderRadius: 4}}
                             />

@@ -20,7 +20,6 @@ export default function SignUp() {
         onCodeFormSubmit,
         pendingVerification,
         clerkErrors,
-        isLoaded,
         isLoading: isLoadingForm
     } = useSignUpWithClerk()
 
@@ -70,7 +69,7 @@ export default function SignUp() {
                     <Input
                         autoCapitalize="none"
                         errorMessage={signUpFormErrors.passwordConfirmation?.message}
-                        label="password Confirmation"
+                        label="Password confirmation"
                         classNames={{wrapper: "mb-2"}}
                         keyboardType="visible-password"
                         value={value}

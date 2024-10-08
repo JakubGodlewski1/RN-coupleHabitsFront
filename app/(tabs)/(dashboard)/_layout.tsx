@@ -1,6 +1,6 @@
 import {Stack} from "expo-router";
 
-export default function () {
+export default function DashboardLayout() {
 
     return <Stack
 
