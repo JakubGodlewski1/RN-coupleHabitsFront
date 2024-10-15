@@ -12,7 +12,10 @@
       "distribution":"internal"
     },
     "production":{
-      "autoIncrement":true
+      "autoIncrement":true,
+      "env":{
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_cHJlcGFyZWQtc2tpbmstNjAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+      }
     }
   },
   "submit":{

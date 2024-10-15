@@ -24,7 +24,6 @@ module.exports = {
                 skip: "#D2D7E5",
                 accent: "#413085",
                 "backgroundItem": "#828282"
-
             }
         },
     },
