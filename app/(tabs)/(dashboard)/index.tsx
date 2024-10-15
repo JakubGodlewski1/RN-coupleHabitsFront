@@ -26,7 +26,7 @@ export default function Dashboard() {
         return <View className="grow items-center justify-center">
             <Text classNames={{text: "text-center mx-4"}}>
                 We were unable to retrieve your user data. Please contact our support team at
-                <Text classNames={{text: "font-mainBold"}}> help@couplehabits.com
+                <Text classNames={{text: "font-mainBold"}}> contact@couplehabits.com
                 </Text>
             </Text>
         </View>

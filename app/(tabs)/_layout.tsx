@@ -27,8 +27,7 @@ export default function TabsLayout() {
     if (!user) {
         return <View className="h-full items-center justify-center text-center mx-10">
             <Text classNames={{text: "text-center"}}>We could not get your user data. Try again later. If problem
-                persists, contact our support team at
-                help@couplehabits.com</Text>
+                persists, contact our support team at contact@couplehabits.com</Text>
         </View>
     }
 
