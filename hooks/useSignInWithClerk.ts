@@ -6,6 +6,7 @@ import {isClerkAPIResponseError, useSignIn} from "@clerk/clerk-expo";
 import {router} from "expo-router";
 import {z} from "zod";
 import {ClerkAPIError} from "@clerk/types";
+import {Alert} from "react-native";
 
 type SignInForm = z.infer<typeof signInValidator>
 type ClerkParamName = "email_address" | "password"
@@ -39,7 +40,11 @@ export const useSignInWithClerk = () => {
                 const field = errorMapping[err.meta.paramName as ClerkParamName];
                 if (field) {
                     setClerkErrors(p => ({...p, [field]: err.message}));
+                } else if (err.meta?.paramName === "identifier") {
+                    Alert.alert(err.longMessage || "something went wrong, try again later")
                 }
+            } else {
+
             }
         });
     }

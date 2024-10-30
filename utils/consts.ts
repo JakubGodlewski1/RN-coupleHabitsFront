@@ -87,8 +87,8 @@ export const EXAMPLE_HABIT: Habit = {
 }
 
 //choose localhost or external (production) backend url
-const IOS = "http://localhost:3004"
-const ANDROID = "http://10.0.2.2:3004"
+const IOS = "http://localhost:3000"
+const ANDROID = "http://10.0.2.2:3000"
 const external = "https://api.couplehabits.com/api/v1"
 const isExternal = true
 
