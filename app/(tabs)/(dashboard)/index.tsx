@@ -53,6 +53,20 @@ export default function Dashboard() {
                                     <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first
                                         habit, you will see it here.</Text>
                                 )}
+                                {
+                                    user.habits.filter(filters.assignedForTodayWithWeekly).length > 0 &&
+                                    user.habits.filter(filters.habitUncompleted).length === 0 &&
+                                    currentTab === "todo" &&
+                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>You have completed all habits
+                                        scheduled for today</Text>
+                                }
+                                {
+                                    user.habits.filter(filters.assignedForTodayWithWeekly).length > 0 &&
+                                    user.habits.filter(filters.habitCompleted).length === 0 &&
+                                    currentTab === "completed" &&
+                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>You have not completed any habits
+                                        yet</Text>
+                                }
                                 {(
                                     user.habits.filter(filters.assignedForTodayWithWeekly).length === 0 &&
                                     currentTab === "todo" &&
