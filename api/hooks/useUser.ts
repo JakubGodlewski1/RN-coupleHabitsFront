@@ -4,19 +4,17 @@ import {User} from "@/types";
 import {useEffect, useState} from "react";
 import {Alert, AppState} from "react-native";
 import {useAxios} from "@/api/hooks/useAxios";
+import {hasBeenReloadedToday} from "@/utils/hasBeenReloadedToday";
+import {queryClient} from "@/api/queryClient";
 
 export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const {getAxiosInstance} = useAxios()
     const [appState, setAppState] = useState(AppState.currentState);
+    const [dailyLoading, setDailyLoading] = useState(false);
 
     useEffect(() => {
-        const subscription = AppState.addEventListener("change", nextAppState => {
-            console.log(appState)
-            setAppState(nextAppState);
-        });
-        return () => {
-            subscription.remove();
-        };
+        const subscription = AppState.addEventListener("change", nextAppState => setAppState(nextAppState));
+        return () => subscription.remove()
     }, []);
 
     const {isError, error, isLoading, data, refetch} = useQuery({
@@ -42,5 +40,22 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
         }
     }, [isError]);
 
-    return {isLoading, error, isError, user: data as User | undefined, refetch}
+    useEffect(() => {
+        const validateHasLoadedToday = async () => {
+            if (!(await hasBeenReloadedToday())) {
+                setDailyLoading(true)
+                await queryClient.invalidateQueries({
+                    queryKey: [queryKeys.useUser]
+                })
+                setDailyLoading(false)
+            }
+        }
+
+        if (AppState.currentState === "active") {
+            validateHasLoadedToday()
+        }
+
+    }, [AppState.currentState !== "active"])
+
+    return {isLoading: (isLoading || dailyLoading), error, isError, user: data as User | undefined, refetch}
 }
