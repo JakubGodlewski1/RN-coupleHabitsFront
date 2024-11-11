@@ -9,6 +9,7 @@ import PageTitle from "@/components/PageTitle";
 import {Controller} from "react-hook-form";
 import {useSignUpWithClerk} from "@/hooks/useSignUpWithClerk";
 import {useGoogleAuthWithClerk} from "@/hooks/useGoogleAuthWithClerk";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 export default function SignUp() {
     const {
@@ -27,6 +28,10 @@ export default function SignUp() {
         isLoading: isLoadingAuth,
         startAuth
     } = useGoogleAuthWithClerk()
+
+    if (isLoadingAuth) {
+        return <CenteredActivityIndicator/>
+    }
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <PageTitle>Sign up</PageTitle>

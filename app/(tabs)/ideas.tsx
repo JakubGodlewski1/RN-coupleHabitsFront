@@ -1,8 +1,7 @@
-import {ScrollView, TouchableOpacity, View, Alert} from "react-native";
+import {ScrollView, TouchableOpacity, View} from "react-native";
 import PageTitle from "@/components/PageTitle";
 import Text from "@/components/Text";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
-import * as Clipboard from 'expo-clipboard';
 import {Shadows} from "@/styles/Shadows";
 import {copyToClipboard} from "@/utils/copyToClipboard";
 

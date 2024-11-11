@@ -5,9 +5,7 @@ import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
 import {CurrentTabBarPage} from "@/types";
 import {tabBarIcons} from "@/utils/tabBarIcons";
-import {useUser} from "@/api/hooks/useUser";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
-import Text from "@/components/Text";
 import {useAfterIntro} from "@/hooks/useAfterIntro";
 
 export default function TabsLayout() {
@@ -15,20 +13,11 @@ export default function TabsLayout() {
     const {isVisible} = useTabBarContext()
     const {isLoading: gettingToken, token} = useAfterIntro()
 
-    const {user, isLoading} = useUser()
-
-    if (isLoading || gettingToken)
+    if (gettingToken)
         return <CenteredActivityIndicator/>
 
     if (!token) {
         return <Redirect href="/(intro)/how-to-play"/>
-    }
-
-    if (!user) {
-        return <View className="h-full items-center justify-center text-center mx-10">
-            <Text classNames={{text: "text-center"}}>We could not get your user data. Try again later. If problem
-                persists, contact our support team at contact@couplehabits.com</Text>
-        </View>
     }
 
     const onPress = (icon: { name: CurrentTabBarPage, body: (currentPage: CurrentTabBarPage) => ReactNode }) => {
