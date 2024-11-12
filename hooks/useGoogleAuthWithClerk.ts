@@ -30,8 +30,10 @@ export const useGoogleAuthWithClerk = () => {
             if (createdSessionId) {
                 await setActive!({session: createdSessionId})
             }
+
         } catch (err) {
             console.error('OAuth error', err)
+        } finally {
             setIsLoading(false)
         }
     }, [])
