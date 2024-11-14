@@ -12,7 +12,7 @@ import React, {useState} from "react";
 import FilteredHabits from "@/components/FilteredHabits";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 import {ShadowsLight} from "@/styles/Shadows";
-import {filters} from "@/utils/habitFilters";
+import NoHabitsInfoScreen from "@/app/(tabs)/(dashboard)/noHabitsInfoScreen";
 
 export default function Dashboard() {
     const {user, isLoading} = useUser({polling: true})
@@ -49,35 +49,8 @@ export default function Dashboard() {
                                 <Avatar ownership="partner" url={user.partner.avatar} text="Partner"/>
                             </View>
                             <View style={{gap: 8}} className="grow p-2">
-                                {user.habits.length === 0 && (
-                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first
-                                        habit, you will see it here.</Text>
-                                )}
-                                {
-                                    user.habits.filter(filters.assignedForTodayWithWeekly).length > 0 &&
-                                    user.habits.filter(filters.habitUncompleted).length === 0 &&
-                                    currentTab === "todo" &&
-                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>You have completed all habits
-                                        scheduled for today</Text>
-                                }
-                                {
-                                    user.habits.filter(filters.assignedForTodayWithWeekly).length > 0 &&
-                                    user.habits.filter(filters.habitCompleted).length === 0 &&
-                                    currentTab === "completed" &&
-                                    <Text classNames={{text: "text-center mt-4 mx-14"}}>You have not completed any habits
-                                        yet</Text>
-                                }
-                                {(
-                                    user.habits.filter(filters.assignedForTodayWithWeekly).length === 0 &&
-                                    currentTab === "todo" &&
-                                    user.habits.length > 0
-                                ) ? (
-                                        <Text classNames={{text: "text-center mt-4 mx-14"}}>You don't have any habits
-                                            scheduled for today</Text>
-                                    )
-                                    :
-                                    <FilteredHabits habits={user.habits} currentTab={currentTab}/>
-                                }
+                                <NoHabitsInfoScreen user={user} currentTab={currentTab}/>
+                                <FilteredHabits habits={user.habits} currentTab={currentTab}/>
                             </View>
                         </> :
                         <ConnectWithPartnerDisplay user={user!}/>
