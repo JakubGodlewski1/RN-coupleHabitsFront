@@ -1,13 +1,62 @@
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import Text from "@/components/Text";
 import {Habit} from "@/types";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {Shadows} from "@/styles/Shadows";
 import SwipebleCardWrapper from "@/components/SwipebleCardWrapper";
 import {useToggleCheckbox} from "@/api/hooks/useToggleCheckbox";
+import Purchases from "react-native-purchases";
+import {useUser} from "@/api/hooks/useUser";
+import RevenueCatUI, {PAYWALL_RESULT} from "react-native-purchases-ui";
+import {useUpdateGameAccount} from "@/api/hooks/useUpdateGameAccount";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicators?: boolean }) => {
     const {toggleCheckbox, isUpdating} = useToggleCheckbox()
+    const {user, isLoading} = useUser()
+    const {updateGameAccount, isPending: isUpdatingGameAccount} = useUpdateGameAccount()
+
+    if (isLoading || !user) {
+        return null
+    }
+
+    const handleToggleCheckbox = async () => {
+        //validate that user has a valid subscription, if so, toggle. otherwise show popup
+        //validate that user has pro access to the app
+        const purchaserInfo = await Purchases.getCustomerInfo()
+        const isSubscribed = purchaserInfo.entitlements.active['pro'] !== undefined;
+        const {gameAccount} = user
+
+        if (isSubscribed || (gameAccount.pro && !gameAccount.isPayer)) {
+            toggleCheckbox({
+                id: habit.id,
+                isCompleted: !habit.details.user.completed
+            })
+
+        } else {
+            //subscription has ended
+            if (!isSubscribed && gameAccount.isPayer) {
+                updateGameAccount({pro: false})
+            }
+
+            //user has to pay
+            try {
+                const result: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({displayCloseButton: true})
+                if (result === "PURCHASED") {
+                    //send api request to add user's partner as pro member
+                    updateGameAccount({pro: true})
+                }
+
+            } catch (err) {
+                Alert.alert("Something went wrong, try again later")
+                console.log(err)
+            }
+        }
+    }
+
+    if (isUpdatingGameAccount) {
+        return <CenteredActivityIndicator/>
+    }
 
     return <View className="border-2 border-skip rounded-2xl overflow-hidden">
         <View style={{...Shadows}} className="m-2 rounded-2xl bg-white">
@@ -26,10 +75,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                                 fillColor="#6EC166"
                                 disableBuiltInState={true}
                                 isChecked={habit.details.user.completed}
-                                onPress={() => toggleCheckbox({
-                                    id: habit.id,
-                                    isCompleted: !habit.details.user.completed
-                                })}
+                                onPress={handleToggleCheckbox}
                                 size={20}
                                 innerIconStyle={{
                                     borderRadius: 4,
@@ -38,7 +84,6 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                                 iconStyle={{borderRadius: 4}}
                             />
                         }
-
                     </View>
                     <View
                         className={`px-4 py-2 flex-1 bg-white rounded-r-xl

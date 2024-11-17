@@ -5,6 +5,18 @@ import {useEffect} from 'react';
 import 'react-native-reanimated';
 import Providers from "@/utils/Providers";
 import {StatusBar} from "expo-status-bar";
+import Purchases from "react-native-purchases";
+import {Platform} from "react-native";
+
+const IOS_RC_KEY = process.env.EXPO_PUBLIC_REVENUE_CAT_IOS
+const ANDROID_RC_KEY = process.env.EXPO_PUBLIC_REVENUE_CAT_ANDROID
+
+if (!IOS_RC_KEY)
+    throw new Error("Ios revenue cat api key is missing")
+
+if (!ANDROID_RC_KEY)
+    throw new Error("Ios revenue cat api key is missing")
+
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,9 +36,21 @@ export default function RootLayout() {
         }
     }, [loaded]);
 
+    //revenue cat
+    Purchases.setLogLevel(Purchases.LOG_LEVEL.VERBOSE)
+
+    useEffect(() => {
+        if (Platform.OS === 'ios') {
+            Purchases.configure({apiKey: IOS_RC_KEY!})
+        } else if (Platform.OS === "android") {
+            Purchases.configure({apiKey: ANDROID_RC_KEY!})
+        }
+    }, []);
+
     if (!loaded) {
         return null;
     }
+
 
     return (
         <Providers>
