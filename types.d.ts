@@ -8,7 +8,6 @@ import {
 } from "@/validators/habitValidators";
 import {signInValidator, signUpValidator} from "@/validators/authValidators";
 
-
 //auth
 type SignUp = z.infer<typeof signUpValidator>
 type SignIn = z.infer<typeof signInValidator>
@@ -35,11 +34,14 @@ type User = {
     connectionCode: string,
     email: string,
     habits: Habit[],
-    gameAccount: {
-        strike: number,
-        points: number,
-        dayOffPrice: number
-    }
+    gameAccount:
+        {
+            "dayOffPrice": number,
+            "isPayer": boolean,
+            "points": number,
+            "pro": boolean,
+            "strike": number
+        }
 };
 
 //Tabs
