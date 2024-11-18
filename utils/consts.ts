@@ -90,7 +90,7 @@ const IOS = "http://localhost:3000"
 const ANDROID = "http://10.0.2.2:3000"
 
 const external = "https://039f-2a02-a313-43a1-fc00-8159-18f4-99d7-a6af.ngrok-free.app/api/v1"
-const isExternal = true
+const isExternal = false
 
 export const DEFAULT_URL = isExternal ? external : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
 
