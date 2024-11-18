@@ -63,7 +63,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
             <SwipebleCardWrapper habit={habit}>
                 <View className="flex-row bg-white h-[88px] rounded-2xl border-x-[0.5px] border-skip shadow-md">
                     <View
-                        className=" py-2 px-4 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
+                        className=" p-2 flex-1 bg-white rounded-l-xl items-center border-r-[0.2px] border-l-4 border-l-white"
                     >
                         <Text
                             classNames={{text: "shrink text-center text-sm -ml-2 font-mainBold mb-auto"}}>{habit.details.user.label}</Text>
@@ -71,7 +71,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                             !hideIndicators &&
                             <BouncyCheckbox
                                 disabled={isUpdating}
-                                style={{marginRight: "auto"}}
+                                style={{marginRight: "auto", padding: 10, margin: -10}}
                                 fillColor="#6EC166"
                                 disableBuiltInState={true}
                                 isChecked={habit.details.user.completed}
@@ -86,7 +86,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                         }
                     </View>
                     <View
-                        className={`px-4 py-2 flex-1 bg-white rounded-r-xl
+                        className={`p-2 flex-1 bg-white rounded-r-xl
                         ${!hideIndicators && "border-r-4 "}
                      ${habit.details.partner.completed ? "border-secondary" : "border-primary"}`}
                     >
