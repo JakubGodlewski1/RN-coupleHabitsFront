@@ -10,17 +10,25 @@ import {useUser} from "@/api/hooks/useUser";
 import RevenueCatUI, {PAYWALL_RESULT} from "react-native-purchases-ui";
 import {useUpdateGameAccount} from "@/api/hooks/useUpdateGameAccount";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import {queryKeys} from "@/api/queryKeys";
+import {useQueryClient} from "@tanstack/react-query";
+import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 
 const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicators?: boolean }) => {
     const {toggleCheckbox, isUpdating} = useToggleCheckbox()
     const {user, isLoading} = useUser()
     const {updateGameAccount, isPending: isUpdatingGameAccount} = useUpdateGameAccount()
+    const queryClient = useQueryClient();
+    const {setIsUpdating} = useOptimisticUpdateContext()
 
     if (isLoading || !user) {
         return null
     }
 
     const handleToggleCheckbox = async () => {
+        queryClient.cancelQueries({queryKey: [queryKeys.useUser]})
+        setIsUpdating(true)
+
         //validate that user has a valid subscription, if so, toggle. otherwise show popup
         //validate that user has pro access to the app
         const purchaserInfo = await Purchases.getCustomerInfo()
@@ -34,6 +42,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
             })
 
         } else {
+            setIsUpdating(false)
             //subscription has ended
             if (!isSubscribed && gameAccount.isPayer) {
                 updateGameAccount({pro: false})

@@ -6,11 +6,13 @@ import {Alert, AppState} from "react-native";
 import {useAxios} from "@/api/hooks/useAxios";
 import {hasBeenReloadedToday} from "@/utils/hasBeenReloadedToday";
 import {queryClient} from "@/api/queryClient";
+import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 
 export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const {getAxiosInstance} = useAxios()
     const [appState, setAppState] = useState(AppState.currentState);
     const [dailyLoading, setDailyLoading] = useState(false);
+    const {isUpdating} = useOptimisticUpdateContext()
 
     useEffect(() => {
         const subscription = AppState.addEventListener("change", nextAppState => setAppState(nextAppState));
@@ -18,16 +20,19 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     }, []);
 
     const {isError, error, isLoading, data, refetch} = useQuery({
-        refetchInterval: appState === "active" && polling ? 1500 : false,
+        refetchInterval: (!isUpdating && appState === "active" && polling) ? 1500 : false,
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
-        queryFn: async () => {
+        queryFn: async ({signal}) => {
             const api = await getAxiosInstance();
             try {
-                const res = await api.get("/users")
+                const res = await api.get("/users", {signal})
                 return res.data
-            } catch (err) {
+            } catch (err: any) {
+                if (err.message === "canceled") {
+                    return
+                }
                 Alert.alert("Something went wrong while fetching your data, try again later")
             }
             return null
@@ -57,5 +62,11 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
 
     }, [AppState.currentState !== "active"])
 
-    return {isLoading: (isLoading || dailyLoading), error, isError, user: data as User | undefined, refetch}
+    return {
+        isLoading: (isLoading || dailyLoading),
+        error,
+        isError,
+        user: isUpdating ? queryClient.getQueryData<User>([queryKeys.useUser]) : data as User | undefined,
+        refetch
+    }
 }
