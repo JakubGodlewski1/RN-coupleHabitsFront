@@ -13,6 +13,7 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const [appState, setAppState] = useState(AppState.currentState);
     const [dailyLoading, setDailyLoading] = useState(false);
     const {isUpdating} = useOptimisticUpdateContext()
+    const [refetchErrorAmount, setRefetchErrorAmount] = useState(0);
 
     useEffect(() => {
         const subscription = AppState.addEventListener("change", nextAppState => setAppState(nextAppState));
@@ -20,7 +21,7 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     }, []);
 
     const {isError, error, isLoading, data, refetch} = useQuery({
-        refetchInterval: (!isUpdating && appState === "active" && polling) ? 1500 : false,
+        refetchInterval: (refetchErrorAmount < 3 && !isUpdating && appState === "active" && polling) ? 1500 : false,
         queryKey: [queryKeys.useUser],
         staleTime: Infinity,
         gcTime: Infinity,
@@ -28,12 +29,16 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
             const api = await getAxiosInstance();
             try {
                 const res = await api.get("/users", {signal})
+                setRefetchErrorAmount(0)
                 return res.data
             } catch (err: any) {
                 if (err.message === "canceled") {
                     return
                 }
-                Alert.alert("Something went wrong while fetching your data, try again later")
+                if (refetchErrorAmount === 0) {
+                    Alert.alert("Something went wrong while fetching your data, try again later")
+                }
+                setRefetchErrorAmount(p => p + 1)
             }
             return null
         }
