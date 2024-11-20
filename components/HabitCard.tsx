@@ -41,6 +41,10 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
                     id: habit.id,
                     isCompleted: !habit.details.user.completed
                 })
+
+                if (!gameAccount.pro) {
+                    updateGameAccount({pro: true})
+                }
             } else {
                 //subscription has ended
                 if (!isSubscribed && gameAccount.isPayer) {
