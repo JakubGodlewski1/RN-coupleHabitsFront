@@ -69,8 +69,12 @@ export default function SignIn() {
             onPress={startAuth}
         />
         <View className="mt-auto">
-            <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's <Link
-                className="text-primary font-mainBold" href="/sign-up">Sign up</Link></Text>
+            <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's
+                <Link
+                    replace
+                    className="text-primary font-mainBold"
+                    href="/sign-up"
+                >Sign up</Link></Text>
         </View>
     </ScrollView>
 }

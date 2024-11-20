@@ -75,9 +75,10 @@ export const useSignUpWithClerk = () => {
     });
 
     const onSignUp = async ({password, email}: SignUpForm) => {
-        if (!isLoaded) {
+        if (!isLoaded)
             return
-        }
+
+        setIsLoading(true)
 
         try {
             await signUp.create({
@@ -91,13 +92,14 @@ export const useSignUpWithClerk = () => {
         } catch (err: any) {
             assignClerkErrors(err.errors)
             console.error(JSON.stringify(err.errors, null, 2))
+        } finally {
+            setIsLoading(false)
         }
     }
 
     const onPressVerify = async ({code}: CodeForm) => {
-        if (!isLoaded) {
+        if (!isLoaded)
             return
-        }
 
         setIsLoading(true)
 
@@ -115,6 +117,7 @@ export const useSignUpWithClerk = () => {
         } catch (err: any) {
             setClerkErrors(p => ({...p, code: err.errors[0].message}))
             console.error(JSON.stringify(err, null, 2))
+        } finally {
             setIsLoading(false)
         }
     }

@@ -97,13 +97,15 @@ export default function SignUp() {
             />
             <View className="mt-auto">
                 <Text classNames={{text: "text-center mb-3"}}>Already Have an account? Let's <Link
-                    className="text-primary font-mainBold" href="/sign-in">Sign in</Link></Text>
+                    replace
+                    className="text-primary font-mainBold"
+                    href="/sign-in">
+                    Sign in</Link></Text>
             </View>
         </>}
 
         {pendingVerification && (
             <View>
-
                 <Controller
                     control={controlCodeForm}
                     render={({field: {onChange, value}}) => {

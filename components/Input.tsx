@@ -31,7 +31,7 @@ export default function Input({
     const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
     return <View className={classNames?.wrapper}>
-        {label && <Text classNames={{text: "font-mainBold"}}>{label}</Text>}
+        {label && <Text classNames={{text: "font-mainMedium"}}>{label}</Text>}
         <View
             className={`flex-row bg-white border-[1px] border-skip rounded-xl items-center pr-4 overflow-hidden`}>
 
