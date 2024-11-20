@@ -1,9 +1,7 @@
 import {Alert, Image, TouchableOpacity} from "react-native";
 import Text from "@/components/Text";
-import {MUTATION_KEY, useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
+import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
 import {pickAvatar} from "@/utils/pickAvatar";
-import {useMutationState} from "@tanstack/react-query";
-import {useEffect, useState} from "react";
 
 type Props = {
     url: string | null,
@@ -11,23 +9,7 @@ type Props = {
     ownership?: "main" | "partner"
 }
 export default function Avatar({url, text, ownership = "partner"}: Props) {
-    const [avatarUrl, setAvatarUrl] = useState<string | null>(url);
-    const {updateAvatar} = useUpdateAvatar()
-    const [optimisticUpdateAvatar] = useMutationState({
-        filters: {mutationKey: [MUTATION_KEY], status: "pending"},
-        select: (mutation) => {
-            return mutation.state.variables
-        }
-    }) as string[] | null[]
-
-    useEffect(() => {
-        if (optimisticUpdateAvatar && ownership === "main") {
-            console.log({update: optimisticUpdateAvatar})
-            setAvatarUrl(optimisticUpdateAvatar)
-        } else {
-            setAvatarUrl(url)
-        }
-    }, [optimisticUpdateAvatar, ownership, url])
+    const {updateAvatar, optimisticUpdate} = useUpdateAvatar()
 
     const handleUpdateAvatar = async () => {
         const uri = await pickAvatar()
@@ -35,7 +17,6 @@ export default function Avatar({url, text, ownership = "partner"}: Props) {
             updateAvatar(uri)
         }
     }
-
 
     return <TouchableOpacity
         onPress={() => ownership === "partner" ? () => {
@@ -50,10 +31,18 @@ export default function Avatar({url, text, ownership = "partner"}: Props) {
         ])
         }
         className="bg-skip rounded-full h-[72px] w-[72px]  items-center justify-center overflow-hidden">
-        {avatarUrl ? <Image className="w-full h-full" source={{
-                uri: avatarUrl || undefined,
-            }}/> :
-            <Text classNames={{text: "font-mainBold text-sm"}}>{text}</Text>
+        {
+            ownership === "main" && ((url || optimisticUpdate) ? <Image className="w-full h-full" source={{
+                    uri: optimisticUpdate || url!
+                }}/> :
+                <Text classNames={{text: "font-mainBold text-sm"}}>{text}</Text>)
         }
+        {
+            ownership === "partner" && (url ? <Image className="w-full h-full" source={{
+                    uri: url
+                }}/> :
+                <Text classNames={{text: "font-mainBold text-sm"}}>{text}</Text>)
+        }
+
     </TouchableOpacity>
 }

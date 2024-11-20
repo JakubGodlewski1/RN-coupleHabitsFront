@@ -1,4 +1,4 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useMutation, useMutationState, useQueryClient} from "@tanstack/react-query";
 import {queryKeys} from "@/api/queryKeys";
 import {router, usePathname} from "expo-router";
 import * as FileSystem from "expo-file-system";
@@ -13,6 +13,13 @@ export const useUpdateAvatar = () => {
     const queryClient = useQueryClient()
     const {getToken} = useAuth()
     const pathname = usePathname()
+
+    const [optimisticUpdateAvatar] = useMutationState({
+        filters: {mutationKey: [MUTATION_KEY], status: "pending"},
+        select: (mutation) => {
+            return mutation.state.variables
+        }
+    }) as string[] | null[]
 
     const uploadImage = async (imageUri: string) => {
         if (pathname === "/settings") {
@@ -38,5 +45,5 @@ export const useUpdateAvatar = () => {
         onError: (error) => handleError(error)
     })
 
-    return {isUpdating: isPending, updateAvatar: mutate}
+    return {isUpdating: isPending, updateAvatar: mutate, optimisticUpdate: optimisticUpdateAvatar}
 }
