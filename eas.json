@@ -14,17 +14,17 @@
         "buildType":"apk"
       },
       "env":{
-        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_cHJlcGFyZWQtc2tpbmstNjAuY2xlcmsuYWNjb3VudHMuZGV2JA",
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_live_Y2xlcmsuY291cGxlaGFiaXRzLmNvbSQ",
         "EXPO_PUBLIC_REVENUE_CAT_IOS":"appl_ZZiGDcQmvWpRoXwiSuArKrVAKRo",
-        "EXPO_PUBLIC_REVENUE_CAT_ANDROID":"goog_rkYnUIQkZXdUDbLxxFTEgBKqHbz"
+        "EXPO_PUBLIC_REVENUE_CAT_ANDROID":"goog_HrnNZhYVkTHkOCRJmVxuaCdzTyA"
       }
     },
     "production":{
       "autoIncrement":true,
       "env":{
-        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_cHJlcGFyZWQtc2tpbmstNjAuY2xlcmsuYWNjb3VudHMuZGV2JA",
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_live_Y2xlcmsuY291cGxlaGFiaXRzLmNvbSQ",
         "EXPO_PUBLIC_REVENUE_CAT_IOS":"appl_ZZiGDcQmvWpRoXwiSuArKrVAKRo",
-        "EXPO_PUBLIC_REVENUE_CAT_ANDROID":"goog_rkYnUIQkZXdUDbLxxFTEgBKqHbz"
+        "EXPO_PUBLIC_REVENUE_CAT_ANDROID":"goog_HrnNZhYVkTHkOCRJmVxuaCdzTyA"
       }
     }
   },
