@@ -1,6 +1,6 @@
-import {Redirect, router, Tabs} from "expo-router";
+import {Redirect, router, Tabs, useSegments} from "expo-router";
 import {Platform, TouchableOpacity, View} from "react-native";
-import {ReactNode, useState} from "react";
+import {ReactNode, useEffect, useState} from "react";
 import {Shadows} from "@/styles/Shadows";
 import {useTabBarContext} from "@/hooks/useTabBarContext";
 import {CurrentTabBarPage} from "@/types";
@@ -12,6 +12,17 @@ export default function TabsLayout() {
     const [currentPage, setCurrentPage] = useState<CurrentTabBarPage>("dashboard");
     const {isVisible} = useTabBarContext()
     const {isLoading: gettingToken, token} = useAfterIntro()
+    const segments = useSegments();
+
+    //update current page in case of being redirected to e.g. dashboard by clicking a link instead of clicking tab bar
+    useEffect(() => {
+        const page = segments[1]
+        if (page === "(dashboard)") {
+            setCurrentPage("dashboard");
+        } else if (page === "settings" || page === "ideas") {
+            setCurrentPage(page);
+        }
+    }, [segments[1]]);
 
     if (gettingToken)
         return <CenteredActivityIndicator/>
@@ -67,6 +78,4 @@ export default function TabsLayout() {
                     </View>
                 )}>
     </Tabs>
-
-
 }
