@@ -14,7 +14,7 @@ export default function Settings() {
     const {updateAvatar} = useUpdateAvatar()
     const {signOut, isLoading: isSigningOutPending} = useSignOutWithClerk()
     const {takeDayOff, isPending} = useTakeDayOff()
-    const {partner, gameAccount: {dayOffPrice}, email} = useUser().user!
+    const {partner, gameAccount: {dayOffPrice}} = useUser().user!
 
     const isLoading = isSigningOutPending || isPending
 
@@ -27,7 +27,6 @@ export default function Settings() {
 
     return <SafeAreaWrapper>
         <PageTitle>Settings</PageTitle>
-        {/*<Text>{email}</Text>*/}
         <View style={{gap: 16, flexGrow: 1}}>
             {
                 partner.connected && (

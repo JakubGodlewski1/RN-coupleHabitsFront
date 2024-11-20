@@ -56,6 +56,4 @@ export default function SwipebleIntroCardWrapper({habit, children, options}: Pro
     >
         {children}
     </Swipeable>
-
-
 }

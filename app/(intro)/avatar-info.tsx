@@ -12,7 +12,7 @@ import Button from "@/components/Button";
 import {router} from "expo-router";
 import {useUser} from "@/api/hooks/useUser";
 
-export default function DashboardInfo() {
+export default function AvatarInfo() {
     const {user} = useUser()
 
     return <Surroundings>
@@ -27,7 +27,6 @@ export default function DashboardInfo() {
                     </View>
                 </View>
             </View>
-
             <Avatar ownership="main" url={user?.avatar || null} text="You"/>
         </View>
     </Surroundings>

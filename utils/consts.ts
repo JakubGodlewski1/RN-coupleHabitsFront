@@ -86,12 +86,11 @@ export const EXAMPLE_HABIT: Habit = {
 }
 
 //choose localhost or external (production) backend url
-const IOS = "http://localhost:3000"
-const ANDROID = "http://10.0.2.2:3000"
+const IOS = "http://localhost:3004"
+const ANDROID = "http://10.0.2.2:3004"
 
-const external = "https://039f-2a02-a313-43a1-fc00-8159-18f4-99d7-a6af.ngrok-free.app/api/v1"
-const isExternal = false
+const external = "https://api.couplehabits.com/api/v1"
+const isExternal = true
 
 export const DEFAULT_URL = isExternal ? external : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
 
-// https://api.couplehabits.com/api/v1
