@@ -27,10 +27,10 @@ export const useToggleCheckbox = () => {
         return await api.patch(`/habits/${id}/toggle`, {isCompleted})
     }
 
-    const {isPending, mutate, status} = useMutation({
+    const {isPending, mutateAsync, status} = useMutation({
         mutationFn: ({id, isCompleted}: { id: string, isCompleted: boolean }) => toggleCheckbox({id, isCompleted}),
         onError: (error) => handleError(error)
     })
 
-    return {isUpdating: isPending, toggleCheckbox: mutate, status}
+    return {isUpdating: isPending, toggleCheckboxAsync: mutateAsync, status}
 }

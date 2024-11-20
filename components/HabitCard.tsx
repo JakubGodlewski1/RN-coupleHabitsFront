@@ -13,10 +13,9 @@ import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 import {queryKeys} from "@/api/queryKeys";
 import {useQueryClient} from "@tanstack/react-query";
 import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
-import {useEffect} from "react";
 
 const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicators?: boolean }) => {
-    const {toggleCheckbox, isUpdating, status} = useToggleCheckbox()
+    const {toggleCheckboxAsync, isUpdating} = useToggleCheckbox()
     const {user, isLoading} = useUser()
     const {updateGameAccount, isPending: isUpdatingGameAccount} = useUpdateGameAccount()
     const queryClient = useQueryClient();
@@ -38,7 +37,7 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
             const {gameAccount} = user
 
             if (isSubscribed || (gameAccount.pro && !gameAccount.isPayer)) {
-                toggleCheckbox({
+                await toggleCheckboxAsync({
                     id: habit.id,
                     isCompleted: !habit.details.user.completed
                 })
@@ -57,14 +56,10 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
             }
         } catch (err) {
             Alert.alert("Something went wrong, try again later")
-        }
-    }
-
-    useEffect(() => {
-        if (status === "success" || status === "error") {
+        } finally {
             setIsUpdating(false)
         }
-    }, [status]);
+    }
 
     if (isUpdatingGameAccount) {
         return <CenteredActivityIndicator/>

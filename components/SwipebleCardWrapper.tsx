@@ -19,21 +19,16 @@ type Props = {
 }
 
 export default function SwipebleCardWrapper({habit, children, options}: Props) {
-    const {isDeleting, deleteHabit, status} = useDeleteHabit()
+    const {isDeleting, deleteHabitAsync} = useDeleteHabit()
     const queryClient = useQueryClient();
     const {setIsUpdating} = useOptimisticUpdateContext()
 
-    const handleDeleteHabit = (id: string) => {
+    const handleDeleteHabit = async (id: string) => {
         queryClient.cancelQueries({queryKey: [queryKeys.useUser]})
         setIsUpdating(true)
-        deleteHabit(id)
+        await deleteHabitAsync(id)
+        setIsUpdating(false)
     }
-
-    useEffect(() => {
-        if (status === "success" || status === "error") {
-            setIsUpdating(false)
-        }
-    }, [status]);
 
     //animate the card
     const swipeableRef = useRef<Swipeable>(null)
