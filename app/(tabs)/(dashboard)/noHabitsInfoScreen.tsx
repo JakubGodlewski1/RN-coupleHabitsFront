@@ -30,7 +30,8 @@ export default function NoHabitsInfoScreen({user, currentTab}: { user: User, cur
         }
         {/*user don't have any habits scheduled for today*/}
         {(
-            user.habits.filter(filters.assignedForTodayWithWeekly).length === 0 &&
+            user.habits.filter(filters.assignedForTodayWithoutWeekly).length === 0 &&
+            user.habits.filter(filters.weekly).length === 0 &&
             currentTab === "todo" &&
             user.habits.length > 0
         ) && (
