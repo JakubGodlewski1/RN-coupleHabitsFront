@@ -18,7 +18,7 @@ export const useDeleteHabit = () => {
         return await api.delete(`/habits/${habitId}`)
     }
 
-    const {isPending, mutate} = useMutation({
+    const {isPending, mutate, status} = useMutation({
         mutationFn: (habitId: string) => deleteHabit(habitId),
         onSuccess: async () => {
             await queryClient.invalidateQueries({
@@ -28,5 +28,5 @@ export const useDeleteHabit = () => {
         onError: (error) => handleError(error)
     })
 
-    return {isDeleting: isPending, deleteHabit: mutate}
+    return {isDeleting: isPending, deleteHabit: mutate, status}
 }

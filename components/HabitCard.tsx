@@ -13,9 +13,10 @@ import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 import {queryKeys} from "@/api/queryKeys";
 import {useQueryClient} from "@tanstack/react-query";
 import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
+import {useEffect} from "react";
 
 const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicators?: boolean }) => {
-    const {toggleCheckbox, isUpdating} = useToggleCheckbox()
+    const {toggleCheckbox, isUpdating, status} = useToggleCheckbox()
     const {user, isLoading} = useUser()
     const {updateGameAccount, isPending: isUpdatingGameAccount} = useUpdateGameAccount()
     const queryClient = useQueryClient();
@@ -31,37 +32,39 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
 
         //validate that user has a valid subscription, if so, toggle. otherwise show popup
         //validate that user has pro access to the app
-        const purchaserInfo = await Purchases.getCustomerInfo()
-        const isSubscribed = purchaserInfo.entitlements.active['pro'] !== undefined;
-        const {gameAccount} = user
+        try {
+            const purchaserInfo = await Purchases.getCustomerInfo()
+            const isSubscribed = purchaserInfo.entitlements.active['pro'] !== undefined;
+            const {gameAccount} = user
 
-        if (isSubscribed || (gameAccount.pro && !gameAccount.isPayer)) {
-            toggleCheckbox({
-                id: habit.id,
-                isCompleted: !habit.details.user.completed
-            })
+            if (isSubscribed || (gameAccount.pro && !gameAccount.isPayer)) {
+                toggleCheckbox({
+                    id: habit.id,
+                    isCompleted: !habit.details.user.completed
+                })
+            } else {
+                //subscription has ended
+                if (!isSubscribed && gameAccount.isPayer) {
+                    updateGameAccount({pro: false})
+                }
 
-        } else {
-            setIsUpdating(false)
-            //subscription has ended
-            if (!isSubscribed && gameAccount.isPayer) {
-                updateGameAccount({pro: false})
-            }
-
-            //user has to pay
-            try {
+                //user has to pay
                 const result: PAYWALL_RESULT = await RevenueCatUI.presentPaywall({displayCloseButton: true})
                 if (result === "PURCHASED") {
                     //send api request to add user's partner as pro member
                     updateGameAccount({pro: true})
                 }
-
-            } catch (err) {
-                Alert.alert("Something went wrong, try again later")
-                console.log(err)
             }
+        } catch (err) {
+            Alert.alert("Something went wrong, try again later")
         }
     }
+
+    useEffect(() => {
+        if (status === "success" || status === "error") {
+            setIsUpdating(false)
+        }
+    }, [status]);
 
     if (isUpdatingGameAccount) {
         return <CenteredActivityIndicator/>

@@ -4,11 +4,9 @@ import {queryKeys} from "@/api/queryKeys";
 import {produce} from "immer";
 import {useAxios} from "@/api/hooks/useAxios";
 import {handleError} from "@/utils/handleError";
-import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 
 export const useToggleCheckbox = () => {
     const {getAxiosInstance} = useAxios()
-    const {setIsUpdating} = useOptimisticUpdateContext()
     const queryClient = useQueryClient();
 
     const toggleCheckbox = async ({id, isCompleted}: { id: string, isCompleted: boolean }) => {
@@ -26,15 +24,13 @@ export const useToggleCheckbox = () => {
         )
 
         const api = await getAxiosInstance()
-        const data = await api.patch(`/habits/${id}/toggle`, {isCompleted})
-        setIsUpdating(false)
-        return data
+        return await api.patch(`/habits/${id}/toggle`, {isCompleted})
     }
 
-    const {isPending, mutate} = useMutation({
+    const {isPending, mutate, status} = useMutation({
         mutationFn: ({id, isCompleted}: { id: string, isCompleted: boolean }) => toggleCheckbox({id, isCompleted}),
         onError: (error) => handleError(error)
     })
 
-    return {isUpdating: isPending, toggleCheckbox: mutate}
+    return {isUpdating: isPending, toggleCheckbox: mutate, status}
 }

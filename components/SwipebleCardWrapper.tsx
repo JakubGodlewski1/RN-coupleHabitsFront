@@ -6,7 +6,9 @@ import Text from "@/components/Text";
 import {Habit, HabitFormType} from "@/types";
 import {useDeleteHabit} from "@/api/hooks/useDeleteHabit";
 import {router} from "expo-router";
-import {useUser} from "@/api/hooks/useUser";
+import {queryKeys} from "@/api/queryKeys";
+import {useQueryClient} from "@tanstack/react-query";
+import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 
 type Props = {
     habit: Habit,
@@ -17,7 +19,21 @@ type Props = {
 }
 
 export default function SwipebleCardWrapper({habit, children, options}: Props) {
-    const {isDeleting, deleteHabit} = useDeleteHabit()
+    const {isDeleting, deleteHabit, status} = useDeleteHabit()
+    const queryClient = useQueryClient();
+    const {setIsUpdating} = useOptimisticUpdateContext()
+
+    const handleDeleteHabit = (id: string) => {
+        queryClient.cancelQueries({queryKey: [queryKeys.useUser]})
+        setIsUpdating(true)
+        deleteHabit(id)
+    }
+
+    useEffect(() => {
+        if (status === "success" || status === "error") {
+            setIsUpdating(false)
+        }
+    }, [status]);
 
     //animate the card
     const swipeableRef = useRef<Swipeable>(null)
@@ -44,7 +60,7 @@ export default function SwipebleCardWrapper({habit, children, options}: Props) {
                 onPress={() => Alert.alert("Deleting", "Are you sure you want to delete this habit?",
                     [
                         {text: "Cancel"},
-                        {text: "Yes", onPress: () => deleteHabit(habit.id)},
+                        {text: "Yes", onPress: () => handleDeleteHabit(habit.id)},
                     ])}
                 className="bg-primary flex-1 rounded-xl items-center justify-center"
             >
