@@ -7,6 +7,7 @@ import {useAxios} from "@/api/hooks/useAxios";
 import {hasBeenReloadedToday} from "@/utils/hasBeenReloadedToday";
 import {queryClient} from "@/api/queryClient";
 import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
+import {useUpdateGameAccount} from "@/api/hooks/useUpdateGameAccount";
 
 export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const {getAxiosInstance} = useAxios()
@@ -14,6 +15,7 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const [dailyLoading, setDailyLoading] = useState(false);
     const {isUpdating} = useOptimisticUpdateContext()
     const [refetchErrorAmount, setRefetchErrorAmount] = useState(0);
+    const {updateGameAccount} = useUpdateGameAccount()
 
     useEffect(() => {
         const subscription = AppState.addEventListener("change", nextAppState => setAppState(nextAppState));
@@ -53,6 +55,10 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     useEffect(() => {
         const validateHasLoadedToday = async () => {
             if (!(await hasBeenReloadedToday())) {
+                //update utc offset - 1 time daily (in case there was time change or user went abroad to a different timezone)
+                updateGameAccount({utcOffset: -Math.floor(new Date().getTimezoneOffset() / 60)})
+
+                //refetch all habits - 1 time daily
                 setDailyLoading(true)
                 await queryClient.invalidateQueries({
                     queryKey: [queryKeys.useUser]
