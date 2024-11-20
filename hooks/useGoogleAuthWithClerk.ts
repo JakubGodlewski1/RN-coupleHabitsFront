@@ -18,21 +18,24 @@ export const useGoogleAuthWithClerk = () => {
     useWarmUpBrowser()
     const [isLoading, setIsLoading] = useState(false)
 
-    const {startOAuthFlow} = useOAuth({strategy: 'oauth_google'})
+    const {startOAuthFlow} = useOAuth({
+        strategy: 'oauth_google'
+    })
 
     const onPress = useCallback(async () => {
         setIsLoading(true)
         try {
             const {createdSessionId, setActive} = await startOAuthFlow({
-                redirectUrl: Linking.createURL("/(tabs)/(dashboard)", {scheme: 'myapp'}),
+                redirectUrl: Linking.createURL("(tabs)/(dashboard)", {scheme: 'myapp'}),
+
             })
 
             if (createdSessionId) {
                 await setActive!({session: createdSessionId})
             }
 
-        } catch (err) {
-            console.error('OAuth error', err)
+        } catch (err: any) {
+            console.error('OAuth error:', err);
         } finally {
             setIsLoading(false)
         }
