@@ -72,7 +72,7 @@ const IdeaCard = ({habitTitle}: { habitTitle: string }) => {
     return (
         <TouchableOpacity style={{...Shadows}} onPress={() => copyToClipboard({
             textToCopy: habitTitle,
-            message: `"Copied to clipboard", Habit "${habitTitle}" has been copied to your clipboard.`
+            message: `Copied to clipboard 😊`
         })}
                           className="bg-white flex-1 p-4 rounded-lg items-center justify-center">
             <Text classNames={{text: "shrink text-center leading-7"}}>
