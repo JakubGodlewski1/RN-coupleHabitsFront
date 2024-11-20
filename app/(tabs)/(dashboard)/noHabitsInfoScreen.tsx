@@ -11,11 +11,12 @@ export default function NoHabitsInfoScreen({user, currentTab}: { user: User, cur
             <Text classNames={{text: "text-center mt-4 mx-14"}}>After adding your first
                 habit, you will see it here.</Text>
         )}
-        {/*User does not have any habits scheduled for today including weekly*/}
+        {/*User completed all habits scheduled for today including weekly*/}
 
         {
-            user.habits.filter(filters.assignedForTodayWithWeekly).length > 0 &&
-            user.habits.filter(filters.habitUncompleted).length === 0 &&
+            user.habits.filter(filters.todoWeekly).length === 0 &&
+            user.habits.filter(filters.todoTodayWithoutWeekly).length === 0 &&
+            user.habits.filter(filters.assignedForTodayWithoutWeekly).length > 0 &&
             currentTab === "todo" &&
             <Text classNames={{text: "text-center mt-4 mx-14"}}>You have completed all habits
                 scheduled for today</Text>
@@ -31,7 +32,7 @@ export default function NoHabitsInfoScreen({user, currentTab}: { user: User, cur
         {/*user don't have any habits scheduled for today*/}
         {(
             user.habits.filter(filters.assignedForTodayWithoutWeekly).length === 0 &&
-            user.habits.filter(filters.weekly).length === 0 &&
+            user.habits.filter(filters.todoWeekly).length === 0 &&
             currentTab === "todo" &&
             user.habits.length > 0
         ) && (
