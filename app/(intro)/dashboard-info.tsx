@@ -5,15 +5,17 @@ import {DashboardTabKey} from "@/types";
 import {View} from "react-native";
 import Avatar from "@/components/Avatar";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
-import HabitCard from "@/components/HabitCard";
 import Text from "@/components/Text";
 import {AntDesign} from "@expo/vector-icons";
 import Button from "@/components/Button";
 import {router} from "expo-router";
+import IntroCard from "@/components/IntroCard/IntroCard";
+import {useUser} from "@/api/hooks/useUser";
 
 export default function DashboardInfo() {
     const {top, bottom} = useSafeAreaInsets()
     const transparency = "bg-black/60"
+    const {user} = useUser()
 
     return (
         <View className="relative grow">
@@ -73,11 +75,11 @@ export default function DashboardInfo() {
                             {/*elements inside*/}
                             <View
                                 className="flex-row justify-around  p-2 rounded-2xl z-30">
-                                <Avatar ownership="main" url={null} text="You"/>
+                                <Avatar ownership="main" url={user?.avatar || null} text="You"/>
                                 <Avatar ownership="partner" url={null} text="Partner"/>
                             </View>
                             <View style={{gap: 8}} className="grow p-2 mt-4">
-                                <HabitCard habit={EXAMPLE_HABIT}/>
+                                <IntroCard habit={EXAMPLE_HABIT}/>
                             </View>
                         </View>
                     </View>
