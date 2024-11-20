@@ -3,6 +3,9 @@
   "main":"expo-router/entry",
   "version":"1.0.0",
   "scripts":{
+    "prod":"NODE_ENV=production npx expo start",
+    "publish-changes:ios":"npx expo publish",
+    "eas:submit:ios":"eas submit -p ios --latest",
     "eas:build:android":"eas build --platform android",
     "eas:build:ios":"eas build --platform ios",
     "dev":"npx expo start",
