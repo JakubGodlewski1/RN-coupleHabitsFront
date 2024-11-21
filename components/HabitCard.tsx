@@ -15,7 +15,7 @@ import {useQueryClient} from "@tanstack/react-query";
 import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 
 const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicators?: boolean }) => {
-    const {toggleCheckboxAsync, isUpdating} = useToggleCheckbox()
+    const {toggleCheckboxAsync, isUpdating, toggleOptimistic} = useToggleCheckbox()
     const {user, isLoading} = useUser()
     const {updateGameAccount, isPending: isUpdatingGameAccount} = useUpdateGameAccount()
     const queryClient = useQueryClient();
@@ -28,6 +28,11 @@ const HabitCard = ({habit, hideIndicators = false}: { habit: Habit, hideIndicato
     const handleToggleCheckbox = async () => {
         queryClient.cancelQueries({queryKey: [queryKeys.useUser]})
         setIsUpdating(true)
+
+        toggleOptimistic({
+            id: habit.id,
+            isCompleted: !habit.details.user.completed
+        })
 
         //validate that user has a valid subscription, if so, toggle. otherwise show popup
         //validate that user has pro access to the app

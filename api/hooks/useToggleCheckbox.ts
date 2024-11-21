@@ -9,8 +9,7 @@ export const useToggleCheckbox = () => {
     const {getAxiosInstance} = useAxios()
     const queryClient = useQueryClient();
 
-    const toggleCheckbox = async ({id, isCompleted}: { id: string, isCompleted: boolean }) => {
-        //optimistic update
+    const toggleOptimistic = ({id, isCompleted}: { id: string, isCompleted: boolean }) => {
         queryClient.setQueryData(
             [queryKeys.useUser],
             (data: User): User => {
@@ -22,15 +21,17 @@ export const useToggleCheckbox = () => {
                 }) as User
             }
         )
+    }
 
+    const toggleCheckbox = async ({id, isCompleted}: { id: string, isCompleted: boolean }) => {
         const api = await getAxiosInstance()
         return await api.patch(`/habits/${id}/toggle`, {isCompleted})
     }
 
-    const {isPending, mutateAsync, status} = useMutation({
+    const {isPending, mutateAsync} = useMutation({
         mutationFn: ({id, isCompleted}: { id: string, isCompleted: boolean }) => toggleCheckbox({id, isCompleted}),
         onError: (error) => handleError(error)
     })
 
-    return {isUpdating: isPending, toggleCheckboxAsync: mutateAsync, status}
+    return {isUpdating: isPending, toggleCheckboxAsync: mutateAsync, toggleOptimistic}
 }
