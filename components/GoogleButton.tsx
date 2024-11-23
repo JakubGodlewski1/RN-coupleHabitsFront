@@ -15,7 +15,7 @@ export default function GoogleButton({onPress, disabled, classNames}: Props) {
     return <TouchableOpacity
         disabled={disabled}
         onPress={onPress}
-        className={`flex-row items-center justify-center space-x-5  bg-white rounded-[20px] p-4 ${classNames?.wrapper}`}
+        className={`flex-row items-center justify-center space-x-5  bg-white rounded-[20px] p-4 ${classNames?.wrapper} ${disabled ? "bg-white/60" : ""}`}
     >
         <Image className="w-6 h-6" source={logo}/>
         <Text className="font-mainSemiBold text-lg">Continue with Google</Text>
