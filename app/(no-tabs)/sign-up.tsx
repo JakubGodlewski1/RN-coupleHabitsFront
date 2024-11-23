@@ -8,8 +8,9 @@ import {Link} from "expo-router";
 import PageTitle from "@/components/PageTitle";
 import {Controller} from "react-hook-form";
 import {useSignUpWithClerk} from "@/hooks/useSignUpWithClerk";
-import {useGoogleAuthWithClerk} from "@/hooks/useGoogleAuthWithClerk";
+import {useOAuthWithClerk} from "@/hooks/usOAuthWithClerk";
 import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
+import AppleButton from "@/components/AppleButton";
 
 export default function SignUp() {
     const {
@@ -24,12 +25,12 @@ export default function SignUp() {
         isLoading: isLoadingForm
     } = useSignUpWithClerk()
 
-    const {
-        isLoading: isLoadingAuth,
-        startAuth
-    } = useGoogleAuthWithClerk()
+    const {isLoading: isLoadingGoogleAuth, startAuth: startGoogleAuth} = useOAuthWithClerk({strategy: "google"})
+    const {isLoading: isLoadingAppleAuth, startAuth: startAppleAuth} = useOAuthWithClerk({strategy: "apple"})
 
-    if (isLoadingAuth) {
+    const isLoading = isLoadingGoogleAuth || isLoadingAppleAuth || isLoadingForm
+
+    if (isLoadingGoogleAuth || isLoadingAppleAuth) {
         return <CenteredActivityIndicator/>
     }
 
@@ -86,21 +87,26 @@ export default function SignUp() {
             />
 
             <Button
-                disabled={isLoadingForm || isLoadingAuth}
+                disabled={isLoading}
                 onPress={onSignUpFormSubmit}
                 title="Sign up"
             />
             <DividerOr classNames={{wrapper: "my-4"}}/>
             <GoogleButton
-                disabled={isLoadingForm || isLoadingAuth}
-                onPress={startAuth}
+                classNames={{wrapper: "mb-2"}}
+                disabled={isLoading}
+                onPress={startGoogleAuth}
+            />
+            <AppleButton
+                disabled={isLoading}
+                onPress={startAppleAuth}
             />
             <View className="mt-auto">
-                <Text classNames={{text: "text-center mb-3"}}>Already Have an account? Let's <Link
+                <Text classNames={{text: "text-center mb-3"}}>Already have an account? Let's <Link
                     replace
                     className="text-primary font-mainBold"
                     href="/sign-in">
-                    Sign in</Link></Text>
+                    sign in</Link></Text>
             </View>
         </>}
 
@@ -122,7 +128,7 @@ export default function SignUp() {
                     }}
                     name="code"
                 />
-                <Button disabled={isLoadingForm || isLoadingAuth} title="Verify Email" onPress={onCodeFormSubmit}/>
+                <Button disabled={isLoading} title="Verify Email" onPress={onCodeFormSubmit}/>
             </View>
         )}
     </ScrollView>

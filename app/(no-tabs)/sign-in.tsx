@@ -8,17 +8,20 @@ import Text from "@/components/Text";
 import PageTitle from "@/components/PageTitle";
 import {useSignInWithClerk} from "@/hooks/useSignInWithClerk";
 import {Controller} from "react-hook-form";
-import {useGoogleAuthWithClerk} from "@/hooks/useGoogleAuthWithClerk";
+import {useOAuthWithClerk} from "@/hooks/usOAuthWithClerk";
+import AppleButton from "@/components/AppleButton";
+import CenteredActivityIndicator from "@/components/CenteredActivityIndicator";
 
 export default function SignIn() {
     const {errors, clerkErrors, handleSignIn, control, isLoading: isLoadingForm} = useSignInWithClerk()
+    const {isLoading: isLoadingGoogleAuth, startAuth: startGoogleAuth} = useOAuthWithClerk({strategy: "google"})
+    const {isLoading: isLoadingAppleAuth, startAuth: startAppleAuth} = useOAuthWithClerk({strategy: "apple"})
 
-    const {
-        isLoading: isLoadingAuth,
-        startAuth
-    } = useGoogleAuthWithClerk()
+    const isLoading = isLoadingGoogleAuth || isLoadingAppleAuth || isLoadingForm
 
-    const isLoading = isLoadingAuth || isLoadingForm
+    if (isLoadingGoogleAuth || isLoadingAppleAuth) {
+        return <CenteredActivityIndicator/>
+    }
 
     return <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <PageTitle>Sign in</PageTitle>
@@ -65,8 +68,13 @@ export default function SignIn() {
         />
         <DividerOr classNames={{wrapper: "my-4"}}/>
         <GoogleButton
+            classNames={{wrapper: "mb-2"}}
             disabled={isLoading}
-            onPress={startAuth}
+            onPress={startGoogleAuth}
+        />
+        <AppleButton
+            disabled={isLoading}
+            onPress={startAppleAuth}
         />
         <View className="mt-auto">
             <Text classNames={{text: "text-center mb-3"}}>Don't have an account yet? Let's
@@ -74,7 +82,7 @@ export default function SignIn() {
                     replace
                     className="text-primary font-mainBold"
                     href="/sign-up"
-                >Sign up</Link></Text>
+                > sign up</Link></Text>
         </View>
     </ScrollView>
 }

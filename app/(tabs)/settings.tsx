@@ -48,7 +48,8 @@ export default function Settings() {
                 classNames={{wrapper: "justify-between"}}
                 iconPosition="right"
                 type="white"
-                onPress={handleUpdateAvatar} title="Change profile picture">
+                onPress={handleUpdateAvatar}
+                title="Change profile picture">
                 <Entypo size={24} name="chevron-small-right"/>
             </Button>
             <Button

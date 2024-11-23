@@ -14,12 +14,18 @@ export const useWarmUpBrowser = () => {
 
 WebBrowser.maybeCompleteAuthSession()
 
-export const useGoogleAuthWithClerk = () => {
+const strategyMap = {
+    google: "oauth_google",
+    apple: "oauth_apple"
+} as const
+
+export const useOAuthWithClerk = ({strategy}: { strategy: keyof typeof strategyMap }) => {
+
     useWarmUpBrowser()
     const [isLoading, setIsLoading] = useState(false)
 
     const {startOAuthFlow} = useOAuth({
-        strategy: 'oauth_google'
+        strategy: strategyMap[strategy]
     })
 
     const onPress = useCallback(async () => {
@@ -27,7 +33,6 @@ export const useGoogleAuthWithClerk = () => {
         try {
             const {createdSessionId, setActive} = await startOAuthFlow({
                 redirectUrl: Linking.createURL("(tabs)/(dashboard)", {scheme: 'myapp'}),
-
             })
 
             if (createdSessionId) {
