@@ -1,11 +1,10 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {queryKeys} from "@/api/queryKeys";
 import {User} from "@/types";
 import {useEffect, useState} from "react";
 import {Alert, AppState} from "react-native";
 import {useAxios} from "@/api/hooks/useAxios";
 import {hasBeenReloadedToday} from "@/utils/hasBeenReloadedToday";
-import {queryClient} from "@/api/queryClient";
 import {useOptimisticUpdateContext} from "@/hooks/useOptimisticUpdateContext";
 import {useUpdateGameAccount} from "@/api/hooks/useUpdateGameAccount";
 
@@ -16,6 +15,7 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
     const {isUpdating} = useOptimisticUpdateContext()
     const [refetchErrorAmount, setRefetchErrorAmount] = useState(0);
     const {updateGameAccount} = useUpdateGameAccount()
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         const subscription = AppState.addEventListener("change", nextAppState => setAppState(nextAppState));
@@ -54,7 +54,13 @@ export const useUser = ({polling}: { polling: boolean } = {polling: false}) => {
 
     useEffect(() => {
         const validateHasLoadedToday = async () => {
-            if (!(await hasBeenReloadedToday())) {
+            const cache = queryClient.getQueryData([queryKeys.useUser]) as undefined | User
+
+            if (
+                !(await hasBeenReloadedToday()) &&
+                cache &&
+                cache.partner.connected
+            ) {
                 //update utc offset - 1 time daily (in case there was time change or user went abroad to a different timezone)
                 updateGameAccount({utcOffset: -Math.floor(new Date().getTimezoneOffset() / 60)})
 
