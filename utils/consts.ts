@@ -1,6 +1,8 @@
 import {CreateHabit, DashboardTabKey, FrequencyType, Habit, Repeat} from "@/types";
 import {Platform} from "react-native";
 
+const isProduction = process.env.EXPO_PUBLIC_NODE_ENV === "production"
+
 export const DASHBOARD_TABS: {
     key: DashboardTabKey,
     label: string
@@ -89,8 +91,6 @@ export const EXAMPLE_HABIT: Habit = {
 const IOS = "http://localhost:3000"
 const ANDROID = "http://10.0.2.2:3000"
 
-const external = "https://api.couplehabits.com/api/v1"
-const isExternal = true
-
-export const DEFAULT_URL = isExternal ? external : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
+const productionUrl = "https://api.couplehabits.com/api/v1"
+export const DEFAULT_URL = isProduction ? productionUrl : `${Platform.OS === "android" ? ANDROID : IOS}/api/v1`
 
