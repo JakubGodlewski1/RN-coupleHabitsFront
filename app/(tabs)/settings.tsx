@@ -1,7 +1,7 @@
 import Text from "@/components/Text";
 import {Alert, Platform, View} from "react-native";
 import Button from "@/components/Button";
-import {Entypo} from "@expo/vector-icons";
+import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import PageTitle from "@/components/PageTitle";
 import {SafeAreaWrapper} from "@/components/SafeAreaWrapper";
 import {useUpdateAvatar} from "@/api/hooks/useUpdateAvatar";
@@ -86,7 +86,7 @@ export default function Settings() {
                 type="white"
                 onPress={handleUpdateAvatar}
                 title="Change profile picture">
-                <Entypo size={24} name="chevron-small-right"/>
+                <MaterialCommunityIcons size={24} name="face-man-shimmer-outline"/>
             </Button>
             <Button
                 classNames={{wrapper: `justify-between mt-auto`}}
@@ -95,7 +95,7 @@ export default function Settings() {
                 type="white"
                 onPress={signOut}
                 title="Sign out">
-                <Entypo size={24} name="chevron-small-right"/>
+                <MaterialIcons size={24} name="logout"/>
             </Button>
             <Button
                 classNames={{wrapper: `justify-between ${Platform.OS === "android" ? "mb-10" : "mb-4"}`}}
@@ -104,11 +104,9 @@ export default function Settings() {
                 type="error"
                 onPress={handleDeleteAccount}
                 title="Delete account">
-                <Entypo size={24} color="red" name="chevron-small-right"/>
+                <Ionicons size={24} color="red" name="trash-bin-outline"/>
             </Button>
 
         </View>
-
-
     </SafeAreaWrapper>
 }
